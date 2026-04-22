@@ -33,12 +33,12 @@ apt install libargs-dev
 - [x] Remove gif from memory.
 - [x] Turn off the display.
 - [x] Turn on the display.
-- [] Fan control
-- [] Display hardware monitor (It may require a daemon to report sensor data).
-- [] Upload jpeg images to LED display.
-- [] Feature to keep track of uploaded images. (I still need to validate if possible, not found any descriptor reporting available slots)
-- [] Slideshow effect for images.
-- [] Clock effect.
+- [ ] Fan control
+- [ ] Display hardware monitor (It may require a daemon to report sensor data).
+- [ ] Upload jpeg images to LED display.
+- [ ] Feature to keep track of uploaded images. (I still need to validate if possible, not found any descriptor reporting available slots)
+- [ ] Slideshow effect for images.
+- [ ] Clock effect.
 
 
 ### Know issues, limitations and bugs
