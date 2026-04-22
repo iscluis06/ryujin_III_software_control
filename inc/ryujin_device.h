@@ -5,8 +5,12 @@
 #include <string>
 #include <memory>
 
+#include "libusb_wrapp.h"
+
 class RyujinDevice {
 private:
+    std::unique_ptr<LibUsbWrapp> lusb_;
+
     class FileHandle {
     public:
         std::shared_ptr<unsigned char[]> buffer;
@@ -34,16 +38,15 @@ private:
     const unsigned char kEndUpload2[3] = {0xec, 0xdc};
     const unsigned char kDelete[3] = {0xec, 0x73, 0x03};
     const unsigned char kReportHid[5] = {0xec, 0x1a, 0x01, 0x14, 0x1e};
-    libusb_device_handle * device = nullptr;
+    std::shared_ptr<libusb_device_handle *> device;
 
     void GetDevice();
-    unsigned char * FillArray(const unsigned char * array, int array_size, int desired_size);
+    std::vector<unsigned char> FillArray(const unsigned char * array, int array_size, int desired_size);
     std::array<unsigned char, 3> GetSizeToHex(int size);
     std::shared_ptr<FileHandle> ReadFile(std::string path);
 public:
     RyujinDevice();
     ~RyujinDevice();
-    bool IsDeviceAvailable();
     void Reset();
     void TurnOnLedDisplay();
     void TurnOffLedDisplay();

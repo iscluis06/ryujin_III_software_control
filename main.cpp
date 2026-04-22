@@ -1,8 +1,5 @@
-#include <cstring>
 #include <iostream>
-#include <libusb-1.0/libusb.h>
 #include <cmath>
-#include <memory>
 #include <args.hxx>
 
 #include "inc/ryujin_device.h"
@@ -38,11 +35,6 @@ int main(int argc, char * argv[]) {
     }
     RyujinDevice device{};
 
-
-    if (!device.IsDeviceAvailable()) {
-        std::cout << "Missing device ryujin III, closing now..." << std::endl;
-        exit(0);
-    }
 
     if (turn_on){ device.TurnOnLedDisplay(); }
     if (turn_off){ device.TurnOffLedDisplay(); }

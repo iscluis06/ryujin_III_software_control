@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 4.2)
 project(ryujinIII)
 
 set(CMAKE_CXX_STANDARD 17)
-FIND_LIBRARY(libusb libusb NAMES libusb-1.0 usb-1.0 usb REQUIRED)
-add_executable(ryujinIII main.cpp ryujin_device.cpp libusb_wrapp.cpp)
-message(STATUS "Library: ${libusb}")
+find_library(libusb libusb NAMES libusb-1.0 usb-1.0 usb REQUIRED)
+add_executable(${PROJECT_NAME} main.cpp src/ryujin_device.cpp src/libusb_wrapp.cpp)
 
-target_link_libraries(ryujinIII PUBLIC ${libusb})
+target_include_directories(${PROJECT_NAME} PUBLIC inc)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC ${libusb})
