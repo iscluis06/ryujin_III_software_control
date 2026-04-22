@@ -1,11 +1,11 @@
 # Ryujin III Control Software
 
-[!WARNING]
-This is an unofficial development to manage Asus Ryujin III water cooling under linux systems.
-Use it under your own responsibility. This is still a work in progress.
+> [!WARNING]
+> This is an unofficial development to manage Asus Ryujin III water cooling under linux systems.
+> Use it under your own responsibility. This is still a work in progress.
 
-[!NOTE]
-Feel free to file any bug you found.
+> [!NOTE]
+> Feel free to file any bug you found.
 
 
 Software to help you control your Asus Ryujin III Water Cooling under linux.
