@@ -22,9 +22,12 @@ private:
     const int kAsusDeviceId = 0x0b05;
     const int kRyujinProductId = 0x1aa2;
     const int kVendorDeviceOut = 0x01;
+    const int kVendorDeviceIn = 0x81;
     const int kHidDeviceOut = 0x02;
-    const int kDefaultTimeOut = 500;
+    const int kHidDeviceIn = 0x82;
+    const int kDefaultTimeOut = 5000;
     const int kDefaultInterruptDataLength = 65;
+    const int kDefaultBulkLength = 4096;
     const unsigned char kTurnOff[2] = {0xec, 0x51};
     const unsigned char kTurnOn[3] = {0xec, 0x51, 0x14};
     const unsigned char kSelectGif[4] = {0xec, 0x51, 0x10, 0x01};
@@ -41,18 +44,18 @@ private:
     std::shared_ptr<libusb_device_handle *> device;
 
     void GetDevice();
-    std::vector<unsigned char> FillArray(const unsigned char * array, int array_size, int desired_size);
-    std::array<unsigned char, 3> GetSizeToHex(int size);
-    std::shared_ptr<FileHandle> ReadFile(std::string path);
+    static std::vector<unsigned char> FillArray(const unsigned char * array, int array_size, int desired_size);
+    static std::array<unsigned char, 3> GetSizeToHex(int size);
+    static std::shared_ptr<FileHandle> ReadFile(const std::string &path);
 public:
     RyujinDevice();
     ~RyujinDevice();
-    void Reset();
-    void TurnOnLedDisplay();
-    void TurnOffLedDisplay();
-    void SelectGifFromMemory(int memory_index);
-    void DeleteFromMemory(int memory_index);
-    void UploadGif(std::string path);
+    void Reset() const;
+    void TurnOnLedDisplay() const;
+    void TurnOffLedDisplay() const;
+    void SelectGifFromMemory(int memory_index) const;
+    void DeleteFromMemory(int memory_index) const;
+    void UploadGif(const std::string &path, short memory_space);
 };
 
 #endif //RYUJINIII_RYUJIN_DEVICE_H

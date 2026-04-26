@@ -48,4 +48,36 @@ because those may overwrite previous resources and may trigger a device reset.
 * Selecting an empty slot may trigger a reset on the device.
 * Uploading of images (gifs/jpegs) sometimes fails on the first try, and it requires a second run to make it work (I'm still trying to diagnose the issue.)
 * Cropping and transformation of gif images will be done automatically; right now I have not implemented any functionality to allow the user to specify those parameters.
-* Uploading of images must select a memory slot.
+* Uploading of images must select a memory slot, make sure to select another slot previously by using the select memory option, it should be different to the one to upload a gif.
+
+### Usage
+```shell
+Ryujin III Managment Tool
+
+  OPTIONS:
+
+      -h, --help                        Display help menu
+      --lon                             Turn on the led display
+      --loff                            Turn off the led display
+      --reset                           Reset device and clear any pending
+                                        instruction
+      --select_gif=[select_gif]         Select a gif from memory
+      --delete=[delete]                 Delete a gif from memory
+      --upload-gif=[upload_gif]         Upload gif, it should be set along side
+                                        select option, you must specify a memory
+                                        slot to upload to
+```
+
+Example turning off the led display
+```shell
+./ryujinIII --loff
+```
+
+Example turning uploading a gif
+```shell
+# Select a different memory slot that the one you want to upload to
+./ryujinIII --select_gif 2
+# Upload the gif to the selected memory slot, it sometimes will fail on the first try,
+# so you may need to run it again. (I'm still trying to figure out why)
+./ryujinIII --upload-gif some_path/to_some_gif/image.gif --select_gif 1
+```
