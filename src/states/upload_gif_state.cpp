@@ -17,7 +17,6 @@ UploadGifState::UploadGifState(std::shared_ptr<libusb_device_handle *> device,
 bool UploadGifState::Execute() {
     LibUsbWrapp wrapp(this->GetDevice(), 0);
     std::vector<unsigned char> buffer(RyujinDevice::kDefaultBulkLength, 0);
-    libusb_clear_halt(*(this->GetDevice()), RyujinDevice::kHidDeviceIn);
     for (int i = 0; i < this->file_handle.iterations; i++) {
         std::cout << "Upload porcentage: " << 100 * ((float) (i + 1) / (float) this->file_handle.iterations) << "%" <<
                 '\r';
@@ -29,7 +28,7 @@ bool UploadGifState::Execute() {
                     std::endl;
             return false;
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
         std::vector<unsigned char> response_back(RyujinDevice::kDefaultInterruptDataLength, 0);
         if (!wrapp.SendInterrupt(RyujinDevice::kHidDeviceIn, response_back)) {
             std::cerr << "Failed to read from input endpoint" << std::endl;

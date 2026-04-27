@@ -23,7 +23,7 @@ bool ReportedSizeState::Execute() {
     std::cerr << "Failed to execute reported size instruction" << std::endl;
     return false;
   }
-  std::this_thread::sleep_for(std::chrono::milliseconds(20));
+  std::this_thread::sleep_for(std::chrono::milliseconds(50));
   std::vector<unsigned char> response_back(RyujinDevice::kDefaultInterruptDataLength, 0);
   if (!wrapp.SendInterrupt(RyujinDevice::kHidDeviceIn, response_back)) {
     std::cerr << "Failed to read from input endpoint" << std::endl;

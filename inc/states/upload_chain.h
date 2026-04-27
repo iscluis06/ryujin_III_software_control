@@ -11,7 +11,7 @@ public:
 
 private:
     static const bool retry_ = true;
-    static const int kMaxTries_ = 50;
+    static const int kMaxTries_ = 5;
     FileHandle file_handle;
 };
 
