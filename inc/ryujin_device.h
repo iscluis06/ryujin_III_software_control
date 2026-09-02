@@ -2,58 +2,112 @@
 #define RYUJINIII_RYUJIN_DEVICE_H
 
 #include <libusb-1.0/libusb.h>
-#include <string>
 #include <memory>
+#include <string>
 
 #include "libusb_wrapp.h"
-
+/**
+ * Main class for all ryujin device properties.
+ */
 class RyujinDevice {
 private:
-    std::unique_ptr<LibUsbWrapp> lusb_;
+  /**
+   * Config Interface Identifier needed to claim it using libusb.
+   */
+  const int kConfigInterface = 0x0;
+  /**
+   * Led Interface Identifier needed to claim it using libusb.
+   */
+  const int kLedInterface = 0x1;
+  /**
+   * Asus identifier
+   */
+  const int kAsusDeviceId = 0x0b05;
+  /**
+   * Product identifier
+   */
+  const int kRyujinProductId = 0x1aa2;
+  /**
+   * Shared pointer to the device handle
+   */
+  std::shared_ptr<libusb_device_handle *> device;
 
-    class FileHandle {
-    public:
-        std::shared_ptr<unsigned char[]> buffer;
-        int size;
-    };
-
-    const int kConfigInterface = 0x0;
-    const int kLedInterface = 0x1;
-    const int kAsusDeviceId = 0x0b05;
-    const int kRyujinProductId = 0x1aa2;
-    const int kDefaultTimeOut = 5000;
-
-    std::shared_ptr<libusb_device_handle *> device;
-
-    void GetDevice();
+  /**
+   * Method that iterates all usb interfaces looking for ryujin device,
+   * if found it will set the device variable.
+   */
+  void FindDevice();
 
 public:
-    RyujinDevice();
+  /**
+   * Constructor which uses FindDevice to initialize device property,
+   * if device property not initialized (device not found), it will terminate
+   * the application with exit code 0.
+   */
+  RyujinDevice();
 
-    ~RyujinDevice();
+  /**
+   * Destructor releases usb interfaces previously claimed.
+   */
+  ~RyujinDevice();
 
-    void Reset() const;
+  /**
+   * Method executes turn on command.
+   */
+  void TurnOnLedDisplay() const;
 
-    void TurnOnLedDisplay() const;
+  /**
+   * Method executes turn off command.
+   */
+  void TurnOffLedDisplay() const;
 
-    void TurnOffLedDisplay() const;
+  void SelectGifFromMemory(int memory_index) const;
 
-    void SelectGifFromMemory(int memory_index) const;
+  /**
+   * Method executes delete command. (only gif spaces)
+   */
+  void DeleteFromMemory(int memory_index) const;
 
-    void DeleteFromMemory(int memory_index) const;
+  /**
+   * Method executes upload gif command
+   * @param path To gif file
+   * @param memory_space Memory slot where to upload gif (1-10)
+   */
+  void UploadGif(const std::string &path, short memory_space);
 
-    void UploadGif(const std::string &path, short memory_space);
+  /**
+   * Default length for usb interrupt instructions.
+   */
+  static const int kDefaultInterruptDataLength = 65;
+  /**
+   * Default command for usb bulk instructions.
+   */
+  static const int kDefaultBulkLength = 4096;
 
-    // Default lengths
-    static const int kDefaultInterruptDataLength = 65;
-    static const int kDefaultBulkLength = 4096;
+  /**
+   * Gets a shared ptr to usb handler
+   * @return Shared pointer to usb handler
+   */
+  std::shared_ptr<libusb_device_handle *> GetDeviceHandle() {
+    return this->device;
+  }
 
-
-    // Endpoints
-    static const int kVendorDeviceOut = 0x01;
-    static const int kVendorDeviceIn = 0x81;
-    static const int kHidDeviceOut = 0x02;
-    static const int kHidDeviceIn = 0x82;
+  /**
+   * USB device output endpoint
+   */
+  static const int kVendorDeviceOut = 0x01;
+  /**
+   * USB device input endpoint
+   */
+  static const int kVendorDeviceIn = 0x81;
+  /**
+   * USB device bulk output endpoint
+   */
+  static const int kHidDeviceOut = 0x02;
+  /**
+   * USB device bulk input endpoint
+   */
+  static const int kHidDeviceIn = 0x82;
 };
 
-#endif //RYUJINIII_RYUJIN_DEVICE_H
+#endif // RYUJINIII_RYUJIN_DEVICE_H
