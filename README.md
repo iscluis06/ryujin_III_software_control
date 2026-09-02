@@ -57,7 +57,7 @@ apt install libargs-dev
     * Dispose method 1
     * Background black
 * I couldn't find a reliable way to recreate a valid gif programatically using libvips or by gifsicle command.
-* Right now the only wat to make a gif file to display is to force its size to a multiple of 4096 bytes.<br>When
+* Right now the only way to make a gif file to display is to force its size to a multiple of 4096 bytes.<br>When
   uploading on windows this requirement is not needed (Posible bug).
 
 ### Usage
