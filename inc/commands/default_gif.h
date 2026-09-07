@@ -7,24 +7,24 @@
  */
 class DefaultGif : public BaseCommand {
 public:
-  /**
-   * Constructor which also sets the reference to device handler
-   * @param device Reference to device handler
-   */
-  DefaultGif(std::shared_ptr<libusb_device_handle *> device);
-  /**
-   * Default destructor
-   */
-  ~DefaultGif() override = default;
-  /**
-   * Method to execute the command
-   * @return True on sucess, otherwise false
-   */
-  bool Execute() override;
-  /**
-   * Default instruction command
-   */
-  unsigned char kDefaultGIFInstruction[3] = {0xec, 0x51, 0x14};
+    /**
+     * Constructor which also sets the reference to wrapper
+     * @param wrapper Reference to libusb wrapper
+     */
+    DefaultGif(std::shared_ptr<LibUsbWrapperBase> wrapper);
+    /**
+     * Default destructor
+     */
+    ~DefaultGif() override = default;
+    /**
+     * Method to execute the command
+     * @return True on sucess, otherwise false
+     */
+    bool Execute() override;
+    /**
+     * Default instruction command
+     */
+    unsigned char kDefaultGIFInstruction[3] = {0xec, 0x51, 0x14};
 };
 
 #endif // RYUJINIII_DEFAULT_GIF_H

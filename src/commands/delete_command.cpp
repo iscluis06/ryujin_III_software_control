@@ -2,27 +2,23 @@
 
 #include <iostream>
 
-#include "libusb_wrapp.h"
+#include "libusb_wrapper.h"
 #include "ryujin_device.h"
 
-DeleteCommand::DeleteCommand(std::shared_ptr<libusb_device_handle *> device)
-    : BaseCommand(device, this->kValidateResponse,
-                  sizeof(this->kValidateResponse)) {}
+DeleteCommand::DeleteCommand(std::shared_ptr<LibUsbWrapperBase> wrapper) :
+    BaseCommand(std::move(wrapper), this->kValidateResponse, sizeof(this->kValidateResponse)) {}
 
 bool DeleteCommand::Execute() {
-  LibUsbWrapp wrapp(this->GetDevice(), this->kTimeout);
-  auto buffer =
-      LibUsbWrapp::FillArray(this->kDelete, sizeof(this->kDelete),
-                             RyujinDevice::kDefaultInterruptDataLength);
-  if (!wrapp.SendInterrupt(RyujinDevice::kHidDeviceOut, buffer)) {
-    std::cerr << "Failed to execute delete memory instruction" << std::endl;
-    return false;
-  }
-  std::vector<unsigned char> response_back(
-      RyujinDevice::kDefaultInterruptDataLength, 0);
-  if (!wrapp.SendInterrupt(RyujinDevice::kHidDeviceIn, response_back)) {
-    std::cerr << "Failed to read from input endpoint" << std::endl;
-    return false;
-  }
-  return this->IsMessageValid(response_back);
+    auto buffer = this->GetWrapper()->FillArray(this->kDelete, sizeof(this->kDelete),
+                                                RyujinDevice::kDefaultInterruptDataLength);
+    if (!this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceOut, buffer)) {
+        std::cerr << "Failed to execute delete memory instruction" << std::endl;
+        return false;
+    }
+    std::vector<unsigned char> response_back(RyujinDevice::kDefaultInterruptDataLength, 0);
+    if (!this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceIn, response_back)) {
+        std::cerr << "Failed to read from input endpoint" << std::endl;
+        return false;
+    }
+    return this->IsMessageValid(response_back);
 }

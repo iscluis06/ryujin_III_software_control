@@ -3,31 +3,26 @@
 #include <iostream>
 #include <thread>
 
-#include "libusb_wrapp.h"
+#include "libusb_wrapper.h"
 #include "ryujin_device.h"
 
-SelectGifCommand::SelectGifCommand(
-    std::shared_ptr<libusb_device_handle *> device, int memory_index)
-    : BaseCommand(device, this->kValidateResponse,
-                  sizeof(this->kValidateResponse)),
-      memory_index_(memory_index) {}
+SelectGifCommand::SelectGifCommand(std::shared_ptr<LibUsbWrapperBase> wrapper, int memory_index) :
+    BaseCommand(std::move(wrapper), this->kValidateResponse, sizeof(this->kValidateResponse)),
+    memory_index_(memory_index) {}
 
 bool SelectGifCommand::Execute() {
-  LibUsbWrapp wrapp(this->GetDevice(), this->kTimeout);
-  std::vector<unsigned char> buffer =
-      LibUsbWrapp::FillArray(this->kSelectGif, sizeof(this->kSelectGif),
-                             RyujinDevice::kDefaultInterruptDataLength);
-  buffer[4] = this->memory_index_;
-  if (!wrapp.SendInterrupt(RyujinDevice::kHidDeviceOut, buffer)) {
-    std::cerr << "Couldn't execute select gif instruction " << std::endl;
-    return false;
-  }
-  std::this_thread::sleep_for(std::chrono::milliseconds(20));
-  std::vector<unsigned char> response_back(
-      RyujinDevice::kDefaultInterruptDataLength, 0);
-  if (!wrapp.SendInterrupt(RyujinDevice::kHidDeviceIn, response_back)) {
-    std::cerr << "Failed to read from input endpoint" << std::endl;
-    return false;
-  }
-  return this->IsMessageValid(response_back);
+    std::vector<unsigned char> buffer = this->GetWrapper()->FillArray(this->kSelectGif, sizeof(this->kSelectGif),
+                                                                      RyujinDevice::kDefaultInterruptDataLength);
+    buffer[4] = this->memory_index_;
+    if (!this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceOut, buffer)) {
+        std::cerr << "Couldn't execute select gif instruction " << std::endl;
+        return false;
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    std::vector<unsigned char> response_back(RyujinDevice::kDefaultInterruptDataLength, 0);
+    if (!this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceIn, response_back)) {
+        std::cerr << "Failed to read from input endpoint" << std::endl;
+        return false;
+    }
+    return this->IsMessageValid(response_back);
 }

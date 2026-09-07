@@ -7,27 +7,27 @@
  */
 class DeleteCommand : public BaseCommand {
 public:
-  /**
-   * Constructor which also sets the device handler property
-   * @param device Reference to device handler
-   */
-  DeleteCommand(std::shared_ptr<libusb_device_handle *> device);
+    /**
+     * Constructor which also sets the reference to wrapper
+     * @param wrapper Reference to libusb wrapper
+     */
+    DeleteCommand(std::shared_ptr<LibUsbWrapperBase> wrapper);
 
-  /**
-   * Default execution of command
-   * @return True on succeed, otherwise false
-   */
-  bool Execute() override;
+    /**
+     * Default execution of command
+     * @return True on succeed, otherwise false
+     */
+    bool Execute() override;
 
 private:
-  /**
-   * Default delete instruction
-   */
-  const unsigned char kDelete[3] = {0xec, 0x73, 0x03};
-  /**
-   * Default validation of response
-   */
-  const unsigned char kValidateResponse[2] = {0xec, 0x73};
+    /**
+     * Default delete instruction
+     */
+    const unsigned char kDelete[3] = {0xec, 0x73, 0x03};
+    /**
+     * Default validation of response
+     */
+    const unsigned char kValidateResponse[2] = {0xec, 0x73};
 };
 
 #endif // RYUJINIII_DELETE_COMMAND_H

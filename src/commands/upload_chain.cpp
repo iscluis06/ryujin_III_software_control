@@ -8,46 +8,43 @@
 #include "commands/start_upload_command.h"
 #include "commands/transaction_command.h"
 #include "commands/upload_gif_command.h"
-#include "magick_validation.h"
+#include "magick_tool.h"
 #include "ryujin_device.h"
 
 #include <iostream>
 
 const std::string UploadChain::kFinalGifPath_ = "/tmp/ryujin.gif";
 
-UploadChain::UploadChain(std::shared_ptr<libusb_device_handle *> device,
-                         const std::string &path, int memory_index)
-    : CommandChain() {
-  std::string magick_transform(
-      "magick " + path +
-      " -coalesce -dispose 1 -resize 320x240! -background black -dither "
-      "FloydSteinberg -remap netscape: -colors 64 " +
-      UploadChain::kFinalGifPath_ + " && truncate -s %4096 " +
-      UploadChain::kFinalGifPath_);
-  if (!MagickValidation::IsAvailable()) {
-    std::cout << "DISABLED" << std::endl;
-    return;
-  }
-  std::system(magick_transform.c_str());
-  this->file_handle_ = FileHandle(UploadChain::kFinalGifPath_);
-  this->AddCommand(new DefaultGif(device));
-  this->AddCommand(new TransactionCommand(device));
-  this->AddCommand(new StartTransactionCommand(device));
-  this->AddCommand(new SelectMemorySpaceCommand(device, memory_index));
-  this->AddCommand(new StartUploadCommand(device));
-  this->AddCommand(
-      new ReportedSizeCommand(device, this->file_handle_.GetSizeToHex()));
-  this->AddCommand(new UploadGifCommand(device, this->file_handle_));
-  this->AddCommand(new EndUploadCommand(device));
+UploadChain::UploadChain(std::shared_ptr<TransformToolBase> transform_tool, std::shared_ptr<FileHandleBase> file_tool,
+                         std::shared_ptr<LibUsbWrapperBase> wrapper, const std::string &path, int memory_index) :
+    CommandChain() {
+    if (!transform_tool->IsAvailable()) {
+        std::cout << "DISABLED" << std::endl;
+        return;
+    }
+    transform_tool->Transform(path, this->kFinalGifPath_);
+    file_tool->SetPath(this->kFinalGifPath_);
+    if (!file_tool->Initialize()) {
+        std::cerr << "File not found " << std::endl;
+        return;
+    }
+    this->AddCommand(new DefaultGif(wrapper));
+    this->AddCommand(new TransactionCommand(wrapper));
+    this->AddCommand(new StartTransactionCommand(wrapper));
+    this->AddCommand(new SelectMemorySpaceCommand(wrapper, memory_index));
+    this->AddCommand(new StartUploadCommand(wrapper));
+    this->AddCommand(new ReportedSizeCommand(wrapper, file_tool->GetSizeToHex()));
+    this->AddCommand(new UploadGifCommand(wrapper, file_tool));
+    this->AddCommand(new EndUploadCommand(wrapper));
 }
 
 bool UploadChain::Execute() {
-  int no_retries = 0;
-  while (no_retries < this->kMaxTries_) {
-    if (this->CommandChain::Execute()) {
-      return true;
+    int no_retries = 0;
+    while (no_retries < this->kMaxTries_) {
+        if (this->CommandChain::Execute()) {
+            return true;
+        }
+        no_retries++;
     }
-    no_retries++;
-  }
-  return false;
+    return false;
 }
