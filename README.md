@@ -7,7 +7,31 @@
 > [!NOTE]
 > Feel free to file any bug you found.
 
+> [!IMPORTANT]
+> You require sudo or root privelegies in order to execute the binary, you can also set up udev
+> rules to allow any user to access ryujin usb interface.
 
+> [!NOTE]
+> Creating UDEV rules
+> <br> 1. Find your usb device, by executing lsusb.
+> <br> 2. Copy the values separated by ":", the one on the left is the idVendor, while the one on the right is the
+idProduct.
+> <br> 3. Create a udev rule, (use sudo) by creating a file inside the following directory /etc/udev/rules.d/[name]
+.rules, you can
+name it as you like being the only requirement to have ".rules" at the end.
+> <br> 4. Copy/Paste the following by replacing IDVENDOR and IDPRODUCT by the values from step 2:
+> ```shell
+> SUBSYSTEM=="usb", ATTRS{idVendor}=="IDVENDOR", ATTRS{idProduct}=="IDPRODUCT", TAG+="uaccess", MODE="0666"
+> ```
+> Save it and close it
+> <br> 5. Execute the following command to reload udev rules:
+> ```shell
+> sudo udevadm control --reload-rules
+> sudo udevadm trigger
+> ```
+> 6. Execute binary without sude, it should work now, if not sometimes it will require you to restart the machine.
+
+<br><br>
 Software to help you control your Asus Ryujin III Water Cooling under linux. Right now I only support Debian 13 (And
 probably some Debian base distros). This work was done through reverse engineering Ryujin III usb packets under linux
 using wireshark (usbmon) to capture. Also, using libusb 1.0.0 to communicate with Ryujin interface.
