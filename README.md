@@ -32,7 +32,7 @@ apt install libargs-dev
 
 - [x] Upload gifs to the LED display.
 - [x] Select gif to display on.
-- [x] Remove gif from memory.
+- [ ] Remove gif from memory.
 - [x] Turn off the display.
 - [x] Turn on the display.
 - [ ] Fan control
