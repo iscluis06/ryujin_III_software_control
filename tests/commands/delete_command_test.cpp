@@ -1,7 +1,7 @@
 #include "commands/delete_command.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include "mocks/libusb_wrapper_mock.h"
+#include "../mocks/libusb_wrapper_mock.h"
 
 class DeleteCommandTest : public testing::Test {};
 
@@ -26,7 +26,6 @@ TEST_F(DeleteCommandTest, ExecuteFail) {
             std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
     DeleteCommand delete_command(wrapper_mock);
     std::vector<unsigned char> default_array{65, 0};
-    std::vector<unsigned char> valid_response = {0xec, 0x73};
     EXPECT_CALL(*(wrapper_mock.get()), FillArray).WillOnce(testing::Return(default_array));
     EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt).WillRepeatedly(testing::Return(false));
     EXPECT_EQ(delete_command.Execute(), false);
@@ -37,7 +36,6 @@ TEST_F(DeleteCommandTest, InvalidResponse) {
             std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
     DeleteCommand delete_command(wrapper_mock);
     std::vector<unsigned char> default_array{65, 0};
-    std::vector<unsigned char> valid_response = {0xec, 0x73};
     EXPECT_CALL(*(wrapper_mock.get()), FillArray).WillOnce(testing::Return(default_array));
     EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt)
             .WillOnce(testing::Return(true))

@@ -2,10 +2,18 @@ cmake_minimum_required(VERSION 4.2)
 project(ryujinIII)
 
 set(CMAKE_CXX_STANDARD 17)
+
+find_program(CPPCHECK_PATH NAMES cppcheck)
+if (CPPCHECK_PATH)
+    set(CMAKE_CXX_CPPCHECK
+            "${CPPCHECK_PATH}"
+            "--enable=warning,performance,portability"
+            "--check-level=exhaustive"
+            "--suppress=missingIncludeSystem"
+            "--suppress=checkersReport")
+endif ()
+
 find_library(libusb libusb NAMES libusb-1.0 usb-1.0 usb REQUIRED)
-find_library(libgtest_main libgtest_main NAMES gtest_main)
-find_library(libgtest libgtest NAMES gtest)
-find_library(libgmock libgmock NAMES gmock)
 
 add_library(${PROJECT_NAME}_library
         src/ryujin_device.cpp
@@ -40,27 +48,4 @@ target_include_directories(${PROJECT_NAME}_library PUBLIC inc)
 target_link_libraries(${PROJECT_NAME}_library PUBLIC ${libusb})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}_library)
 
-enable_testing()
-
-add_executable(${PROJECT_NAME}_gtest
-        src/commands/tests/base_command_test.cpp
-        src/commands/tests/command_chain_test.cpp
-        src/commands/tests/default_gif_test.cpp
-        src/commands/tests/delete_chain_test.cpp
-        src/commands/tests/delete_command_test.cpp
-        src/commands/tests/end_upload_command_test.cpp
-        src/commands/tests/reported_size_command_test.cpp
-        src/commands/tests/select_gif_command_test.cpp
-        src/commands/tests/select_memory_space_command_test.cpp
-        src/commands/tests/start_transaction_command_test.cpp
-        src/commands/tests/start_upload_command_test.cpp
-        src/commands/tests/transaction_command_test.cpp
-        src/commands/tests/turn_off_command_test.cpp
-        src/commands/tests/turn_on_command_test.cpp
-        src/commands/tests/upload_chain_test.cpp
-        src/commands/tests/upload_gif_command_test.cpp
-)
-
-target_link_libraries(${PROJECT_NAME}_gtest ${libgtest} ${libgtest_main} ${libgmock} ${libusb} ${PROJECT_NAME}_library)
-
-target_include_directories(${PROJECT_NAME}_gtest PUBLIC inc src/commands/tests/mocks)
+add_subdirectory(tests)

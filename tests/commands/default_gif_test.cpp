@@ -3,7 +3,7 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include "mocks/libusb_wrapper_mock.h"
+#include "../mocks/libusb_wrapper_mock.h"
 
 class DefaultGifTest : public testing::Test {};
 

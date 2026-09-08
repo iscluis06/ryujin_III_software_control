@@ -90,7 +90,7 @@ private:
     /**
      * Default timeout for the usb operations.
      */
-    int default_time_out_;
+    int default_time_out_ = 0;
 };
 
 #endif // RYUJINIII_LIBUSB_WRAPPER_H

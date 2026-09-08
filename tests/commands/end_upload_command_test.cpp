@@ -1,7 +1,7 @@
 #include "commands/end_upload_command.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include "mocks/libusb_wrapper_mock.h"
+#include "../mocks/libusb_wrapper_mock.h"
 
 class EndUploadCommandTest : public testing::Test {};
 

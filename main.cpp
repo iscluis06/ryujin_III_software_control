@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
         base_command = factory.GetCommand("select_gif_from_memory", args::get(select_gif_from_memory));
     }
     if (delete_from_memory) {
-        base_chain = factory.GetChain("delete_from_memory", args::get(select_gif_from_memory));
+        base_chain = factory.GetChain("delete_from_memory", args::get(delete_from_memory));
     }
     if (upload_gif && select_gif_from_memory) {
         base_chain = factory.GetChain("upload_gif", args::get(upload_gif),

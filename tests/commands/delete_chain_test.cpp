@@ -1,8 +1,8 @@
 #include "commands/delete_chain.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include "mocks/base_command_mock.h"
-#include "mocks/libusb_wrapper_mock.h"
+#include "../mocks/commands/base_command_mock.h"
+#include "../mocks/libusb_wrapper_mock.h"
 
 class DeleteChainTest : public testing::Test {};
 

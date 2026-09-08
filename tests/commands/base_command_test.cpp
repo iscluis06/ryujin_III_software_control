@@ -1,6 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include "base_command_mock.h"
+#include "../mocks/commands/base_command_mock.h"
 
 class BaseCommandTest : public testing::Test {};
 

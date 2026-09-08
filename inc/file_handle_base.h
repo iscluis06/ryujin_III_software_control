@@ -85,12 +85,12 @@ private:
     /**
      * Current size on bytes of read file
      */
-    int size_;
+    int size_ = 0;
     /**
      * Number of iterations required to send file data using bulk instruction
      * (4096)
      */
-    int iterations_;
+    int iterations_ = 0;
     /**
      * Reference to the path of file
      */

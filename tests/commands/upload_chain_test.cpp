@@ -3,9 +3,9 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include "mocks/file_handle_mock.h"
-#include "mocks/libusb_wrapper_mock.h"
-#include "mocks/transform_tool_mock.h"
+#include "../mocks/file_handle_mock.h"
+#include "../mocks/libusb_wrapper_mock.h"
+#include "../mocks/transform_tool_mock.h"
 
 class UploadChainTest : public testing::Test {};
 

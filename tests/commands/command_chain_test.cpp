@@ -3,7 +3,7 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include "mocks/base_command_mock.h"
+#include "commands/base_command_mock.h"
 
 class CommandChainTest : public testing::Test {};
 
