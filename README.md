@@ -29,7 +29,7 @@ name it as you like being the only requirement to have ".rules" at the end.
 > sudo udevadm control --reload-rules
 > sudo udevadm trigger
 > ```
-> 6. Execute binary without sude, it should work now, if not sometimes it will require you to restart the machine.
+> 6. Execute binary without sudo, it should work now, if not sometimes it will require you to restart the machine.
 
 <br><br>
 Software to help you control your Asus Ryujin III Water Cooling under linux. Right now I only support Debian 13 (And
@@ -56,7 +56,7 @@ apt install libargs-dev
 
 - [x] Upload gifs to the LED display.
 - [x] Select gif to display on.
-- [ ] Remove gif from memory.
+- [x] Remove gif from memory.
 - [x] Turn off the display.
 - [x] Turn on the display.
 - [ ] Fan control
