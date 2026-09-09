@@ -1,82 +1,26 @@
 #include "ryujin_device.h"
-#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <memory>
 
-#include "commands/delete_chain.h"
-#include "commands/select_gif_command.h"
-#include "commands/turn_off_command.h"
-#include "commands/turn_on_command.h"
-#include "commands/upload_chain.h"
-
-RyujinDevice::RyujinDevice() {
-  libusb_init(nullptr);
-  this->device = std::make_shared<libusb_device_handle *>();
-  this->FindDevice();
-  if (this->device) {
-    libusb_set_auto_detach_kernel_driver(*(this->device.get()), 1);
-    libusb_set_configuration(*(this->device.get()), 1);
-    libusb_claim_interface(*(this->device.get()), this->kConfigInterface);
-    libusb_claim_interface(*(this->device.get()), this->kLedInterface);
-    libusb_clear_halt(*(this->device.get()), RyujinDevice::kVendorDeviceOut);
-    libusb_clear_halt(*(this->device.get()), RyujinDevice::kHidDeviceOut);
-    libusb_clear_halt(*(this->device.get()), RyujinDevice::kVendorDeviceIn);
-    libusb_clear_halt(*(this->device.get()), RyujinDevice::kHidDeviceIn);
-  } else {
-    std::cerr << "Device not found, exiting..." << std::endl;
-    exit(0);
-  }
-}
-
+RyujinDevice::RyujinDevice(std::shared_ptr<LibUsbWrapper> wrapper) : wrapper_(wrapper) {}
 RyujinDevice::~RyujinDevice() {
-  if (device != nullptr) {
-    libusb_release_interface(*this->device.get(), this->kConfigInterface);
-    libusb_release_interface(*this->device.get(), this->kLedInterface);
-    libusb_close(*this->device.get());
-  }
-}
-
-void RyujinDevice::FindDevice() {
-  libusb_device **dev_list = nullptr;
-  ssize_t result_device_list = libusb_get_device_list(nullptr, &dev_list);
-  for (int i = 0; i < result_device_list; i++) {
-    std::shared_ptr<libusb_device_descriptor> desc =
-        std::make_shared<libusb_device_descriptor>();
-    libusb_get_device_descriptor(dev_list[i], desc.get());
-    if (desc->idVendor == this->kAsusDeviceId &&
-        desc->idProduct == this->kRyujinProductId) {
-      libusb_open(dev_list[i], (this->device.get()));
-      libusb_reset_device(*(this->device.get()));
-      libusb_open(dev_list[i], (this->device.get()));
-      break;
+    if (!this->GetWrapper()->ReleaseInterface(this->kConfigInterface)) {
+        std::cout << "Failed releasing config interface" << std::endl;
     }
-  }
-  libusb_free_device_list(dev_list, 1);
+    if (!this->GetWrapper()->ReleaseInterface(this->kLedInterface)) {
+        std::cout << "Failed releasing LED interface" << std::endl;
+    }
 }
 
-void RyujinDevice::TurnOnLedDisplay() const {
-  TurnOnCommand turn_on_state(this->device);
-  turn_on_state.Execute();
-};
-
-void RyujinDevice::TurnOffLedDisplay() const {
-  TurnOffCommand turn_off_state(this->device);
-  turn_off_state.Execute();
+bool RyujinDevice::Initialize() {
+    if (!this->GetWrapper()->InitializeDevice(this->kAsusDeviceId, this->kRyujinProductId)) {
+        std::cout << "Device not found" << std::endl;
+        return false;
+    }
+    if (!this->GetWrapper()->ClaimInterfaces(kConfigInterface) || !this->GetWrapper()->ClaimInterfaces(kLedInterface)) {
+        std::cout << "Failed claiming an interface " << std::endl;
+        return false;
+    }
+    return true;
 }
-
-void RyujinDevice::SelectGifFromMemory(int memory_index) const {
-  SelectGifCommand select_gif_state(this->device, memory_index);
-  select_gif_state.Execute();
-}
-
-void RyujinDevice::DeleteFromMemory(int memory_index) const {
-  DeleteChain delete_chain(this->device, memory_index);
-  delete_chain.Execute();
-}
-
-void RyujinDevice::UploadGif(const std::string &path, short memory_space) {
-  UploadChain upload_chain(this->device, path, memory_space);
-  upload_chain.Execute();
-  std::cout << "Success" << std::endl;
-};
