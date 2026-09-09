@@ -72,7 +72,6 @@ public:
 protected:
     /**
      * Method that reads all file data and initialize size, iterations and buffer.
-     * @param path Path to file to read
      * @return True on success, false otherwise
      */
     virtual bool ReadFile() = 0;

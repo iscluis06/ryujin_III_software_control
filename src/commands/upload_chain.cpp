@@ -28,7 +28,7 @@ UploadChain::UploadChain(std::shared_ptr<TransformToolBase> transform_tool, std:
         std::cerr << "File not found " << std::endl;
         return;
     }
-    this->AddCommand(new DefaultGif(wrapper));
+    this->AddCommand(new DefaultGifCommand(wrapper));
     this->AddCommand(new TransactionCommand(wrapper));
     this->AddCommand(new StartTransactionCommand(wrapper));
     this->AddCommand(new SelectMemorySpaceCommand(wrapper, memory_index));

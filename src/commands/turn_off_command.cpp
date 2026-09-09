@@ -8,3 +8,4 @@ bool TurnOffCommand::Execute() {
     auto buffer = this->GetWrapper()->FillArray(this->kTurnOff, 2, RyujinDevice::kDefaultInterruptDataLength);
     return this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceOut, buffer);
 }
+std::string TurnOffCommand::GetClassName() { return "TurnOffCommand"; }

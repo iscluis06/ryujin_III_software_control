@@ -26,3 +26,4 @@ bool SelectGifCommand::Execute() {
     }
     return this->IsMessageValid(response_back);
 }
+std::string SelectGifCommand::GetClassName() { return "SelectGifCommand"; }

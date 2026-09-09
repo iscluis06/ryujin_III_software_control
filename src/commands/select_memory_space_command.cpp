@@ -26,3 +26,4 @@ bool SelectMemorySpaceCommand::Execute() {
     }
     return this->IsMessageValid(response_back);
 }
+std::string SelectMemorySpaceCommand::GetClassName() { return "SelectMemorySpaceCommand"; }

@@ -7,7 +7,7 @@
 #include "libusb_wrapper_base.h"
 
 /**
- * Default implement for libusb wrapper
+ * Default implement for libusb wrapper base
  */
 class LibUsbWrapper : public LibUsbWrapperBase {
 public:
@@ -58,8 +58,10 @@ public:
      */
     void SetHandle(std::shared_ptr<libusb_device_handle *> handle);
     /**
-     * Method that iterates all usb interfaces looking for a device,
-     * if found it will set the device variable and claim interfaces.
+     * Method that iterates all usb interfaces looking for the device specified by deviceId and productId.
+     * It sets the device handle property (handle_) if found.
+     * @param deviceId id of the device to look for
+     * @param productId id of the product to look for
      * @return True on success, otherwise false
      */
     [[nodiscard]] bool InitializeDevice(int deviceId, int productId) override;
@@ -86,7 +88,7 @@ private:
     /**
      * Shared pointer to the device handler (ryujin)
      */
-    std::shared_ptr<libusb_device_handle *> handle_;
+    std::shared_ptr<libusb_device_handle *> handle_ = nullptr;
     /**
      * Default timeout for the usb operations.
      */

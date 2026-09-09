@@ -41,3 +41,5 @@ bool UploadGifCommand::Execute() {
     }
     return true;
 }
+
+std::string UploadGifCommand::GetClassName() { return "UploadGifCommand"; }

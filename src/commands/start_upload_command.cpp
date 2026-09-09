@@ -24,3 +24,4 @@ bool StartUploadCommand::Execute() {
     }
     return this->IsMessageValid(response_back);
 }
+std::string StartUploadCommand::GetClassName() { return "StartUploadCommand"; }

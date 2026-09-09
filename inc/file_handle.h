@@ -12,7 +12,9 @@ public:
      * Default constructor
      */
     FileHandle() = default;
-
+    /**
+     * Default destructor
+     */
     ~FileHandle() override = default;
 
 protected:

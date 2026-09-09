@@ -14,6 +14,9 @@ public:
      */
     TurnOnCommand(std::shared_ptr<LibUsbWrapperBase> wrapper);
 
+    /**
+     * Default constructor
+     */
     ~TurnOnCommand() override = default;
 
     /**
@@ -21,6 +24,11 @@ public:
      * @return True on success, otherwise false
      */
     bool Execute() override;
+    /**
+     * Method used mainly for testing purposes
+     * @return The class name as string
+     */
+    std::string GetClassName() override;
 
 private:
     /**

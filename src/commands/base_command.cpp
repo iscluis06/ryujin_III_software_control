@@ -18,4 +18,6 @@ bool BaseCommand::IsMessageValid(const std::vector<unsigned char> &message) cons
     return true;
 }
 
+
 std::shared_ptr<LibUsbWrapperBase> BaseCommand::GetWrapper() const { return this->wrapper_; }
+std::string BaseCommand::GetClassName() { return "BaseCommand"; }

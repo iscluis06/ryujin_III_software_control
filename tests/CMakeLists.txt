@@ -25,6 +25,7 @@ add_executable(${PROJECT_NAME}_gtest
         commands/turn_on_command_test.cpp
         commands/upload_chain_test.cpp
         commands/upload_gif_command_test.cpp
+        factory_test.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}_gtest ${libgtest} ${libgtest_main} ${libgmock} ${libusb} ${PROJECT_NAME}_library)

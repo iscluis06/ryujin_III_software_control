@@ -1,5 +1,6 @@
 #include "factory.h"
 
+#include "commands/default_gif.h"
 #include "commands/delete_chain.h"
 #include "commands/select_gif_command.h"
 #include "commands/turn_off_command.h"
@@ -15,6 +16,9 @@ std::unique_ptr<BaseCommand> Factory::GetCommand(std::string command) {
     }
     if (command == "turn_off") {
         return std::make_unique<TurnOffCommand>(wrapper_);
+    }
+    if (command == "default_gif") {
+        return std::make_unique<DefaultGifCommand>(wrapper_);
     }
     return nullptr;
 }

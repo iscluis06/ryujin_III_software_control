@@ -22,3 +22,4 @@ bool DeleteCommand::Execute() {
     }
     return this->IsMessageValid(response_back);
 }
+std::string DeleteCommand::GetClassName() { return "DeleteCommand"; }

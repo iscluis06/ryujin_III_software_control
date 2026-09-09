@@ -57,16 +57,29 @@ public:
     virtual std::vector<unsigned char> FillArray(const unsigned char *array, int array_size, int desired_size);
 
     /**
-     * Method that iterates all usb interfaces looking for a device,
-     * if found it will set the device variable and claim interfaces.
+     * Method that iterates all usb interfaces looking for the device specified by deviceId and productId.
+     * @param deviceId id of the device to look for
+     * @param productId id of the product to look for
      * @return True on success, otherwise false
      */
     [[nodiscard]] virtual bool InitializeDevice(int deviceId, int productId) = 0;
-
+    /**
+     * Claims an interface by the id specified on interface param
+     * @param interface Id of interface to claim using libusb
+     * @return True on success, otherwise false
+     */
     [[nodiscard]] virtual bool ClaimInterfaces(int interface) const = 0;
-
+    /**
+     * Clean any pending actions on given endpoint
+     * @param endpoint It cleans the given endpoint
+     * @return True on success, otherwise false
+     */
     [[nodiscard]] virtual bool HaltEndpoint(int endpoint) const = 0;
-
+    /**
+     * Releases the given interface by interface param
+     * @param interface Releases the given interface
+     * @return True on success, otherwise false
+     */
     [[nodiscard]] virtual bool ReleaseInterface(int interface) const = 0;
 };
 

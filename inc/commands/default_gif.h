@@ -5,22 +5,27 @@
 /**
  * Command for setting default gif into display
  */
-class DefaultGif : public BaseCommand {
+class DefaultGifCommand : public BaseCommand {
 public:
     /**
      * Constructor which also sets the reference to wrapper
      * @param wrapper Reference to libusb wrapper
      */
-    DefaultGif(std::shared_ptr<LibUsbWrapperBase> wrapper);
+    DefaultGifCommand(std::shared_ptr<LibUsbWrapperBase> wrapper);
     /**
      * Default destructor
      */
-    ~DefaultGif() override = default;
+    ~DefaultGifCommand() override = default;
     /**
      * Method to execute the command
-     * @return True on sucess, otherwise false
+     * @return True on success, otherwise false
      */
     bool Execute() override;
+    /**
+     * Method used mainly for testing purposes
+     * @return The class name as string
+     */
+    std::string GetClassName() override;
     /**
      * Default instruction command
      */

@@ -24,3 +24,4 @@ bool TransactionCommand::Execute() {
     }
     return this->IsMessageValid(response_back);
 }
+std::string TransactionCommand::GetClassName() { return "TransactionCommand"; }

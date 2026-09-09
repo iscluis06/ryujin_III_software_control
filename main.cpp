@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
     args::HelpFlag help(parser, "help", "Display help menu", {'h', "help"});
     args::Flag turn_on(parser, "turn on", "Turn on the led display", {"lon"});
     args::Flag turn_off(parser, "turn off", "Turn off the led display", {"loff"});
+    args::Flag default_gif(parser, "default gif", "Displays the default gif", {"default_gif"});
     args::ValueFlag<int> select_gif_from_memory(parser, "select-gif", "Select a gif from memory", {"select-gif"});
     args::ValueFlag<int> delete_from_memory(parser, "delete", "Delete a gif from memory", {"delete"});
     args::ValueFlag<std::string> upload_gif(parser, "upload-gif",
@@ -61,17 +62,15 @@ int main(int argc, char *argv[]) {
     std::shared_ptr<CommandChain> base_chain = nullptr;
     if (turn_on) {
         base_command = factory.GetCommand("turn_on");
-    }
-    if (turn_off) {
+    } else if (turn_off) {
         base_command = factory.GetCommand("turn_off");
-    }
-    if (!upload_gif && select_gif_from_memory) {
+    } else if (default_gif) {
+        base_command = factory.GetCommand("default_gif");
+    } else if (!upload_gif && select_gif_from_memory) {
         base_command = factory.GetCommand("select_gif_from_memory", args::get(select_gif_from_memory));
-    }
-    if (delete_from_memory) {
+    } else if (delete_from_memory) {
         base_chain = factory.GetChain("delete_from_memory", args::get(delete_from_memory));
-    }
-    if (upload_gif && select_gif_from_memory) {
+    } else if (upload_gif && select_gif_from_memory) {
         base_chain = factory.GetChain("upload_gif", args::get(upload_gif),
                                       static_cast<short>(args::get(select_gif_from_memory)));
     } else if (upload_gif && !select_gif_from_memory) {

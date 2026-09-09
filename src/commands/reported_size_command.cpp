@@ -26,3 +26,4 @@ bool ReportedSizeCommand::Execute() {
     }
     return this->IsMessageValid(response_back);
 }
+std::string ReportedSizeCommand::GetClassName() { return "ReportedSizeCommand"; }

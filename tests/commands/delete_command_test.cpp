@@ -1,7 +1,7 @@
 #include "commands/delete_command.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include "../mocks/libusb_wrapper_mock.h"
+#include "libusb_wrapper_mock.h"
 
 class DeleteCommandTest : public testing::Test {};
 

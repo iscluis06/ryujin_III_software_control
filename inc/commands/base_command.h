@@ -3,6 +3,7 @@
 
 #include <libusb_wrapper_base.h>
 #include <memory>
+#include <string>
 #include <vector>
 /**
  * Abstract class for testing purposes
@@ -47,6 +48,12 @@ public:
      * @return The wrapper reference
      */
     [[nodiscard]] std::shared_ptr<LibUsbWrapperBase> GetWrapper() const;
+    /**
+     * Method used mainly for testing purposes
+     * @return The class name as string
+     */
+    virtual std::string GetClassName();
+
 
 private:
     /**

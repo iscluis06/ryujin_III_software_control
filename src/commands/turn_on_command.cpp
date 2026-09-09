@@ -8,3 +8,4 @@ bool TurnOnCommand::Execute() {
                                                 RyujinDevice::kDefaultInterruptDataLength);
     return this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceOut, buffer);
 }
+std::string TurnOnCommand::GetClassName() { return "TurnOnCommand"; }

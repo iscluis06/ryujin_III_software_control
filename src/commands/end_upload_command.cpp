@@ -24,3 +24,4 @@ bool EndUploadCommand::Execute() {
     }
     return this->IsMessageValid(response_back);
 }
+std::string EndUploadCommand::GetClassName() { return "EndUploadCommand"; }

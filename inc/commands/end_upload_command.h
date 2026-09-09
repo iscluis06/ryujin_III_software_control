@@ -20,6 +20,11 @@ public:
      * @return True on succeed, otherwise false
      */
     bool Execute() override;
+    /**
+     * Method used mainly for testing purposes
+     * @return The class name as string
+     */
+    std::string GetClassName() override;
 
 private:
     /**

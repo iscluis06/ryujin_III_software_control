@@ -1,9 +1,7 @@
 #ifndef RYUJINIII_RYUJIN_DEVICE_H
 #define RYUJINIII_RYUJIN_DEVICE_H
 
-#include <libusb-1.0/libusb.h>
 #include <memory>
-#include <string>
 #include "libusb_wrapper.h"
 /**
  * Main class for all ryujin device properties.

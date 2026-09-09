@@ -33,7 +33,7 @@ add_library(${PROJECT_NAME}_library
         src/commands/upload_gif_command.cpp
         src/commands/end_upload_command.cpp
         src/commands/upload_chain.cpp
-        src/commands/default_gif.cpp
+        src/commands/default_gif_command.cpp
         src/magick_tool.cpp
         src/commands/command_chain.cpp
         src/factory.cpp

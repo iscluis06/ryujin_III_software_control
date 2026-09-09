@@ -5,7 +5,7 @@
 #include "commands/select_memory_space_command.h"
 
 DeleteChain::DeleteChain(std::shared_ptr<LibUsbWrapperBase> wrapper, int memory_index) : CommandChain() {
-    this->AddCommand(new DefaultGif(wrapper));
+    this->AddCommand(new DefaultGifCommand(wrapper));
     this->AddCommand(new SelectMemorySpaceCommand(wrapper, memory_index));
     this->AddCommand(new DeleteCommand(wrapper));
 }
