@@ -40,6 +40,12 @@ public:
     /**
      * Method that returns a command chain according to command string
      * @param command Name of the command chain to instance
+     * @return Command chain instance on success otherwise false
+     */
+    virtual std::unique_ptr<CommandChain> GetChain(std::string command) = 0;
+    /**
+     * Method that returns a command chain according to command string
+     * @param command Name of the command chain to instance
      * @param path Pass the value of path to command chain instance
      * @param index Pass the value of index to command chain instance
      * @return Command chain instance on success otherwise false

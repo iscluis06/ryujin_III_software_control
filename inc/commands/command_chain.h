@@ -7,7 +7,7 @@
 /**
  * Default implementation for BaseCommandChain
  */
-class CommandChain : public BaseCommandChain {
+class CommandChain : public BaseCommandChain, public std::enable_shared_from_this<CommandChain> {
 public:
     /**
      * Default constructor

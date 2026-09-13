@@ -1,7 +1,8 @@
 #include "factory.h"
 
-#include "commands/default_gif.h"
+#include "commands/default_gif_command.h"
 #include "commands/delete_chain.h"
+#include "commands/hardware_monitor_chain.h"
 #include "commands/select_gif_command.h"
 #include "commands/turn_off_command.h"
 #include "commands/turn_on_command.h"
@@ -28,9 +29,20 @@ std::unique_ptr<BaseCommand> Factory::GetCommand(std::string command, int index)
     }
     return nullptr;
 }
+
+std::unique_ptr<CommandChain> Factory::GetChain(std::string command) {
+    if (command == "hw_monitor") {
+        return std::make_unique<HardwareMonitorChain>(wrapper_);
+    }
+    return nullptr;
+}
+
 std::unique_ptr<CommandChain> Factory::GetChain(std::string command, int index) {
     if (command == "delete_from_memory") {
         return std::make_unique<DeleteChain>(wrapper_, index);
+    }
+    if (command == "hw_monitor") {
+        return std::make_unique<HardwareMonitorChain>(wrapper_);
     }
     return nullptr;
 }

@@ -60,12 +60,16 @@ apt install libargs-dev
 - [x] Turn off the display.
 - [x] Turn on the display.
 - [ ] Fan control
-- [ ] Display hardware monitor (It may require a daemon to report sensor data).
+- [x] Display hardware monitor (It may require a daemon to report sensor data).
 - [ ] Upload jpeg images to LED display.
 - [ ] Feature to keep track of uploaded images. (I still need to validate if possible, not found any descriptor
   reporting available slots)
 - [ ] Slideshow effect for images.
 - [ ] Clock effect.
+
+Special thanks to https://github.com/liquidctl/liquidctl
+and https://github.com/BrandonKynoch/asus-rog-ryujin-iii-linux-controller @BrandonKynoch, without your findings this may
+not be possible.
 
 ### Know issues, limitations and bugs
 
@@ -87,16 +91,51 @@ apt install libargs-dev
 ### Usage
 
 ```shell
-Ryujin III Managment Tool
+Ryujin III Management Tool
+    Current hardware monitor implementations:
+    0 - Ryujin Liquid Temp
+    1 - Ryujin Fan Speed
+    2 - Ryujin Pump Speed
+    3 - Amd Core Temp
+    4 - Git Last Commiter [param: path to git local repo]
 
   OPTIONS:
 
       -h, --help                        Display help menu
       --lon                             Turn on the led display
       --loff                            Turn off the led display
-      --select-gif=[select_gif]         Select a gif from memory
+      --default_gif                     Displays the default gif
+      --hw_monitor                      Displays default hardware monitor, 1
+                                        line, mode cyberpunk, style 1 and ryujin
+                                        liquid temp implement.
+                                        Cancel loop by using ctrl+c
+      --hw_monitor_config               Configures a hardware monitor specify
+                                        lines by using line parameters for
+                                        example --line1, --mode for mode
+                                        [galactic = 0, cyberpunk = 1], --style
+                                        from 0 up to 3.
+                                        Example: --hw_monitor_config --line1=0
+                                        --mode=1 --style=0
+                                        Cancel loop by using ctrl+c
+      --line1=[line1]                   Configures the first line for hardware
+                                        monitor, refer to hardware monitor
+                                        implementations for options
+      --line2=[line2]                   Configures the first line for hardware
+                                        monitor, refer to hardware monitor
+                                        implementations for options
+      --line3=[line3]                   Configures the first line for hardware
+                                        monitor, refer to hardware monitor
+                                        implementations for options
+      --git-repo=[git_repo_path]        Specifies the path to the git repo for
+                                        Git Last Commiter implementation
+      --mode=[mode]                     Specifies the mode for hardware monitor,
+                                        currently only galactic=0 and
+                                        cyberpunk=1 available
+      --style=[style]                   Specifies the style for hardware
+                                        monitor, from 0 up to 3 available
+      --select-gif=[select-gif]         Select a gif from memory
       --delete=[delete]                 Delete a gif from memory
-      --upload-gif=[upload_gif]         Upload gif, it should be set along side
+      --upload-gif=[upload-gif]         Upload gif, it should be set along side
                                         select option, you must specify a memory
                                         slot to upload to
 ```
@@ -115,3 +154,29 @@ Example turning uploading a gif
 # Upload the gif to the selected memory slot, it sometimes will fail on the first try
 ./ryujinIII --upload-gif some_path/to_some_gif/image.gif --select-gif 1
 ```
+
+Example of hardware monitor config with liquid temp implementation
+
+```shell
+./ryujinIII --hw_monitor_config --style 0 --mode 1 --line1 0
+```
+
+Example of hardware monitor config with liquid temp implementation, fan speed
+
+```shell
+./ryujinIII --hw_monitor_config --style 0 --mode 1 --line1 0 --line2 1
+```
+
+Example of hardware monitor config with liquid temp implementation, fan speed and amd core temp
+
+```shell
+./ryujinIII --hw_monitor_config --style 0 --mode 1 --line1 0 --line2 1 --line3 3
+```
+
+Example of hardware monitor config with git repo
+
+```shell
+./ryujinIII --hw_monitor_config --style 0 --mode 1 --line1 4 --git-repo="path to repo"
+```
+
+To close all hardware loops just press ctrl+C.

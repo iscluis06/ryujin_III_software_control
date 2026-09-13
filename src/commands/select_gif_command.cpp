@@ -3,27 +3,19 @@
 #include <iostream>
 #include <thread>
 
-#include "libusb_wrapper.h"
-#include "ryujin_device.h"
+#include "ryujin_constants.h"
 
 SelectGifCommand::SelectGifCommand(std::shared_ptr<LibUsbWrapperBase> wrapper, int memory_index) :
-    BaseCommand(std::move(wrapper), this->kValidateResponse, sizeof(this->kValidateResponse)),
-    memory_index_(memory_index) {}
-
-bool SelectGifCommand::Execute() {
-    std::vector<unsigned char> buffer = this->GetWrapper()->FillArray(this->kSelectGif, sizeof(this->kSelectGif),
-                                                                      RyujinDevice::kDefaultInterruptDataLength);
-    buffer[4] = this->memory_index_;
-    if (!this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceOut, buffer)) {
-        std::cerr << "Couldn't execute select gif instruction " << std::endl;
-        return false;
-    }
-    std::this_thread::sleep_for(std::chrono::milliseconds(20));
-    std::vector<unsigned char> response_back(RyujinDevice::kDefaultInterruptDataLength, 0);
-    if (!this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceIn, response_back)) {
-        std::cerr << "Failed to read from input endpoint" << std::endl;
-        return false;
-    }
-    return this->IsMessageValid(response_back);
+    BaseCommand(std::move(wrapper)) {
+    auto buffer = this->GetWrapper()->FillArray(this->kSelectGif.data(), this->kSelectGif.size(),
+                                                RyujinConstants::kDefaultInterruptDataLength);
+    buffer[4] = memory_index;
+    this->SetInstruction(buffer);
+    this->SetEndpointIn(RyujinConstants::kHidDeviceIn);
+    this->SetEndpointOut(RyujinConstants::kHidDeviceOut);
+    this->SetTimeout(20);
+    this->ShouldReadBack(true);
+    this->SetValidationMessage(this->kValidateResponse);
 }
-std::string SelectGifCommand::GetClassName() { return "SelectGifCommand"; }
+
+std::string SelectGifCommand::GetClassName() const { return "SelectGifCommand"; }

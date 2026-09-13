@@ -27,7 +27,7 @@ public:
      * Method used mainly for testing purposes
      * @return The class name as string
      */
-    std::string GetClassName() override;
+    std::string GetClassName() const override;
 
 private:
     /**

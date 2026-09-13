@@ -16,25 +16,20 @@ public:
     TransactionCommand(std::shared_ptr<LibUsbWrapperBase> wrapper);
 
     /**
-     * Default execution command
-     * @return True on success, otherwise false
-     */
-    bool Execute() override;
-    /**
      * Method used mainly for testing purposes
      * @return The class name as string
      */
-    std::string GetClassName() override;
+    std::string GetClassName() const override;
 
 private:
     /**
      * Default command instruction
      */
-    const unsigned char kTransaction[4] = {0xec, 0x71, 0x01, 0x01};
+    const std::vector<unsigned char> kTransaction = {0xec, 0x71, 0x01, 0x01};
     /**
      * Default instruction to validate the response
      */
-    const unsigned char kValidateResponse[2] = {0xec, 0x71};
+    const std::vector<unsigned char> kValidateResponse = {0xec, 0x71};
 };
 
 #endif // RYUJINIII_TRANSACTION_COMMAND_H

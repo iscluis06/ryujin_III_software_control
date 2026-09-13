@@ -14,25 +14,20 @@ public:
     DeleteCommand(std::shared_ptr<LibUsbWrapperBase> wrapper);
 
     /**
-     * Default execution of command
-     * @return True on succeed, otherwise false
-     */
-    bool Execute() override;
-    /**
      * Method used mainly for testing purposes
      * @return The class name as string
      */
-    std::string GetClassName() override;
+    std::string GetClassName() const override;
 
 private:
     /**
      * Default delete instruction
      */
-    const unsigned char kDelete[3] = {0xec, 0x73, 0x03};
+    const std::vector<unsigned char> kDelete = {0xec, 0x73, 0x03};
     /**
      * Default validation of response
      */
-    const unsigned char kValidateResponse[2] = {0xec, 0x73};
+    const std::vector<unsigned char> kValidateResponse = {0xec, 0x73};
 };
 
 #endif // RYUJINIII_DELETE_COMMAND_H

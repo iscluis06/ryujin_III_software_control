@@ -3,35 +3,33 @@
 #include <cstring>
 #include <iostream>
 
-#include "libusb_wrapper.h"
-#include "ryujin_device.h"
+#include "ryujin_constants.h"
 
 UploadGifCommand::UploadGifCommand(std::shared_ptr<LibUsbWrapperBase> wrapper,
-                                   std::shared_ptr<FileHandleBase> file_handle) :
-    BaseCommand(std::move(wrapper), this->kValidateResponse, sizeof(this->kValidateResponse)) {
+                                   std::shared_ptr<FileHandleBase> file_handle) : BaseCommand(std::move(wrapper)) {
     this->file_handle_ = file_handle;
 }
 
 bool UploadGifCommand::Execute() {
-    std::vector<unsigned char> buffer(RyujinDevice::kDefaultBulkLength, 0);
+    std::vector<unsigned char> buffer(RyujinConstants::kDefaultBulkLength, 0);
     for (int i = 0; i < this->file_handle_->GetIterations(); i++) {
         std::cout.flush();
-        int current_size = this->file_handle_->GetSize() - ((i + 1) * RyujinDevice::kDefaultBulkLength);
-        int size_to_copy =
-                current_size < 0 ? current_size + RyujinDevice::kDefaultBulkLength : RyujinDevice::kDefaultBulkLength;
-        memcpy(buffer.data(), this->file_handle_->GetBuffer().get() + (i * RyujinDevice::kDefaultBulkLength),
+        int current_size = this->file_handle_->GetSize() - ((i + 1) * RyujinConstants::kDefaultBulkLength);
+        int size_to_copy = current_size < 0 ? current_size + RyujinConstants::kDefaultBulkLength
+                                            : RyujinConstants::kDefaultBulkLength;
+        memcpy(buffer.data(), this->file_handle_->GetBuffer().get() + (i * RyujinConstants::kDefaultBulkLength),
                sizeof(unsigned char) * size_to_copy);
-        if (!this->GetWrapper()->SendBulk(RyujinDevice::kVendorDeviceOut, buffer)) {
+        if (!this->GetWrapper()->SendBulk(RyujinConstants::kVendorDeviceOut, buffer)) {
             std::cout << "Failed to upload gif instruction [" << i << "/" << this->file_handle_->GetIterations() << "]"
                       << std::endl;
             return false;
         }
-        std::vector<unsigned char> response_back(RyujinDevice::kDefaultInterruptDataLength, 0);
-        if (!this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceIn, response_back)) {
+        std::vector<unsigned char> response_back(RyujinConstants::kDefaultInterruptDataLength, 0);
+        if (!this->GetWrapper()->SendInterrupt(RyujinConstants::kHidDeviceIn, response_back)) {
             std::cerr << "Failed to read from input endpoint" << std::endl;
             return false;
         }
-        memset(buffer.data(), 0, RyujinDevice::kDefaultBulkLength);
+        memset(buffer.data(), 0, RyujinConstants::kDefaultBulkLength);
         std::cout << "Upload porcentage: ";
         if (i + 1 < this->file_handle_->GetIterations()) {
             std::cout << (int) (100 * ((float) (i + 1) / (float) this->file_handle_->GetIterations())) << "%" << '\r';
@@ -42,4 +40,4 @@ bool UploadGifCommand::Execute() {
     return true;
 }
 
-std::string UploadGifCommand::GetClassName() { return "UploadGifCommand"; }
+std::string UploadGifCommand::GetClassName() const { return "UploadGifCommand"; }

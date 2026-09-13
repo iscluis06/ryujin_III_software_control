@@ -3,7 +3,7 @@
 
 #include <gmock/gmock.h>
 
-#include "libusb_wrapper_base.h"
+#include "wrappers/libusb_wrapper_base.h"
 
 class LibUsbWrapperMock : public LibUsbWrapperBase {
 public:

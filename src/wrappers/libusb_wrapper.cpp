@@ -1,4 +1,4 @@
-#include "libusb_wrapper.h"
+#include "wrappers/libusb_wrapper.h"
 #include <iostream>
 
 LibUsbWrapper::LibUsbWrapper() : LibUsbWrapperBase() {}

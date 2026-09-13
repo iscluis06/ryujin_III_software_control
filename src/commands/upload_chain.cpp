@@ -1,6 +1,6 @@
 #include "commands/upload_chain.h"
 
-#include "commands/default_gif.h"
+#include "commands/default_gif_command.h"
 #include "commands/end_upload_command.h"
 #include "commands/reported_size_command.h"
 #include "commands/select_memory_space_command.h"

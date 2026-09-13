@@ -3,7 +3,7 @@
 
 #include <string>
 #include "base_factory.h"
-#include "libusb_wrapper.h"
+#include "wrappers/libusb_wrapper.h"
 
 /**
  * Default factory implementation
@@ -39,6 +39,12 @@ public:
      * @return Command chain instance on success otherwise false
      */
     std::unique_ptr<CommandChain> GetChain(std::string command, int index) override;
+    /**
+     * Method that returns a command chain according to command string
+     * @param command Name of the command chain to instance
+     * @return Command chain instance on success otherwise false
+     */
+    std::unique_ptr<CommandChain> GetChain(std::string command) override;
     /**
      * Method that returns a command chain according to command string
      * @param command Name of the command chain to instance

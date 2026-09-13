@@ -13,21 +13,16 @@ public:
      */
     TurnOffCommand(std::shared_ptr<LibUsbWrapperBase> wrapper);
     /**
-     * Default command execution
-     * @return True on success, otherwise false
-     */
-    bool Execute() override;
-    /**
      * Method used mainly for testing purposes
      * @return The class name as string
      */
-    std::string GetClassName() override;
+    std::string GetClassName() const override;
 
 private:
     /**
      * Default instruction command
      */
-    const unsigned char kTurnOff[2] = {0xec, 0x51};
+    const std::vector<unsigned char> kTurnOff = {0xec, 0x51};
 };
 
 #endif // RYUJINIII_TURN_OFF_COMMAND_H

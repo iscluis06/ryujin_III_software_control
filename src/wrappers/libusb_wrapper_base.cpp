@@ -1,4 +1,4 @@
-#include "libusb_wrapper_base.h"
+#include "wrappers/libusb_wrapper_base.h"
 #include <cstring>
 
 std::vector<unsigned char> LibUsbWrapperBase::FillArray(const unsigned char *array, int array_size, int desired_size) {

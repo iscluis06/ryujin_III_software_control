@@ -1,4 +1,4 @@
-#include "commands/default_gif.h"
+#include "commands/default_gif_command.h"
 
 
 #include <gmock/gmock.h>

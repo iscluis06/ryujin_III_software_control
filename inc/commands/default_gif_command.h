@@ -17,19 +17,14 @@ public:
      */
     ~DefaultGifCommand() override = default;
     /**
-     * Method to execute the command
-     * @return True on success, otherwise false
-     */
-    bool Execute() override;
-    /**
      * Method used mainly for testing purposes
      * @return The class name as string
      */
-    std::string GetClassName() override;
+    std::string GetClassName() const override;
     /**
      * Default instruction command
      */
-    unsigned char kDefaultGIFInstruction[3] = {0xec, 0x51, 0x14};
+    const std::vector<unsigned char> kDefaultGIFInstruction = {0xec, 0x51, 0x14};
 };
 
 #endif // RYUJINIII_DEFAULT_GIF_H

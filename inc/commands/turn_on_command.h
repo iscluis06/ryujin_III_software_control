@@ -18,23 +18,17 @@ public:
      * Default constructor
      */
     ~TurnOnCommand() override = default;
-
-    /**
-     * Default execution command
-     * @return True on success, otherwise false
-     */
-    bool Execute() override;
     /**
      * Method used mainly for testing purposes
      * @return The class name as string
      */
-    std::string GetClassName() override;
+    std::string GetClassName() const override;
 
 private:
     /**
      * Default instruction command
      */
-    const unsigned char kTurnOn[3] = {0xec, 0x51, 0x14};
+    const std::vector<unsigned char> kTurnOn = {0xec, 0x51, 0x14};
 };
 
 #endif // RYUJINIII_TURN_ON_COMMAND_H

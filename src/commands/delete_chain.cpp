@@ -1,6 +1,6 @@
 #include "commands/delete_chain.h"
 
-#include "commands/default_gif.h"
+#include "commands/default_gif_command.h"
 #include "commands/delete_command.h"
 #include "commands/select_memory_space_command.h"
 

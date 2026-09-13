@@ -3,25 +3,16 @@
 #include <iostream>
 #include <thread>
 
-#include "libusb_wrapper.h"
-#include "ryujin_device.h"
+#include "ryujin_constants.h"
 
-EndUploadCommand::EndUploadCommand(std::shared_ptr<LibUsbWrapperBase> wrapper) :
-    BaseCommand(std::move(wrapper), this->kValidateResponse, sizeof(this->kValidateResponse)) {}
-
-bool EndUploadCommand::Execute() {
-    auto buffer = this->GetWrapper()->FillArray(this->kEndUpload, sizeof(this->kEndUpload),
-                                                RyujinDevice::kDefaultInterruptDataLength);
-    if (!this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceOut, buffer)) {
-        std::cerr << "Failed to execute end upload instruction" << std::endl;
-        return false;
-    }
-    std::this_thread::sleep_for(std::chrono::milliseconds(20));
-    std::vector<unsigned char> response_back(RyujinDevice::kDefaultInterruptDataLength, 0);
-    if (!this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceIn, response_back)) {
-        std::cerr << "Failed to read from input endpoint" << std::endl;
-        return false;
-    }
-    return this->IsMessageValid(response_back);
+EndUploadCommand::EndUploadCommand(std::shared_ptr<LibUsbWrapperBase> wrapper) : BaseCommand(std::move(wrapper)) {
+    this->SetInstruction(this->GetWrapper()->FillArray(this->kEndUpload.data(), this->kEndUpload.size(),
+                                                       RyujinConstants::kDefaultInterruptDataLength));
+    this->SetTimeout(20);
+    this->ShouldReadBack(true);
+    this->SetEndpointIn(RyujinConstants::kHidDeviceIn);
+    this->SetEndpointOut(RyujinConstants::kHidDeviceOut);
+    this->SetValidationMessage(this->kValidateResponse);
 }
-std::string EndUploadCommand::GetClassName() { return "EndUploadCommand"; }
+
+std::string EndUploadCommand::GetClassName() const { return "EndUploadCommand"; }

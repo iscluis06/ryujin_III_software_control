@@ -2,7 +2,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "commands/default_gif.h"
+#include "commands/default_gif_command.h"
 #include "commands/select_gif_command.h"
 #include "commands/turn_off_command.h"
 #include "commands/turn_on_command.h"

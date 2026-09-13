@@ -1,16 +1,13 @@
-#include "commands/default_gif.h"
-#include "libusb_wrapper.h"
-#include "ryujin_device.h"
+#include "commands/default_gif_command.h"
+#include "ryujin_constants.h"
 
-DefaultGifCommand::DefaultGifCommand(std::shared_ptr<LibUsbWrapperBase> wrapper) : BaseCommand(std::move(wrapper)) {}
-
-bool DefaultGifCommand::Execute() {
-    auto buffer = this->GetWrapper()->FillArray(this->kDefaultGIFInstruction, sizeof(this->kDefaultGIFInstruction),
-                                                RyujinDevice::kDefaultInterruptDataLength);
-    bool result = this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceOut, buffer);
-    std::vector<unsigned char> response_back(RyujinDevice::kDefaultInterruptDataLength, 0);
-    this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceIn, response_back);
-    return result;
+DefaultGifCommand::DefaultGifCommand(std::shared_ptr<LibUsbWrapperBase> wrapper) : BaseCommand(std::move(wrapper)) {
+    this->SetInstruction(this->GetWrapper()->FillArray(this->kDefaultGIFInstruction.data(),
+                                                       this->kDefaultGIFInstruction.size(),
+                                                       RyujinConstants::kDefaultInterruptDataLength));
+    this->SetEndpointIn(RyujinConstants::kHidDeviceIn);
+    this->SetEndpointOut(RyujinConstants::kHidDeviceOut);
+    this->ShouldReadBack(true);
 }
 
-std::string DefaultGifCommand::GetClassName() { return "DefaultGifCommand"; }
+std::string DefaultGifCommand::GetClassName() const { return "DefaultGifCommand"; }

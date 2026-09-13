@@ -1,11 +1,12 @@
 #include "commands/turn_on_command.h"
-#include "ryujin_device.h"
+#include "ryujin_constants.h"
 
-TurnOnCommand::TurnOnCommand(std::shared_ptr<LibUsbWrapperBase> wrapper) : BaseCommand(std::move(wrapper)) {}
-
-bool TurnOnCommand::Execute() {
-    auto buffer = this->GetWrapper()->FillArray(this->kTurnOn, sizeof(this->kTurnOn),
-                                                RyujinDevice::kDefaultInterruptDataLength);
-    return this->GetWrapper()->SendInterrupt(RyujinDevice::kHidDeviceOut, buffer);
+TurnOnCommand::TurnOnCommand(std::shared_ptr<LibUsbWrapperBase> wrapper) : BaseCommand(std::move(wrapper)) {
+    this->SetInstruction(this->GetWrapper()->FillArray(this->kTurnOn.data(), this->kTurnOn.size(),
+                                                       RyujinConstants::kDefaultInterruptDataLength));
+    this->SetEndpointOut(RyujinConstants::kHidDeviceOut);
+    this->SetEndpointIn(RyujinConstants::kHidDeviceIn);
+    this->ShouldReadBack(true);
 }
-std::string TurnOnCommand::GetClassName() { return "TurnOnCommand"; }
+
+std::string TurnOnCommand::GetClassName() const { return "TurnOnCommand"; }

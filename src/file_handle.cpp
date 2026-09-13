@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "ryujin_device.h"
+#include "ryujin_constants.h"
 
 bool FileHandle::ReadFile() {
     std::ifstream file(this->GetPath(), std::ios::in | std::ios::binary | std::ios::ate);
@@ -18,7 +18,7 @@ bool FileHandle::ReadFile() {
         std::cerr << "Couldn't read file or invalid path" << std::endl;
         return false;
     }
-    this->SetIterations(std::ceil(this->GetSize() / RyujinDevice::kDefaultBulkLength));
+    this->SetIterations(std::ceil(this->GetSize() / RyujinConstants::kDefaultBulkLength));
     this->SetIterations(this->GetIterations() == 0 ? 1 : this->GetIterations());
     return true;
 };

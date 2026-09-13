@@ -17,7 +17,7 @@ find_library(libusb libusb NAMES libusb-1.0 usb-1.0 usb REQUIRED)
 
 add_library(${PROJECT_NAME}_library
         src/ryujin_device.cpp
-        src/libusb_wrapper.cpp
+        src/wrappers/libusb_wrapper.cpp
         src/commands/base_command.cpp
         src/commands/select_gif_command.cpp
         src/commands/turn_on_command.cpp
@@ -36,9 +36,25 @@ add_library(${PROJECT_NAME}_library
         src/commands/default_gif_command.cpp
         src/magick_tool.cpp
         src/commands/command_chain.cpp
+        src/commands/start_hardware_monitor_command.cpp
         src/factory.cpp
-        src/libusb_wrapper_base.cpp
+        src/wrappers/libusb_wrapper_base.cpp
         src/file_handle_base.cpp
+        src/led_line/amd_core_line.cpp
+        src/led_line/kernel_hardware_monitor.cpp
+        src/led_line/ryujin_liquid_temp_line.cpp
+        src/byte_utils.cpp
+        src/stores/hardware_status_store.cpp
+        src/commands/hardware_monitor_chain.cpp
+        src/commands/hardware_status_command.cpp
+        src/commands/hardware_monitor_style_command.cpp
+        src/commands/hardware_monitor_line_command.cpp
+        src/led_line/ryujin_status_line.cpp
+        src/led_line/led_line_factory.cpp
+        src/led_line/git_last_commiter_line.cpp
+        src/led_line/ryujin_pump_speed_line.cpp
+        src/led_line/ryujin_fan_speed_line.cpp
+        src/commands/hardware_monitor_chain_config.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp)
