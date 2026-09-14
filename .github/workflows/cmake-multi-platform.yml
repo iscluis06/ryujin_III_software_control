@@ -32,11 +32,11 @@ jobs:
       - name: Upload deb artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: DEB package
           path: build/*.deb
+          archive: false
 
       - name: Upload targz artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: tar.gz package
           path: build/*.tar.gz
+          archive: false
