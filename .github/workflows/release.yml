@@ -32,13 +32,13 @@ jobs:
           cpack
 
       - name: Upload deb artifacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           path: build/*.deb
           archive: false
 
       - name: Upload targz artifacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           path: build/*.tar.gz
           archive: false
@@ -59,5 +59,5 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
-          files: ./artifacts/*
+          files: ./artifacts/**/*
           generate_release_notes: true
