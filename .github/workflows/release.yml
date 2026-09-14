@@ -32,13 +32,13 @@ jobs:
           cpack
 
       - name: Upload deb artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: build/*.deb
           archive: false
 
       - name: Upload targz artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: build/*.tar.gz
           archive: false
@@ -50,7 +50,7 @@ jobs:
 
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: ./artifacts
 
