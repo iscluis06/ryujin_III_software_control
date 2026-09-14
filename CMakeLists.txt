@@ -2,6 +2,13 @@ cmake_minimum_required(VERSION 4.2)
 project(ryujinIII)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_MAJOR_VERSION 0)
+set(CMAKE_MINOR_VERSION 2)
+set(CMAKE_PATCH_VERSION 0)
+set(CMAKE_TWEAK_VERSION 0)
+set(CMAKE_PROJECT_VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}.${CMAKE_TWEAK_VERSION})
+
+configure_file(README.md README.md COPYONLY)
 
 find_program(CPPCHECK_PATH NAMES cppcheck)
 if (CPPCHECK_PATH)
@@ -12,6 +19,8 @@ if (CPPCHECK_PATH)
             "--suppress=missingIncludeSystem"
             "--suppress=checkersReport")
 endif ()
+
+message(STATUS "PROFILE: ${CMAKE_BUILD_TYPE}")
 
 find_library(libusb libusb NAMES libusb-1.0 usb-1.0 usb REQUIRED)
 
@@ -64,4 +73,16 @@ target_include_directories(${PROJECT_NAME}_library PUBLIC inc)
 target_link_libraries(${PROJECT_NAME}_library PUBLIC ${libusb})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}_library)
 
-add_subdirectory(tests)
+IF (${CMAKE_BUILD_TYPE} STREQUAL "Release")
+    message(STATUS "Release")
+    target_link_options(${PROJECT_NAME}_library PRIVATE -Os -O3 -s)
+    target_compile_options(${PROJECT_NAME}_library PRIVATE -Os -O3 -s)
+    target_link_options(${PROJECT_NAME} PRIVATE -Os -O3 -s)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Os -O3 -s)
+ENDIF ()
+
+install(TARGETS ${PROJECT_NAME}
+        RUNTIME DESTINATION bin)
+
+#add_subdirectory(tests)
+include(packaging.cmake)
