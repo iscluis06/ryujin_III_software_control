@@ -26,7 +26,7 @@ jobs:
       run: |
         mkdir build
         cpack --build . -B build --config Release
-        cpack -C Release
+        cpack -B build -C Release
 
     - name: Upload deb artifacts
       uses: actions/upload-artifact@v7
