@@ -26,7 +26,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake --build .. -DCMAKE_BUILD_TYPE=Release
+          cmake -DCMAKE_BUILD_TYPE=Release --build .. 
           cpack
 
       - name: Upload deb artifacts
