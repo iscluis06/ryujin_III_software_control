@@ -29,13 +29,13 @@ jobs:
         cpack -C Release
 
     - name: Upload deb artifacts
-      uses: actions/upload-artifact@4
+      uses: actions/upload-artifact@7
       with:
         name: DEB package
         path: build/*.deb
 
     - name: Upload targz artifacts
-      uses: actions/upload-artifact@4
+      uses: actions/upload-artifact@7
       with:
         name: DEB package
         path: build/*.tar.gz
