@@ -34,14 +34,14 @@ jobs:
       - name: Upload deb artifacts
         uses: actions/upload-artifact@v7
         with:
+          name: deb-artifacts
           path: build/*.deb
-          archive: false
 
       - name: Upload targz artifacts
         uses: actions/upload-artifact@v7
         with:
+          name: targz-artifacts
           path: build/*.tar.gz
-          archive: false
 
   release:
     name: Create release
@@ -53,6 +53,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           path: ./artifacts
+          merge-multiple: true
 
       - name: Create release
         uses: softprops/action-gh-release@v2
