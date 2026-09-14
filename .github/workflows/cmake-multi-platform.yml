@@ -25,7 +25,7 @@ jobs:
       - name: Package project
         run: |
           mkdir build
-          cpack --build . -B build --config Release
+          cpack --build . -B build -DCMAKE_BUILD_TYPE=Release
           cpack -B build
 
       - name: Upload deb artifacts
