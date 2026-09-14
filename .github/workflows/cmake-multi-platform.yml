@@ -1,0 +1,41 @@
+name: CMake on DEBIAN
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: debian:latest
+
+    steps:
+    - name: Checkout repo 
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        apt-get update
+        apt-get install -y cmake build-essential git curl libusb-1.0-0 libusb-1.0-0-dev libargs-dev
+
+    - name: Package project
+      run: |
+        mkdir build
+        cpack --build . -B build --config Release
+        cpack -C Release
+
+    - name: Upload deb artifacts
+      uses: actions/upload-artifact@4
+      with:
+        name: DEB package
+        path: build/*.deb
+
+    - name: Upload targz artifacts
+      uses: actions/upload-artifact@4
+      with:
+        name: DEB package
+        path: build/*.tar.gz
