@@ -9,6 +9,7 @@ class HardwareStatusCommand : public BaseCommand {
 public:
     HardwareStatusCommand(std::shared_ptr<LibUsbWrapperBase> wrapper, std::shared_ptr<HardwareStatusStore> store);
     void UpdateStore();
+    std::string GetClassName() const override;
 
 private:
     std::shared_ptr<HardwareStatusStore> store_;

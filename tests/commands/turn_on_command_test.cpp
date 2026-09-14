@@ -3,25 +3,23 @@
 #include <gtest/gtest.h>
 #include "libusb_wrapper_mock.h"
 
-class TurnOnCommandTest : public testing::Test {};
+class TurnOnCommandTest : public testing::Test {
+protected:
+    void SetUp() { mock = std::make_shared<testing::NiceMock<LibUsbWrapperMock>>(); }
+    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> mock;
+    std::vector<unsigned char> default_array = std::vector<unsigned char>(65, 0);
+};
 
 TEST_F(TurnOnCommandTest, ExecuteSuccess) {
-    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> wrapper_mock =
-            std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
-    TurnOnCommand turn_on_command(wrapper_mock);
-    std::vector<unsigned char> default_array(65, 0);
-    EXPECT_CALL(*(wrapper_mock.get()), FillArray).WillOnce(testing::Return(default_array));
-    EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt).WillOnce(testing::Return(true));
+    EXPECT_CALL(*(this->mock.get()), FillArray).WillOnce(testing::Return(this->default_array));
+    TurnOnCommand turn_on_command(this->mock);
+    EXPECT_CALL(*(this->mock.get()), SendInterrupt).WillOnce(testing::Return(true)).WillOnce(testing::Return(true));
     EXPECT_EQ(turn_on_command.Execute(), true);
 }
 
 TEST_F(TurnOnCommandTest, ExecuteFail) {
-    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> wrapper_mock =
-            std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
-    std::vector<unsigned char> size = {0x00, 0xff, 0x1f};
-    TurnOnCommand turn_on_command(wrapper_mock);
-    std::vector<unsigned char> default_array(65, 0);
-    EXPECT_CALL(*(wrapper_mock.get()), FillArray).WillOnce(testing::Return(default_array));
-    EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt).WillRepeatedly(testing::Return(false));
+    EXPECT_CALL(*(this->mock.get()), FillArray).WillOnce(testing::Return(this->default_array));
+    TurnOnCommand turn_on_command(this->mock);
+    EXPECT_CALL(*(this->mock.get()), SendInterrupt).WillRepeatedly(testing::Return(false));
     EXPECT_EQ(turn_on_command.Execute(), false);
 }

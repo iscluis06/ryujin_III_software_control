@@ -12,7 +12,7 @@ public:
     virtual ~KernelHardwareMonitor() override = default;
     virtual std::string GetLine() override;
     void AddLabel(std::string label);
-    void SetHardwareMonitorName(std::string name);
+    void SetHardwareMonitorName(const std::string &name);
     virtual bool IsHardwareNameAvailable();
     virtual std::string TransformValue(std::string value) = 0;
     virtual std::string GetTitle() override = 0;

@@ -9,7 +9,7 @@ std::string KernelHardwareMonitor::GetLine() {
     return this->TransformValue(this->GetInputValue());
 }
 void KernelHardwareMonitor::AddLabel(std::string label) { this->hardware_labels_.emplace_front(label); }
-void KernelHardwareMonitor::SetHardwareMonitorName(std::string name) { this->hardware_monitor_name_ = name; }
+void KernelHardwareMonitor::SetHardwareMonitorName(const std::string& name) { this->hardware_monitor_name_ = name; }
 bool KernelHardwareMonitor::IsHardwareNameAvailable() { return this->GetHardwareMonitorNamePath() != ""; }
 std::string KernelHardwareMonitor::GetInputValue() {
     std::string amd_hardware_monitor_path = this->GetHardwareMonitorNamePath();
@@ -21,7 +21,7 @@ std::string KernelHardwareMonitor::GetInputValue() {
         std::string line;
         getline(file, line);
         file.close();
-        for (std::string label_value: hardware_labels_) {
+        for (const std::string& label_value: hardware_labels_) {
             if (line == label_value) {
                 std::string file_name = hw_entry.path();
                 file_name.replace(file_name.length() - this->kInputString.length(), this->kInputString.length(),

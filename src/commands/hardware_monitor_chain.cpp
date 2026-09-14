@@ -14,7 +14,7 @@ bool HardwareMonitorChain::running_ = false;
 HardwareMonitorChain::HardwareMonitorChain(std::shared_ptr<LibUsbWrapperBase> wrapper,
                                            RyujinConstants::MonitorMode mode, RyujinConstants::MonitorStyle style,
                                            LedLineFactory::LedLineImplementations line1) :
-    mode_(mode), wrapper_(wrapper), style_(style) {
+    mode_(mode), wrapper_(std::move(wrapper)), style_(style) {
     this->store_ = std::make_shared<HardwareStatusStore>();
     this->led_line_factory_ = std::make_shared<LedLineFactory>(this->store_);
     this->lines_.push_back(line1);
@@ -24,7 +24,7 @@ HardwareMonitorChain::HardwareMonitorChain(std::shared_ptr<LibUsbWrapperBase> wr
                                            RyujinConstants::MonitorMode mode, RyujinConstants::MonitorStyle style,
                                            LedLineFactory::LedLineImplementations line1,
                                            LedLineFactory::LedLineImplementations line2) :
-    HardwareMonitorChain(wrapper, mode, style, line1) {
+    HardwareMonitorChain(std::move(wrapper), mode, style, line1) {
     this->lines_.push_back(line2);
     this->lines_config_ = RyujinConstants::LinesConfig::LINES2;
 }
@@ -33,7 +33,7 @@ HardwareMonitorChain::HardwareMonitorChain(std::shared_ptr<LibUsbWrapperBase> wr
                                            LedLineFactory::LedLineImplementations line1,
                                            LedLineFactory::LedLineImplementations line2,
                                            LedLineFactory::LedLineImplementations line3) :
-    HardwareMonitorChain(wrapper, mode, style, line1, line2) {
+    HardwareMonitorChain(std::move(wrapper), mode, style, line1, line2) {
     this->lines_.push_back(line3);
     this->lines_config_ = RyujinConstants::LinesConfig::LINES3;
 }

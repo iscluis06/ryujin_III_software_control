@@ -17,7 +17,8 @@ if (CPPCHECK_PATH)
             "--enable=warning,performance,portability"
             "--check-level=exhaustive"
             "--suppress=missingIncludeSystem"
-            "--suppress=checkersReport")
+            "--suppress=checkersReport"
+            "--error-exitcode=1")
 endif ()
 
 message(STATUS "PROFILE: ${CMAKE_BUILD_TYPE}")
@@ -84,5 +85,5 @@ ENDIF ()
 install(TARGETS ${PROJECT_NAME}
         RUNTIME DESTINATION bin)
 
-#add_subdirectory(tests)
+add_subdirectory(tests)
 include(packaging.cmake)

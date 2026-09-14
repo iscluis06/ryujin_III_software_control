@@ -1,7 +1,7 @@
 #include "commands/hardware_monitor_chain_config.h"
 
 HardwareMonitorChainConfig::HardwareMonitorChainConfig(std::shared_ptr<LibUsbWrapperBase> wrapper) :
-    wrapper_(wrapper) {}
+    wrapper_(std::move(wrapper)) {}
 
 void HardwareMonitorChainConfig::AddLine(int line) {
     this->lines_.push_back(static_cast<LedLineFactory::LedLineImplementations>(line));
@@ -10,7 +10,7 @@ void HardwareMonitorChainConfig::SetMode(int mode) { this->mode_ = static_cast<R
 void HardwareMonitorChainConfig::SetStyle(int style) {
     this->style_ = static_cast<RyujinConstants::MonitorStyle>(style);
 }
-void HardwareMonitorChainConfig::SetGitPath(std::string git_path) { this->git_path_ = git_path; }
+void HardwareMonitorChainConfig::SetGitPath(const std::string &git_path) { this->git_path_ = git_path; }
 std::shared_ptr<HardwareMonitorChain> HardwareMonitorChainConfig::GetChain() {
     std::shared_ptr<HardwareMonitorChain> chain;
     if (this->lines_.size() >= 3) {

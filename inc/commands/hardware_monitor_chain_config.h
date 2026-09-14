@@ -11,13 +11,13 @@ public:
     void AddLine(int line);
     void SetMode(int mode);
     void SetStyle(int style);
-    void SetGitPath(std::string git_path);
+    void SetGitPath(const std::string &git_path);
     std::shared_ptr<HardwareMonitorChain> GetChain();
 
 private:
     std::vector<LedLineFactory::LedLineImplementations> lines_;
-    RyujinConstants::MonitorMode mode_;
-    RyujinConstants::MonitorStyle style_;
+    RyujinConstants::MonitorMode mode_ = RyujinConstants::MonitorMode::PUNK;
+    RyujinConstants::MonitorStyle style_ = RyujinConstants::MonitorStyle::STYLE01;
     std::shared_ptr<LibUsbWrapperBase> wrapper_;
     std::string git_path_;
 };

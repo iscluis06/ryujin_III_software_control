@@ -7,7 +7,7 @@ class AmdCoreLineTest : public testing::Test {};
 TEST_F(AmdCoreLineTest, GetLineSuccess) {
     testing::NiceMock<AmdCoreLineMock> amd_core_line;
     std::string expected_temp = "38254";
-    std::string final_temp = std::to_string(std::stoi(expected_temp) / 1000.0f);
+    std::string final_temp = std::to_string(std::stoi(expected_temp) / 1000.0f).substr(0, 5).append("\u2103");
     EXPECT_CALL(amd_core_line, IsHardwareNameAvailable).WillOnce(testing::Return(true));
     EXPECT_CALL(amd_core_line, GetInputValue()).WillOnce(testing::Return(expected_temp));
     std::string result = amd_core_line.GetLine();
@@ -27,7 +27,7 @@ TEST_F(AmdCoreLineTest, GetLineFail) {
 TEST_F(AmdCoreLineTest, TransformValueSuccess) {
     testing::NiceMock<AmdCoreLineMock> amd_core_line;
     std::string expected_temp = "38254";
-    std::string final_temp = std::to_string(std::stoi(expected_temp) / 1000.0f);
+    std::string final_temp = std::to_string(std::stoi(expected_temp) / 1000.0f).substr(0, 5).append("\u2103");
     std::string result = amd_core_line.TransformValue(expected_temp);
     EXPECT_EQ(result.length(), final_temp.length());
     EXPECT_EQ(result, final_temp);

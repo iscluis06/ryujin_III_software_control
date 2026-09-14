@@ -1,7 +1,6 @@
 #include "commands/select_memory_space_command.h"
 
 #include <iostream>
-#include <thread>
 
 #include "ryujin_constants.h"
 

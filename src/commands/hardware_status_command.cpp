@@ -24,3 +24,4 @@ void HardwareStatusCommand::UpdateStore() {
     this->store_->SetPumpSpeed(this->byte_utils.GetDecimalValueFromHexString(pump_speed_hex_string_value));
     this->store_->SetFanSpeed(this->byte_utils.GetDecimalValueFromHexString(fan_speed_hex_string_value));
 }
+std::string HardwareStatusCommand::GetClassName() const { return "HardwareStatusCommand"; }

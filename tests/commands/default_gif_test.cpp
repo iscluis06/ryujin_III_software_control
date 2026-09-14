@@ -5,24 +5,22 @@
 #include <gtest/gtest.h>
 #include "libusb_wrapper_mock.h"
 
-class DefaultGifTest : public testing::Test {};
+class DefaultGifTest : public testing::Test {
+protected:
+    void SetUp() { this->wrapper_mock = std::make_shared<testing::NiceMock<LibUsbWrapperMock>>(); }
+    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> wrapper_mock;
+};
 
 TEST_F(DefaultGifTest, ExecuteSuccess) {
-    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> mock =
-            std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
-    DefaultGifCommand default_gif(mock);
-    ON_CALL(*(mock.get()), SendInterrupt(testing::_, testing::_)).WillByDefault(testing::Return(true));
-    EXPECT_CALL(*(mock.get()), FillArray).Times(1);
-    EXPECT_CALL(*(mock.get()), SendInterrupt).Times(2);
+    DefaultGifCommand default_gif(this->wrapper_mock);
+    ON_CALL(*(this->wrapper_mock.get()), SendInterrupt(testing::_, testing::_)).WillByDefault(testing::Return(true));
+    EXPECT_CALL(*(this->wrapper_mock.get()), SendInterrupt).Times(2);
     EXPECT_EQ(default_gif.Execute(), true);
 }
 
 TEST_F(DefaultGifTest, ExecuteFail) {
-    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> mock =
-            std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
-    DefaultGifCommand default_gif(mock);
-    ON_CALL(*(mock.get()), SendInterrupt(testing::_, testing::_)).WillByDefault(testing::Return(false));
-    EXPECT_CALL(*(mock.get()), FillArray).Times(1);
-    EXPECT_CALL(*(mock.get()), SendInterrupt).Times(2);
+    DefaultGifCommand default_gif(this->wrapper_mock);
+    ON_CALL(*(this->wrapper_mock.get()), SendInterrupt(testing::_, testing::_)).WillByDefault(testing::Return(false));
+    EXPECT_CALL(*(this->wrapper_mock.get()), SendInterrupt).Times(1);
     EXPECT_EQ(default_gif.Execute(), false);
 }

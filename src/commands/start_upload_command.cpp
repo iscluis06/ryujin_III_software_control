@@ -6,8 +6,7 @@
 #include "ryujin_constants.h"
 
 StartUploadCommand::StartUploadCommand(std::shared_ptr<LibUsbWrapperBase> wrapper) : BaseCommand(std::move(wrapper)) {
-    this->SetInstruction(this->GetWrapper()->FillArray(this->kStartUpload.data(), this->kStartUpload.size(),
-                                                       RyujinConstants::kDefaultInterruptDataLength));
+    this->SetInstruction(this->kStartUpload);
     this->SetEndpointIn(RyujinConstants::kHidDeviceIn);
     this->SetEndpointOut(RyujinConstants::kHidDeviceOut);
     this->SetTimeout(20);

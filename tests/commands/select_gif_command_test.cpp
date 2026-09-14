@@ -3,18 +3,21 @@
 #include <gtest/gtest.h>
 #include "libusb_wrapper_mock.h"
 
-class SelectGifCommandTest : public testing::Test {};
+class SelectGifCommandTest : public testing::Test {
+protected:
+    void SetUp() { mock = std::make_shared<testing::NiceMock<LibUsbWrapperMock>>(); }
+    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> mock;
+    std::vector<unsigned char> default_array = std::vector<unsigned char>(65, 0);
+    std::vector<unsigned char> valid_response = {0xec, 0x51};
+    const int kMemoryIndex = 1;
+};
 
 TEST_F(SelectGifCommandTest, ExecuteSuccess) {
-    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> wrapper_mock =
-            std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
-    SelectGifCommand select_gif_command(wrapper_mock, 1);
-    std::vector<unsigned char> default_array(65, 0);
-    std::vector<unsigned char> valid_response = {0xec, 0x51};
-    EXPECT_CALL(*(wrapper_mock.get()), FillArray).WillOnce(testing::Return(default_array));
-    EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt)
+    EXPECT_CALL(*(this->mock.get()), FillArray).WillOnce(testing::Return(this->default_array));
+    SelectGifCommand select_gif_command(this->mock, this->kMemoryIndex);
+    EXPECT_CALL(*(this->mock.get()), SendInterrupt)
             .WillOnce(testing::Return(true))
-            .WillOnce([valid_response](unsigned char endpoint, std::vector<unsigned char> &data) {
+            .WillOnce([this](unsigned char endpoint, std::vector<unsigned char> &data) {
                 data = valid_response;
                 return true;
             });
@@ -22,28 +25,18 @@ TEST_F(SelectGifCommandTest, ExecuteSuccess) {
 }
 
 TEST_F(SelectGifCommandTest, ExecuteFail) {
-    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> wrapper_mock =
-            std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
-    std::vector<unsigned char> size = {0x00, 0xff, 0x1f};
-    SelectGifCommand select_gif_command(wrapper_mock, 1);
-    std::vector<unsigned char> default_array(65, 0);
-    std::vector<unsigned char> valid_response = {0xec, 0x51};
-    EXPECT_CALL(*(wrapper_mock.get()), FillArray).WillOnce(testing::Return(default_array));
-    EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt).WillRepeatedly(testing::Return(false));
+    EXPECT_CALL(*(this->mock.get()), FillArray).WillOnce(testing::Return(this->default_array));
+    SelectGifCommand select_gif_command(this->mock, this->kMemoryIndex);
+    EXPECT_CALL(*(this->mock.get()), SendInterrupt).WillRepeatedly(testing::Return(false));
     EXPECT_EQ(select_gif_command.Execute(), false);
 }
 
 TEST_F(SelectGifCommandTest, InvalidResponse) {
-    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> wrapper_mock =
-            std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
-    std::vector<unsigned char> size = {0x00, 0xff, 0x1f};
-    SelectGifCommand select_gif_command(wrapper_mock, 1);
-    std::vector<unsigned char> default_array(65, 0);
-    std::vector<unsigned char> valid_response = {0xec, 0x51};
-    EXPECT_CALL(*(wrapper_mock.get()), FillArray).WillOnce(testing::Return(default_array));
-    EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt)
+    EXPECT_CALL(*(this->mock.get()), FillArray).WillOnce(testing::Return(this->default_array));
+    SelectGifCommand select_gif_command(this->mock, this->kMemoryIndex);
+    EXPECT_CALL(*(this->mock.get()), SendInterrupt)
             .WillOnce(testing::Return(true))
-            .WillOnce([default_array](unsigned char endpoint, std::vector<unsigned char> &data) {
+            .WillOnce([this](unsigned char endpoint, std::vector<unsigned char> &data) {
                 data = default_array;
                 return true;
             });

@@ -1,9 +1,9 @@
 #include "commands/hardware_monitor_line_command.h"
 
 #include "ryujin_constants.h"
-HardwareMonitorLineCommand::HardwareMonitorLineCommand(const std::shared_ptr<LibUsbWrapperBase> &wrapper,
+HardwareMonitorLineCommand::HardwareMonitorLineCommand(std::shared_ptr<LibUsbWrapperBase> wrapper,
                                                        std::shared_ptr<LedLineBase> base, int line) :
-    BaseCommand(wrapper) {
+    BaseCommand(std::move(wrapper)) {
     this->line_ = line;
     this->base_ = base;
     this->SetEndpointIn(RyujinConstants::kHidDeviceIn);
@@ -20,7 +20,7 @@ bool HardwareMonitorLineCommand::Execute() {
     instruction.insert(instruction.end(), std::make_move_iterator(title.begin()), std::make_move_iterator(title.end()));
     instruction.insert(instruction.end(), std::make_move_iterator(value.begin()), std::make_move_iterator(value.end()));
     instruction[2] = this->line_;
-    this->SetInstruction(this->GetWrapper()->FillArray(instruction.data(), instruction.size(),
-                                                       RyujinConstants::kDefaultInterruptDataLength));
+    this->SetInstruction(instruction);
     return BaseCommand::Execute();
 }
+std::string HardwareMonitorLineCommand::GetClassName() const { return "HardwareMonitorLineCommand"; }

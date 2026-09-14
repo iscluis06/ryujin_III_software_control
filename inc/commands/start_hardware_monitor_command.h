@@ -9,7 +9,8 @@
  */
 class StartHardwareMonitorCommand : public BaseCommand {
 public:
-    StartHardwareMonitorCommand(const std::shared_ptr<LibUsbWrapperBase> &wrapper);
+    StartHardwareMonitorCommand(std::shared_ptr<LibUsbWrapperBase> wrapper);
+    std::string GetClassName() const override;
 
 private:
     // hardware monitor start

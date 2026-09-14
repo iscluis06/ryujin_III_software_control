@@ -5,6 +5,8 @@
 #include <memory>
 #include <string>
 #include <vector>
+
+#include "ryujin_constants.h"
 #include "wrappers/libusb_wrapper_base.h"
 /**
  * Abstract class for testing purposes
@@ -45,9 +47,9 @@ public:
      * Method used mainly for testing purposes
      * @return The class name as string
      */
-    virtual std::string GetClassName() const;
+    [[nodiscard]] virtual std::string GetClassName() const = 0;
 
-    void SetInstruction(std::vector<unsigned char> instruction);
+    void SetInstruction(const std::vector<unsigned char> &instruction);
     void SetTimeout(int timeout);
     void SetValidationMessage(std::vector<unsigned char> validation_message);
     void ShouldReadBack(bool read_back);
@@ -55,7 +57,7 @@ public:
     void SetCallBackFunction(std::function<void()> function_pointer);
     void SetEndpointOut(int endpoint_out);
     void SetEndpointIn(int endpoint_in);
-    void SetResponseBackSize(int size);
+    void SetInterruptSize(int size);
 
 private:
     /**
@@ -69,9 +71,9 @@ private:
     bool read_back_ = false;
     std::vector<unsigned char> message_back_;
     std::function<void()> callback_;
-    int endpoint_out_;
-    int endpoint_in_;
-    int response_back_size_ = 65;
+    int endpoint_out_ = -1;
+    int endpoint_in_ = -1;
+    int interrupt_size_ = RyujinConstants::kDefaultInterruptDataLength;
 };
 
 #endif // RYUJINIII_BASE_COMMAND_H

@@ -8,7 +8,5 @@ TEST_F(RyujinDeviceTest, ServiceTest) {
     std::shared_ptr<LibUsbWrapperBase> wrapper = std::make_shared<LibUsbWrapper>();
     RyujinDevice ryujin_device(wrapper);
     ryujin_device.Initialize();
-    ryujin_device.StartMonitorServer();
-    while (1);
     EXPECT_EQ(1, 1);
 }

@@ -2,13 +2,14 @@
 
 #include "ryujin_constants.h"
 
-StartHardwareMonitorCommand::StartHardwareMonitorCommand(const std::shared_ptr<LibUsbWrapperBase> &wrapper) :
-    BaseCommand(wrapper) {
+StartHardwareMonitorCommand::StartHardwareMonitorCommand(std::shared_ptr<LibUsbWrapperBase> wrapper) :
+    BaseCommand(std::move(wrapper)) {
     this->SetEndpointOut(RyujinConstants::kHidDeviceOut);
     this->SetEndpointIn(RyujinConstants::kHidDeviceIn);
     this->ShouldReadBack(true);
     this->SetInstruction(this->kHardwareMonitor);
 }
+std::string StartHardwareMonitorCommand::GetClassName() const { return "StartHardwareMonitorCommand"; }
 
 // bool StartHardwareMonitorCommand::Execute() {
 //     std::vector<unsigned char> buffer = this->GetWrapper()->FillArray(

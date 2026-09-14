@@ -4,7 +4,7 @@
 
 #include "led_line/git_last_committer_line.h"
 
-GitLastCommiterLine::GitLastCommiterLine(std::string git_path) : LedLineBase(), git_path_(git_path) {}
+GitLastCommiterLine::GitLastCommiterLine(const std::string &git_path) : LedLineBase(), git_path_(git_path) {}
 
 std::string GitLastCommiterLine::GetLine() { return this->ExecuteCommiterName().substr(0, 8); }
 

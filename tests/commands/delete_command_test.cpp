@@ -3,18 +3,20 @@
 #include <gtest/gtest.h>
 #include "libusb_wrapper_mock.h"
 
-class DeleteCommandTest : public testing::Test {};
+class DeleteCommandTest : public testing::Test {
+protected:
+    void SetUp() { this->mock = std::make_shared<testing::NiceMock<LibUsbWrapperMock>>(); }
+    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> mock;
+    std::vector<unsigned char> default_array = std::vector<unsigned char>(65, 0);
+    std::vector<unsigned char> valid_response = {0xec, 0x73};
+};
 
 TEST_F(DeleteCommandTest, ExecuteSuccess) {
-    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> wrapper_mock =
-            std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
-    DeleteCommand delete_command(wrapper_mock);
-    std::vector<unsigned char> default_array{65, 0};
-    std::vector<unsigned char> valid_response = {0xec, 0x73};
-    EXPECT_CALL(*(wrapper_mock.get()), FillArray).WillOnce(testing::Return(default_array));
-    EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt)
+    EXPECT_CALL(*(this->mock.get()), FillArray).WillOnce(testing::Return(this->default_array));
+    DeleteCommand delete_command(this->mock);
+    EXPECT_CALL(*(this->mock.get()), SendInterrupt)
             .WillOnce(testing::Return(true))
-            .WillOnce([valid_response](unsigned char endpoint, std::vector<unsigned char> &data) {
+            .WillOnce([this](unsigned char endpoint, std::vector<unsigned char> &data) {
                 data = valid_response;
                 return true;
             });
@@ -22,24 +24,18 @@ TEST_F(DeleteCommandTest, ExecuteSuccess) {
 }
 
 TEST_F(DeleteCommandTest, ExecuteFail) {
-    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> wrapper_mock =
-            std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
-    DeleteCommand delete_command(wrapper_mock);
-    std::vector<unsigned char> default_array{65, 0};
-    EXPECT_CALL(*(wrapper_mock.get()), FillArray).WillOnce(testing::Return(default_array));
-    EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt).WillRepeatedly(testing::Return(false));
+    EXPECT_CALL(*(this->mock.get()), FillArray).WillOnce(testing::Return(this->default_array));
+    DeleteCommand delete_command(this->mock);
+    EXPECT_CALL(*(this->mock.get()), SendInterrupt).WillRepeatedly(testing::Return(false));
     EXPECT_EQ(delete_command.Execute(), false);
 }
 
 TEST_F(DeleteCommandTest, InvalidResponse) {
-    std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> wrapper_mock =
-            std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
-    DeleteCommand delete_command(wrapper_mock);
-    std::vector<unsigned char> default_array{65, 0};
-    EXPECT_CALL(*(wrapper_mock.get()), FillArray).WillOnce(testing::Return(default_array));
-    EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt)
+    EXPECT_CALL(*(this->mock.get()), FillArray).WillOnce(testing::Return(this->default_array));
+    DeleteCommand delete_command(this->mock);
+    EXPECT_CALL(*(this->mock.get()), SendInterrupt)
             .WillOnce(testing::Return(true))
-            .WillOnce([default_array](unsigned char endpoint, std::vector<unsigned char> &data) {
+            .WillOnce([this](unsigned char endpoint, std::vector<unsigned char> &data) {
                 data = default_array;
                 return true;
             });

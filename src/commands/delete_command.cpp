@@ -5,8 +5,7 @@
 #include "ryujin_constants.h"
 
 DeleteCommand::DeleteCommand(std::shared_ptr<LibUsbWrapperBase> wrapper) : BaseCommand(std::move(wrapper)) {
-    this->SetInstruction(this->GetWrapper()->FillArray(this->kDelete.data(), this->kDelete.size(),
-                                                       RyujinConstants::kDefaultInterruptDataLength));
+    this->SetInstruction(this->kDelete);
     this->SetEndpointOut(RyujinConstants::kHidDeviceOut);
     this->SetEndpointIn(RyujinConstants::kHidDeviceIn);
     this->SetValidationMessage(this->kValidateResponse);

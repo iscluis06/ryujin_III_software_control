@@ -1,8 +1,8 @@
 #include "commands/hardware_monitor_style_command.h"
 
 #include "ryujin_constants.h"
-HardwareMonitorStyleCommand::HardwareMonitorStyleCommand(const std::shared_ptr<LibUsbWrapperBase> &wrapper, int lines,
-                                                         int mode, int style) : BaseCommand(wrapper) {
+HardwareMonitorStyleCommand::HardwareMonitorStyleCommand(std::shared_ptr<LibUsbWrapperBase> wrapper, int lines,
+                                                         int mode, int style) : BaseCommand(std::move(wrapper)) {
     auto buffer = this->GetWrapper()->FillArray(this->kHardwareMonitor.data(), this->kHardwareMonitor.size(),
                                                 RyujinConstants::kDefaultInterruptDataLength);
     buffer[this->kNumLinesOffset] = lines;
@@ -13,3 +13,4 @@ HardwareMonitorStyleCommand::HardwareMonitorStyleCommand(const std::shared_ptr<L
     this->SetEndpointOut(RyujinConstants::kHidDeviceOut);
     this->ShouldReadBack(true);
 }
+std::string HardwareMonitorStyleCommand::GetClassName() const { return "HardwareMonitorStyleCommand"; }

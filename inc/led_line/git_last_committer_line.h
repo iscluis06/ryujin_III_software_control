@@ -6,7 +6,7 @@
 
 class GitLastCommiterLine : public LedLineBase {
 public:
-    GitLastCommiterLine(std::string git_path);
+    GitLastCommiterLine(const std::string &git_path);
     ~GitLastCommiterLine() override = default;
     std::string GetLine() override;
     std::string GetTitle() override;

@@ -2,9 +2,7 @@
 #include "ryujin_constants.h"
 
 DefaultGifCommand::DefaultGifCommand(std::shared_ptr<LibUsbWrapperBase> wrapper) : BaseCommand(std::move(wrapper)) {
-    this->SetInstruction(this->GetWrapper()->FillArray(this->kDefaultGIFInstruction.data(),
-                                                       this->kDefaultGIFInstruction.size(),
-                                                       RyujinConstants::kDefaultInterruptDataLength));
+    this->SetInstruction(this->kDefaultGIFInstruction);
     this->SetEndpointIn(RyujinConstants::kHidDeviceIn);
     this->SetEndpointOut(RyujinConstants::kHidDeviceOut);
     this->ShouldReadBack(true);

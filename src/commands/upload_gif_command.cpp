@@ -1,5 +1,6 @@
 #include "commands/upload_gif_command.h"
 
+#include <bits/this_thread_sleep.h>
 #include <cstring>
 #include <iostream>
 
@@ -13,7 +14,6 @@ UploadGifCommand::UploadGifCommand(std::shared_ptr<LibUsbWrapperBase> wrapper,
 bool UploadGifCommand::Execute() {
     std::vector<unsigned char> buffer(RyujinConstants::kDefaultBulkLength, 0);
     for (int i = 0; i < this->file_handle_->GetIterations(); i++) {
-        std::cout.flush();
         int current_size = this->file_handle_->GetSize() - ((i + 1) * RyujinConstants::kDefaultBulkLength);
         int size_to_copy = current_size < 0 ? current_size + RyujinConstants::kDefaultBulkLength
                                             : RyujinConstants::kDefaultBulkLength;
@@ -30,13 +30,15 @@ bool UploadGifCommand::Execute() {
             return false;
         }
         memset(buffer.data(), 0, RyujinConstants::kDefaultBulkLength);
-        std::cout << "Upload porcentage: ";
+        std::cout << "\rUpload porcentage: ";
         if (i + 1 < this->file_handle_->GetIterations()) {
-            std::cout << (int) (100 * ((float) (i + 1) / (float) this->file_handle_->GetIterations())) << "%" << '\r';
+            std::cout << (int) (100 * ((float) (i + 1) / (float) this->file_handle_->GetIterations())) << "%"
+                      << std::flush;
         } else {
-            std::cout << 100 << "%" << '\r' << std::endl;
+            std::cout << 100 << "%" << std::flush;
         }
     }
+    std::cout << std::endl;
     return true;
 }
 

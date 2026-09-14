@@ -11,7 +11,8 @@
  */
 class HardwareMonitorStyleCommand : public BaseCommand {
 public:
-    HardwareMonitorStyleCommand(const std::shared_ptr<LibUsbWrapperBase> &wrapper, int lines, int mode, int style);
+    HardwareMonitorStyleCommand(std::shared_ptr<LibUsbWrapperBase> wrapper, int lines, int mode, int style);
+    std::string GetClassName() const override;
 
 private:
     const short kModeByteOffset = 2;
