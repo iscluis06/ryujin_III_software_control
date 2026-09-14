@@ -25,8 +25,9 @@ jobs:
       - name: Package project
         run: |
           mkdir build
-          cpack --build . -B build -DCMAKE_BUILD_TYPE=Release
-          cpack -B build
+          cd build
+          cpack --build .. -DCMAKE_BUILD_TYPE=Release
+          cpack
 
       - name: Upload deb artifacts
         uses: actions/upload-artifact@v7
