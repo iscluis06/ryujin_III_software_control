@@ -1,0 +1,33 @@
+name: CMake on DEBIAN
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: debian:latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y cmake build-essential git curl libusb-1.0-0 libusb-1.0-0-dev libargs-dev
+
+      - name: Build project
+        run: |
+          mkdir build
+          cmake -DCMAKE_BUILD_TYPE=Release -S . -B build
+
+      - name: Test project
+        run: |
+          cd build
+          ctest
