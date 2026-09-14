@@ -1,4 +1,4 @@
-name: CMake on DEBIAN
+name: Build and test project
 
 on:
   push:
