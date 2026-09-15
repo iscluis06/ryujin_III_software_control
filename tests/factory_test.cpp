@@ -11,8 +11,9 @@
 class FactoryTest : public testing::Test {
 protected:
     void SetUp() {
+        args::ArgumentParser p("test parser");
         this->mock = std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
-        this->factory = std::make_shared<Factory>(this->mock);
+        this->factory = std::make_shared<Factory>(this->mock, p);
     }
     void CommandTest(const std::string &command_name, std::unique_ptr<BaseCommand> command_expected, bool equal) {
         auto command = this->factory->GetCommand(command_name);

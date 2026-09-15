@@ -50,8 +50,18 @@ public:
      * Default command for usb bulk instructions.
      */
     static const int kDefaultBulkLength = 4096;
+    /**
+     * Enum of current mode implementations.
+     * TODO: Implement CUSTOM
+     */
     enum class MonitorMode : short { GALACTIC, PUNK, CUSTOM };
+    /**
+     * Enum of all posible background styles
+     */
     enum class MonitorStyle : short { STYLE01 = 0x0, STYLE02 = 0x1, STYLE03 = 0x2, STYLE04 = 0x3 };
+    /**
+     * Enum of all posible line configs, LINES1 will show only one monitor line, LINES2 two lines and so on
+     */
     enum class LinesConfig : short { LINES1 = 0x0, LINES2 = 0x1, LINES3 = 0x2 };
 };
 

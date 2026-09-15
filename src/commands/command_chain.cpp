@@ -40,3 +40,4 @@ void CommandChain::AddCommand(BaseCommand *command) {
     current_command_chain->next_command_chain = new CommandChain();
     current_command_chain->next_command_chain->current_command = command;
 }
+std::string CommandChain::GetClassName() const { return "CommandChain"; }

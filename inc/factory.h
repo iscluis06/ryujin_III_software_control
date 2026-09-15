@@ -1,6 +1,7 @@
 #ifndef RYUJINIII_FACTORY_H
 #define RYUJINIII_FACTORY_H
 
+#include <args.hxx>
 #include <string>
 #include "base_factory.h"
 #include "wrappers/libusb_wrapper.h"
@@ -20,39 +21,11 @@ public:
      */
     ~Factory() override = default;
     /**
-     * Method that returns a given class instance according to command string
-     * @param command Name of the command to instance
+     * Method that returns a given class instance according to matching arguments
+     * @param parser Reference to arguments parser
      * @return Command instance on success otherwise false
      */
-    std::unique_ptr<BaseCommand> GetCommand(std::string command) override;
-    /**
-     * Method that returns a given class instance according to command string
-     * @param command Name of the command to instance
-     * @param index Pass the value of index to command instance
-     * @return Command instance on success otherwise false
-     */
-    std::unique_ptr<BaseCommand> GetCommand(std::string command, int index) override;
-    /**
-     * Method that returns a command chain according to command string
-     * @param command Name of the command chain to instance
-     * @param index Pass the value of index to command chain instance
-     * @return Command chain instance on success otherwise false
-     */
-    std::unique_ptr<CommandChain> GetChain(std::string command, int index) override;
-    /**
-     * Method that returns a command chain according to command string
-     * @param command Name of the command chain to instance
-     * @return Command chain instance on success otherwise false
-     */
-    std::unique_ptr<CommandChain> GetChain(std::string command) override;
-    /**
-     * Method that returns a command chain according to command string
-     * @param command Name of the command chain to instance
-     * @param path Pass the value of path to command chain instance
-     * @param index Pass the value of index to command chain instance
-     * @return Command chain instance on success otherwise false
-     */
-    std::unique_ptr<CommandChain> GetChain(std::string command, std::string path, int index) override;
+    std::unique_ptr<ExecuteBase> GetCommand(args::ArgumentParser &parser) override;
 
 private:
     /**

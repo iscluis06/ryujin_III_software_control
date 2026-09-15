@@ -18,6 +18,7 @@ std::shared_ptr<LibUsbWrapperBase> BaseCommand::GetWrapper() const { return this
 std::string BaseCommand::GetClassName() const { return "BaseCommand"; }
 void BaseCommand::SetInstruction(const std::vector<unsigned char> &instruction) {
     if (instruction.size() == this->interrupt_size_) {
+        this->instruction_ = instruction;
         return;
     }
     this->instruction_ = this->GetWrapper()->FillArray(instruction.data(), instruction.size(), this->interrupt_size_);

@@ -9,9 +9,6 @@
  * Main class for all ryujin device properties.
  */
 class RyujinDevice {
-private:
-    std::shared_ptr<LibUsbWrapperBase> wrapper_;
-
 public:
     /**
      * Constructor which uses FindDevice to initialize device property,
@@ -35,6 +32,12 @@ public:
      * @return Shared pointer to usb handler
      */
     std::shared_ptr<LibUsbWrapperBase> GetWrapper() { return this->wrapper_; }
+
+private:
+    /**
+     * Reference to libusb wrapper
+     */
+    std::shared_ptr<LibUsbWrapperBase> wrapper_;
 };
 
 #endif // RYUJINIII_RYUJIN_DEVICE_H

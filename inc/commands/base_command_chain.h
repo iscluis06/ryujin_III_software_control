@@ -4,7 +4,7 @@
 /**
  * Helper abstract class to create a chain of commands (linked list)
  */
-class BaseCommandChain {
+class BaseCommandChain : public ExecuteBase {
 public:
     /**
      * Default constructor
@@ -18,7 +18,7 @@ public:
      * Default method that executes the chain of commands
      * @return True on success, otherwise false
      */
-    virtual bool Execute() = 0;
+    virtual bool Execute() override = 0;
 };
 
 #endif // RYUJINIII_BASE_COMMAND_CHAIN_H

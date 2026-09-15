@@ -35,6 +35,11 @@ public:
      * Reference to next CommandChain
      */
     CommandChain *next_command_chain = nullptr;
+    /**
+     * Method used mainly for testing purposes
+     * @return The class name as string
+     */
+    [[nodiscard]] virtual std::string GetClassName() const override;
 };
 
 #endif // RYUJINIII_COMMAND_CHAIN_H
