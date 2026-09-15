@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt-get update
-          apt-get install -y cmake build-essential git curl libusb-1.0-0 libusb-1.0-0-dev libargs-dev
+          apt-get install -y cmake build-essential git curl libusb-1.0-0 libusb-1.0-0-dev libargs-dev googletest google-mock
 
       - name: Build project
         run: |
