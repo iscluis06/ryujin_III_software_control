@@ -37,7 +37,7 @@ probably some Debian base distros). This work was done through reverse engineeri
 using wireshark (usbmon) to capture. Also, using libusb 1.0.0 to communicate with Ryujin interface.
 
 If you find this useful, please consider making a donations. Thanks!<br><br>
-[![Buy me a Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://www.buymeacoffee.com/iscluis06)
+[<img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"  height="50">](https://www.buymeacoffee.com/iscluis06)
 
 ### Requirements
 
