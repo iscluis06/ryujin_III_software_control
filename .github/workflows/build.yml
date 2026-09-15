@@ -31,4 +31,4 @@ jobs:
       - name: Test project
         run: |
           cd build
-          ctest
+          tests/ryujinIII_gtest --gtest_filter=* --gtest_color=no
