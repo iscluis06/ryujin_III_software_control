@@ -23,6 +23,7 @@ jobs:
         run: |
           apt-get update
           apt-get install -y cmake build-essential git curl libusb-1.0-0 libusb-1.0-0-dev libargs-dev
+          apt-get install -y googletest google-mock libgmock-dev libgtest-dev
 
       - name: Package project
         run: |
