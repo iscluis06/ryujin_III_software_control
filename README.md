@@ -36,6 +36,9 @@ Software to help you control your Asus Ryujin III Water Cooling under linux. Rig
 probably some Debian base distros). This work was done through reverse engineering Ryujin III usb packets under linux
 using wireshark (usbmon) to capture. Also, using libusb 1.0.0 to communicate with Ryujin interface.
 
+If you find this useful, please consider making a donations. Thanks!
+<a href="https://www.buymeacoffee.com/iscluis06"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=iscluis06&button_colour=000000&font_colour=ffffff&font_family=Cookie&outline_colour=ffffff&coffee_colour=FFDD00" /></a>
+
 ### Requirements
 
 * Debian 13 (It may also work on some debian based distros)
