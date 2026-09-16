@@ -2,7 +2,6 @@
 #define RYUJINIII_FACTORY_H
 
 #include <args.hxx>
-#include <string>
 #include "base_factory.h"
 #include "wrappers/libusb_wrapper.h"
 

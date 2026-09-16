@@ -1,13 +1,15 @@
 #include "ryujin_device.h"
 #include <gtest/gtest.h>
-#include "wrappers/libusb_wrapper.h"
+
+#include "libusb_wrapper_mock.h"
 
 class RyujinDeviceTest : public testing::Test {};
 
 TEST_F(RyujinDeviceTest, ServiceTest) {
-    std::shared_ptr<LibUsbWrapperBase> wrapper = std::make_shared<LibUsbWrapper>();
-    // TODO: Fix this test to avoid Segmentation Fault
-    // RyujinDevice ryujin_device(wrapper);
-    // ryujin_device.Initialize();
-    EXPECT_EQ(1, 1);
+    std::shared_ptr<LibUsbWrapperMock> wrapper = std::make_shared<LibUsbWrapperMock>();
+    EXPECT_CALL(*(wrapper.get()), ReleaseInterface).WillRepeatedly(::testing::Return(true));
+    EXPECT_CALL(*(wrapper.get()), InitializeDevice).WillRepeatedly(::testing::Return(true));
+    EXPECT_CALL(*(wrapper.get()), ClaimInterfaces).WillRepeatedly(::testing::Return(true));
+    RyujinDevice ryujin_device(wrapper);
+    EXPECT_EQ(ryujin_device.Initialize(), true);
 }

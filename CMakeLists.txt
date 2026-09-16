@@ -65,6 +65,7 @@ add_library(${PROJECT_NAME}_library
         src/led_line/ryujin_pump_speed_line.cpp
         src/led_line/ryujin_fan_speed_line.cpp
         src/commands/hardware_monitor_chain_config.cpp
+        src/build_args_parser.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp)
