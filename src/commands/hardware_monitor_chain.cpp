@@ -47,19 +47,29 @@ bool HardwareMonitorChain::Execute() {
     start_hardware_monitor_mode->Execute();
     hardware_monitor_style->Execute();
     HardwareMonitorChain::running_ = true;
-
+    bool result = true;
     while (HardwareMonitorChain::running_) {
         HardwareStatusCommand status(this->wrapper_, this->store_);
-        status.Execute();
+        result = status.Execute();
+        if (!result) {
+            std::cout << "Command couldn't execute, stoping monitor" << std::endl;
+            HardwareMonitorChain::running_ = false;
+            break;
+        }
         int i = 0;
         for (auto line: this->lines_) {
             HardwareMonitorLineCommand line_command(this->wrapper_, this->led_line_factory_->GetLedLine(line), i);
             i++;
-            line_command.Execute();
+            result = line_command.Execute();
+            if (!result) {
+                std::cout << "Command couldn't execute, stoping monitor" << std::endl;
+                HardwareMonitorChain::running_ = false;
+                break;
+            }
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-    return true;
+    return result;
 }
 void HardwareMonitorChain::StopLoop(int signal) {
     std::cout << "Stopping loop" << std::endl;

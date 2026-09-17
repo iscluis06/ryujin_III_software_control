@@ -28,8 +28,9 @@ add_executable(${PROJECT_NAME}_gtest
         factory_test.cpp
         led_line/amd_core_line_test.cpp
         led_line/ryujin_liquid_temp_line_test.cpp
-        byte_utils.cpp
+        byte_utils_test.cpp
         ryujin_device_test.cpp
+        commands/hardware_monitor_chain_test.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}_gtest ${libgtest} ${libgtest_main} ${libgmock} ${libusb} ${PROJECT_NAME}_library)
