@@ -19,3 +19,4 @@ std::string AmdCoreLine::TransformValue(std::string value) {
     }
 }
 std::string AmdCoreLine::GetTitle() { return "CPU Avg"; }
+std::string AmdCoreLine::GetClassName() { return "AmdCoreLine"; }

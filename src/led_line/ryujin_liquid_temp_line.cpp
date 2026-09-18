@@ -6,3 +6,4 @@ RyujinLiquidTempLine::RyujinLiquidTempLine(std::shared_ptr<HardwareStatusStore> 
 std::string RyujinLiquidTempLine::GetLine() {
     return std::to_string(this->GetStore()->GetLiquidTemp()).substr(0, 5) + "\u2103";
 }
+std::string RyujinLiquidTempLine::GetClassName() { return "RyujinLiquidTempLine"; }

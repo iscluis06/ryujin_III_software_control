@@ -4,3 +4,4 @@ std::string RyujinFanSpeedLine::GetLine() {
     return std::to_string(this->GetStore()->GetFanSpeed()).substr(0, 5) + " rpm";
 }
 std::string RyujinFanSpeedLine::GetTitle() { return "Fan Speed"; }
+std::string RyujinFanSpeedLine::GetClassName() { return "RyujinFanSpeedLine"; }

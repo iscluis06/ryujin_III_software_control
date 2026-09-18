@@ -2,7 +2,6 @@
 #define RYUJINIII_RYUJIN_DEVICE_H
 
 #include <memory>
-#include <thread>
 
 #include "wrappers/libusb_wrapper_base.h"
 /**

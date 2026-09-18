@@ -26,6 +26,12 @@ public:
      * @return The value to shown on first line
      */
     virtual std::string GetTitle() = 0;
+
+    /**
+     * Utility method for testing purposes
+     * @return The class name
+     */
+    virtual std::string GetClassName() = 0;
 };
 
 #endif // RYUJINIII_LED_LINE_BASE_H

@@ -1,7 +1,7 @@
 #include "led_line/led_line_factory.h"
 
 #include "led_line/amd_core_line.h"
-#include "led_line/git_last_committer_line.h"
+#include "led_line/git_last_commiter_line.h"
 #include "led_line/ryujin_fan_speed_line.h"
 #include "led_line/ryujin_liquid_temp_line.h"
 #include "led_line/ryujin_pump_speed_line.h"

@@ -28,6 +28,11 @@ public:
      * @return The value to shown on first line
      */
     std::string GetTitle() override;
+    /**
+     * Utility method for testing purposes
+     * @return The class name
+     */
+    virtual std::string GetClassName() override;
 };
 
 #endif // RYUJINIII_RYUJIN_PUMP_SPEED_LINE_H

@@ -1,6 +1,5 @@
 #include "commands/upload_gif_command.h"
 
-#include <bits/this_thread_sleep.h>
 #include <cstring>
 #include <iostream>
 

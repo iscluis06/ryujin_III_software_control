@@ -32,17 +32,23 @@ public:
      * Execute git command to get last commiter name
      * @return the raw commiter name from git command
      */
-    std::string ExecuteCommiterName();
+    virtual std::string ExecuteCommiterName();
     /**
      * Execute git command to get last commiter date
      * @return @return the date from last commit on following format %y%m%d %H%M%S, or empty on fail
      */
-    std::string ExecuteCommitDate();
+    virtual std::string ExecuteCommitDate();
     /**
      * Check if git command available on system
      * @return Returns true if git available otherwise false
      */
     bool GitAvailable();
+
+    /**
+     * Utility method for testing purposes
+     * @return The class name
+     */
+    virtual std::string GetClassName() override;
 
 private:
     /**

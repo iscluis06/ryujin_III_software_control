@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-#include "led_line/git_last_committer_line.h"
+#include "led_line/git_last_commiter_line.h"
 
 GitLastCommiterLine::GitLastCommiterLine(const std::string &git_path) : LedLineBase(), git_path_(git_path) {}
 
@@ -30,6 +30,7 @@ std::string GitLastCommiterLine::ExecuteCommiterName() {
     }
     return commiter_name;
 }
+std::string GitLastCommiterLine::GetClassName() { return "GitLastCommiterLine"; }
 std::string GitLastCommiterLine::ExecuteCommitDate() {
     if (!this->GitAvailable()) {
         std::cout << "Git not available" << std::endl;

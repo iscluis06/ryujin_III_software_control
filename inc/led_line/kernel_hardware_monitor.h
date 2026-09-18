@@ -49,6 +49,12 @@ public:
      */
     virtual std::string GetTitle() override = 0;
 
+    /**
+     * Utility method for testing purposes
+     * @return The class name
+     */
+    virtual std::string GetClassName() override = 0;
+
 private:
     /**
      * Search for the kernel driver matching hardware_monitor_name_ property and returns the path

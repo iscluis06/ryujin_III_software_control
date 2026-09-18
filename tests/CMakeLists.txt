@@ -36,6 +36,13 @@ add_executable(${PROJECT_NAME}_gtest
         commands/hardware_monitor_style_command_test.cpp
         commands/hardware_status_command_test.cpp
         commands/start_hardware_monitor_command_test.cpp
+        led_line/ryujin_status_line_test.cpp
+        led_line/ryujin_pump_speed_line_test.cpp
+        led_line/git_last_commiter_line_test.cpp
+        mocks/led_line/kernel_hardware_monitor_mock.h
+        led_line/kernel_hardware_monitor_test.cpp
+        led_line/ryujin_fan_speed_line_test.cpp
+        led_line/led_line_factory_test.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}_gtest ${libgtest} ${libgtest_main} ${libgmock} ${libusb} ${PROJECT_NAME}_library)

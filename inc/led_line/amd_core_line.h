@@ -27,6 +27,12 @@ public:
      * @return The title to show on led display
      */
     std::string GetTitle() override;
+
+    /**
+     * Utility method for testing purposes
+     * @return The class name
+     */
+    std::string GetClassName() override;
 };
 
 #endif // RYUJINIII_AMD_CORE_LINE_H
