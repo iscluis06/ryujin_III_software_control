@@ -11,12 +11,16 @@
 > You require sudo or root privelegies in order to execute the binary, you can also set up udev
 > rules to allow any user to access ryujin usb interface.
 
+> [!IMPORTANT]
+> UDEV RULES ONLY REQUIRED FOR DEVELOPMENT.<br>
+> Currently DEB package has a post install script which creates an udev rule and retriggers udev rules.<br>
+
 > [!NOTE]
 > Creating UDEV rules
 > <br> 1. Find your usb device, by executing lsusb.
 > <br> 2. Copy the values separated by ":", the one on the left is the idVendor, while the one on the right is the
 idProduct.
-> <br> 3. Create a udev rule, (use sudo) by creating a file inside the following directory /etc/udev/rules.d/[name]
+> <br> 3. Create an udev rule, (use sudo) by creating a file inside the following directory /etc/udev/rules.d/[name]
 .rules, you can
 name it as you like being the only requirement to have ".rules" at the end.
 > <br> 4. Copy/Paste the following by replacing IDVENDOR and IDPRODUCT by the values from step 2:
