@@ -31,6 +31,11 @@ add_executable(${PROJECT_NAME}_gtest
         byte_utils_test.cpp
         ryujin_device_test.cpp
         commands/hardware_monitor_chain_test.cpp
+        commands/hardware_monitor_chain_config_test.cpp
+        commands/hardware_monitor_line_command_test.cpp
+        commands/hardware_monitor_style_command_test.cpp
+        commands/hardware_status_command_test.cpp
+        commands/start_hardware_monitor_command_test.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}_gtest ${libgtest} ${libgtest_main} ${libgmock} ${libusb} ${PROJECT_NAME}_library)
