@@ -2,7 +2,7 @@
 #define RYUJINIII_BUILDS_ARGS_PARSER_H
 
 #include <args.hxx>
-#include <string>
+#include <forward_list>
 
 class BuildArgsParser {
 public:
@@ -13,22 +13,8 @@ public:
     args::ArgumentParser *GetParser();
 
 private:
+    std::forward_list<args::Base *> options;
     args::ArgumentParser *parser = nullptr;
-    args::HelpFlag *help = nullptr;
-    args::Flag *turn_on = nullptr;
-    args::Flag *turn_off = nullptr;
-    args::Flag *default_gif = nullptr;
-    args::Flag *hardware_monitor = nullptr;
-    args::Flag *hardware_monitor_config = nullptr;
-    args::ValueFlag<int> *line1 = nullptr;
-    args::ValueFlag<int> *line2 = nullptr;
-    args::ValueFlag<int> *line3 = nullptr;
-    args::ValueFlag<std::string> *git_repo_path = nullptr;
-    args::ValueFlag<int> *mode = nullptr;
-    args::ValueFlag<int> *style = nullptr;
-    args::ValueFlag<int> *select_gif_from_memory = nullptr;
-    args::ValueFlag<int> *delete_from_memory = nullptr;
-    args::ValueFlag<std::string> *upload_gif = nullptr;
 };
 
 #endif // RYUJINIII_BUILDS_ARGS_PARSER_H

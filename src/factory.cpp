@@ -6,6 +6,7 @@
 #include "commands/hardware_monitor_chain.h"
 #include "commands/hardware_monitor_chain_config.h"
 #include "commands/select_gif_command.h"
+#include "commands/speed_config_command.h"
 #include "commands/turn_off_command.h"
 #include "commands/turn_on_command.h"
 #include "commands/upload_chain.h"
@@ -32,6 +33,16 @@ std::unique_ptr<ExecuteBase> Factory::GetCommand(args::ArgumentParser &parser) {
     }
     if (mapped_flags.count("hardware monitor")) {
         return std::make_unique<HardwareMonitorChain>(wrapper_);
+    }
+    if (mapped_flags.count("fan speed config")) {
+        auto value = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["fan speed config"]);
+        return std::make_unique<SpeedConfigCommand>(wrapper_, SpeedConfigCommand::DeviceSelector::FAN_DEVICE,
+                                                    args::get(*value));
+    }
+    if (mapped_flags.count("pump speed config")) {
+        auto value = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["pump speed config"]);
+        return std::make_unique<SpeedConfigCommand>(wrapper_, SpeedConfigCommand::DeviceSelector::PUMP_DEVICE,
+                                                    args::get(*value));
     }
     if (mapped_flags.count("select gif") && !mapped_flags.count("upload gif")) {
         auto index = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["select gif"]);
