@@ -62,9 +62,9 @@ apt install libargs-dev
 - [x] Remove gif from memory.
 - [x] Turn off the display.
 - [x] Turn on the display.
-- [ ] Fan control
+- [x] Fan control
 - [x] Display hardware monitor (It may require a daemon to report sensor data).
-- [ ] Upload jpeg images to LED display.
+- [x] Upload jpeg images to LED display.
 - [ ] Feature to keep track of uploaded images. (I still need to validate if possible, not found any descriptor
   reporting available slots)
 - [ ] Slideshow effect for images.
@@ -141,9 +141,13 @@ Ryujin III Management Tool
       --style=[style]                   Specifies the style for hardware
                                         monitor, from 0 up to 3 available
       --select-gif=[select gif]         Select a gif from memory
+      --select-jpeg=[select jpeg]       Select a jpeg from memory
       --delete-from-memory=[delete from
       memory]                           Delete a gif from memory
       --upload-gif=[upload gif]         Upload gif, it should be set along side
+                                        select option, you must specify a memory
+                                        slot to upload to
+      --upload-jpeg=[upload jpeg]       Upload jpeg, it should be set along side
                                         select option, you must specify a memory
                                         slot to upload to
 ```
@@ -154,13 +158,22 @@ Example turning off the led display
 ./ryujinIII --loff
 ```
 
-Example turning uploading a gif
+Example uploading a gif
 
 ```shell
 # Select a different memory slot that the one you want to upload to
 ./ryujinIII --select-gif 2
 # Upload the gif to the selected memory slot, it sometimes will fail on the first try
 ./ryujinIII --upload-gif some_path/to_some_gif/image.gif --select-gif 1
+```
+
+Example uploading a jpeg
+
+```shell
+# Select a different memory slot that the one you want to upload to
+./ryujinIII --select-jpeg 4
+# Upload the gif to the selected memory slot, it sometimes will fail on the first try
+./ryujinIII --upload-jpeg some_path/to_some_jpeg/image.jpeg --select-jpeg 4
 ```
 
 Example of hardware monitor config with liquid temp implementation

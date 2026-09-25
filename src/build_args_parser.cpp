@@ -50,6 +50,8 @@ BuildArgsParser::BuildArgsParser() {
             *this->parser, "style", "Specifies the style for hardware monitor, from 0 up to 3 available", {"style"}));
     this->options.emplace_front(
             new args::ValueFlag<int>(*this->parser, "select gif", "Select a gif from memory", {"select-gif"}));
+    this->options.emplace_front(
+            new args::ValueFlag<int>(*this->parser, "select jpeg", "Select a jpeg from memory", {"select-jpeg"}));
     this->options.emplace_front(new args::ValueFlag<int>(*this->parser, "delete from memory",
                                                          "Delete a gif from memory", {"delete-from-memory"}));
     this->options.emplace_front(
@@ -57,6 +59,11 @@ BuildArgsParser::BuildArgsParser() {
                                              "Upload gif, it should be set along side select option, you must specify "
                                              "a memory slot to upload to",
                                              {"upload-gif"}));
+    this->options.emplace_front(
+            new args::ValueFlag<std::string>(*this->parser, "upload jpeg",
+                                             "Upload jpeg, it should be set along side select option, you must specify "
+                                             "a memory slot to upload to",
+                                             {"upload-jpeg"}));
 }
 BuildArgsParser::~BuildArgsParser() {
     for (auto option: this->options) {

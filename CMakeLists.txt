@@ -67,6 +67,14 @@ add_library(${PROJECT_NAME}_library
         src/commands/hardware_monitor_chain_config.cpp
         src/build_args_parser.cpp
         src/commands/speed_config_command.cpp
+        src/commands/select_memory_space_jpeg_command.cpp
+        src/commands/upload_chain_jpeg.cpp
+        src/commands/select_jpeg_command.cpp
+        src/magick_tool_jpeg.cpp
+        src/commands/start_jpeg_selection_command.cpp
+        src/commands/show_jpeg_command.cpp
+        src/commands/end_jpeg_mode_command.cpp
+        src/commands/select_jpeg_chain.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp)

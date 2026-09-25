@@ -6,12 +6,15 @@
 #include "commands/hardware_monitor_chain.h"
 #include "commands/hardware_monitor_chain_config.h"
 #include "commands/select_gif_command.h"
+#include "commands/select_jpeg_chain.h"
 #include "commands/speed_config_command.h"
 #include "commands/turn_off_command.h"
 #include "commands/turn_on_command.h"
 #include "commands/upload_chain.h"
+#include "commands/upload_chain_jpeg.h"
 #include "file_handle.h"
 #include "magick_tool.h"
+#include "magick_tool_jpeg.h"
 
 Factory::Factory(std::shared_ptr<LibUsbWrapperBase> wrapper) : wrapper_(std::move(wrapper)) {}
 std::unique_ptr<ExecuteBase> Factory::GetCommand(args::ArgumentParser &parser) {
@@ -48,6 +51,10 @@ std::unique_ptr<ExecuteBase> Factory::GetCommand(args::ArgumentParser &parser) {
         auto index = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["select gif"]);
         return std::make_unique<SelectGifCommand>(wrapper_, args::get(*index));
     }
+    if (mapped_flags.count("select jpeg") && !mapped_flags.count("upload jpeg")) {
+        auto index = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["select jpeg"]);
+        return std::make_unique<SelectJpegChain>(wrapper_, args::get(*index));
+    }
     if (mapped_flags.count("delete from memory")) {
         auto index = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["delete from memory"]);
         return std::make_unique<DeleteChain>(wrapper_, args::get(*index));
@@ -59,7 +66,14 @@ std::unique_ptr<ExecuteBase> Factory::GetCommand(args::ArgumentParser &parser) {
         std::shared_ptr<TransformToolBase> transform_tool = std::make_shared<MagickTool>();
         return std::make_unique<UploadChain>(transform_tool, file_handle, wrapper_, args::get(*path),
                                              args::get(*index));
-        return nullptr;
+    }
+    if (mapped_flags.count("upload jpeg") && mapped_flags.count("select jpeg")) {
+        auto path = dynamic_cast<args::ValueFlag<std::string> *>(mapped_flags["upload jpeg"]);
+        auto index = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["select jpeg"]);
+        std::shared_ptr<FileHandleBase> file_handle = std::make_shared<FileHandle>();
+        std::shared_ptr<TransformToolBase> transform_tool = std::make_shared<MagickToolJpeg>();
+        return std::make_unique<UploadChainJpeg>(transform_tool, file_handle, wrapper_, args::get(*path),
+                                                 args::get(*index));
     }
     if (mapped_flags.count("hardware monitor config")) {
         if (!mapped_flags.count("line1") || !mapped_flags.count("mode") || !mapped_flags.count("style")) {
