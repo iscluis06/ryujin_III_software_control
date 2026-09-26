@@ -64,6 +64,7 @@ BuildArgsParser::BuildArgsParser() {
                                              "Upload jpeg, it should be set along side select option, you must specify "
                                              "a memory slot to upload to",
                                              {"upload-jpeg"}));
+    this->options.emplace_front(new args::Flag(*this->parser, "clock mode", "Activates clock mode", {"clock-mode"}));
 }
 BuildArgsParser::~BuildArgsParser() {
     for (auto option: this->options) {

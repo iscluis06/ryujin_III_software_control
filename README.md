@@ -68,7 +68,7 @@ apt install libargs-dev
 - [ ] Feature to keep track of uploaded images. (I still need to validate if possible, not found any descriptor
   reporting available slots)
 - [ ] Slideshow effect for images.
-- [ ] Clock effect.
+- [x] Clock effect.
 
 Special thanks to https://github.com/liquidctl/liquidctl
 and https://github.com/BrandonKynoch/asus-rog-ryujin-iii-linux-controller @BrandonKynoch, without your findings this may
@@ -150,6 +150,7 @@ Ryujin III Management Tool
       --upload-jpeg=[upload jpeg]       Upload jpeg, it should be set along side
                                         select option, you must specify a memory
                                         slot to upload to
+      --clock-mode                      Activates clock mode
 ```
 
 Example turning off the led display
@@ -211,6 +212,12 @@ Example of pump speed configuration, refer to the below tables for RPM's.
 
 ```shell
 ./ryujinIII --pump-speed-config 50
+```
+
+Example of clock mode
+
+```shell
+./ryujinIII --clock-mode
 ```
 
 Currently I use a best effort formula to guess and configure the speeds, whenever you

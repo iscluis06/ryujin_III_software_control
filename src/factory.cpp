@@ -1,6 +1,8 @@
 #include "factory.h"
 
 #include <map>
+#include "commands/clock_chain.h"
+#include "commands/clock_mode_command.h"
 #include "commands/default_gif_command.h"
 #include "commands/delete_chain.h"
 #include "commands/hardware_monitor_chain.h"
@@ -74,6 +76,9 @@ std::unique_ptr<ExecuteBase> Factory::GetCommand(args::ArgumentParser &parser) {
         std::shared_ptr<TransformToolBase> transform_tool = std::make_shared<MagickToolJpeg>();
         return std::make_unique<UploadChainJpeg>(transform_tool, file_handle, wrapper_, args::get(*path),
                                                  args::get(*index));
+    }
+    if (mapped_flags.count("clock mode")) {
+        return std::make_unique<ClockChain>(wrapper_);
     }
     if (mapped_flags.count("hardware monitor config")) {
         if (!mapped_flags.count("line1") || !mapped_flags.count("mode") || !mapped_flags.count("style")) {
