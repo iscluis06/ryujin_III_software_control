@@ -9,6 +9,7 @@
 #include "commands/hardware_monitor_chain_config.h"
 #include "commands/select_gif_command.h"
 #include "commands/select_jpeg_chain.h"
+#include "commands/slide_show_chain.h"
 #include "commands/speed_config_command.h"
 #include "commands/turn_off_command.h"
 #include "commands/turn_on_command.h"
@@ -48,6 +49,10 @@ std::unique_ptr<ExecuteBase> Factory::GetCommand(args::ArgumentParser &parser) {
         auto value = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["pump speed config"]);
         return std::make_unique<SpeedConfigCommand>(wrapper_, SpeedConfigCommand::DeviceSelector::PUMP_DEVICE,
                                                     args::get(*value));
+    }
+    if (mapped_flags.count("slideshow...")) {
+        auto value = args::get(*dynamic_cast<args::ValueFlagList<int> *>(mapped_flags["slideshow..."]));
+        return std::make_unique<SlideShowChain>(wrapper_, value);
     }
     if (mapped_flags.count("select gif") && !mapped_flags.count("upload gif")) {
         auto index = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["select gif"]);

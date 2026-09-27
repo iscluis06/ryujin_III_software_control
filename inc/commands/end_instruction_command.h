@@ -3,13 +3,13 @@
 
 #include "commands/base_command.h"
 
-class EndJpegModeCommand : public BaseCommand {
+class EndInstructionCommand : public BaseCommand {
 public:
-    EndJpegModeCommand(std::shared_ptr<LibUsbWrapperBase> base);
+    EndInstructionCommand(std::shared_ptr<LibUsbWrapperBase> base);
     std::string GetClassName() const override;
 
 private:
-    const std::vector<unsigned char> kEndJpegCommand = {0xec, 0x51, 0x1f};
+    const std::vector<unsigned char> kInstruction = {0xec, 0x51, 0x1f};
 };
 
 #endif // RYUJINIII_END_JPEG_MODE_COMMAND_H

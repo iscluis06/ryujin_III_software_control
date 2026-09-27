@@ -3,9 +3,9 @@
 
 #include "commands/base_command.h"
 
-class StartJpegSelectionCommand : public BaseCommand {
+class StartInstructionCommand : public BaseCommand {
 public:
-    StartJpegSelectionCommand(std::shared_ptr<LibUsbWrapperBase> base);
+    StartInstructionCommand(std::shared_ptr<LibUsbWrapperBase> base);
     std::string GetClassName() const override;
 
 private:

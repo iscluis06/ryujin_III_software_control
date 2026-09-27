@@ -13,6 +13,8 @@ BuildArgsParser::BuildArgsParser() {
     this->options.emplace_front(new args::Flag(*this->parser, "turn off", "Turn off the led display", {"loff"}));
     this->options.emplace_front(
             new args::Flag(*this->parser, "default gif", "Displays the default gif", {"default-gif"}));
+    this->options.emplace_front(new args::ValueFlagList<int>(*this->parser, "slideshow",
+                                                             "Creates a slideshow between gif images", {"slideshow"}));
     this->options.emplace_front(new args::Flag(*this->parser, "hardware monitor",
                                                "Displays default hardware monitor, 1 line, mode cyberpunk, style 1 and "
                                                "ryujin liquid temp implement.\nCancel loop by using ctrl+c ",

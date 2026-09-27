@@ -67,6 +67,7 @@ apt install libargs-dev
 - [x] Upload jpeg images to LED display.
 - [ ] Feature to keep track of uploaded images. (I still need to validate if possible, not found any descriptor
   reporting available slots)
+- [x] Slideshow effect for gifs.
 - [ ] Slideshow effect for images.
 - [x] Clock effect.
 
@@ -112,6 +113,7 @@ Ryujin III Management Tool
       config]                           Pump Speed config
       --loff                            Turn off the led display
       --default-gif                     Displays the default gif
+      --slideshow=[slideshow...]        Creates a slideshow between gif images
       --hw-monitor                      Displays default hardware monitor, 1
                                         line, mode cyberpunk, style 1 and ryujin
                                         liquid temp implement.
@@ -218,6 +220,15 @@ Example of clock mode
 
 ```shell
 ./ryujinIII --clock-mode
+```
+
+Example slideshow gif functionality.
+Be aware, that selecting a memory slot currently empty may cause
+led display to ignore the selected slot and if all slots are empty may trigger
+a device reset.
+
+```shell
+./ryujinIII --slideshow=1 --slideshow=2
 ```
 
 Currently I use a best effort formula to guess and configure the speeds, whenever you

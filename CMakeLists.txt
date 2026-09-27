@@ -71,13 +71,15 @@ add_library(${PROJECT_NAME}_library
         src/commands/upload_chain_jpeg.cpp
         src/commands/select_jpeg_command.cpp
         src/magick_tool_jpeg.cpp
-        src/commands/start_jpeg_selection_command.cpp
+        src/commands/start_instruction_command.cpp
         src/commands/show_jpeg_command.cpp
-        src/commands/end_jpeg_mode_command.cpp
+        src/commands/end_instruction_command.cpp
         src/commands/select_jpeg_chain.cpp
         src/commands/clock_mode_command.cpp
         src/commands/start_clock_command.cpp
         src/commands/clock_chain.cpp
+        src/commands/slide_show_command.cpp
+        src/commands/slide_show_chain.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp)
