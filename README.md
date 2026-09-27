@@ -216,13 +216,16 @@ Example of pump speed configuration, refer to the below tables for RPM's.
 ./ryujinIII --pump-speed-config 50
 ```
 
+Currently I use a best effort formula to guess and configure the speeds, whenever you
+set a speed for PUMP or FANS, command will try to update both devices, it is not perfect.
+
 Example of clock mode
 
 ```shell
 ./ryujinIII --clock-mode
 ```
 
-Example slideshow gif functionality.
+Example slideshow gif functionality.<br>
 Be aware, that selecting a memory slot currently empty may cause
 led display to ignore the selected slot and if all slots are empty may trigger
 a device reset.
@@ -230,9 +233,6 @@ a device reset.
 ```shell
 ./ryujinIII --slideshow=1 --slideshow=2
 ```
-
-Currently I use a best effort formula to guess and configure the speeds, whenever you
-set a speed for PUMP or FANS, command will try to update both devices, it is not perfect.
 
 ## Speed config for pump and fans
 
