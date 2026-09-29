@@ -9,7 +9,7 @@ public:
     std::string GetClassName() const override;
 
 private:
-    std::vector<unsigned char> kStartJpegSelectionCommand = {0xec, 0xdc};
+    std::vector<unsigned char> kInstruction = {0xec, 0xdc};
 };
 
 #endif // RYUJINIII_START_JPEG_SELECTION_COMMAND_H

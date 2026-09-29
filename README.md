@@ -68,7 +68,7 @@ apt install libargs-dev
 - [ ] Feature to keep track of uploaded images. (I still need to validate if possible, not found any descriptor
   reporting available slots)
 - [x] Slideshow effect for gifs.
-- [ ] Slideshow effect for images.
+- [x] Slideshow effect for images.
 - [x] Clock effect.
 
 Special thanks to https://github.com/liquidctl/liquidctl
@@ -114,6 +114,8 @@ Ryujin III Management Tool
       --loff                            Turn off the led display
       --default-gif                     Displays the default gif
       --slideshow=[slideshow...]        Creates a slideshow between gif images
+      --slideshow-jpeg=[slideshow
+      jpeg...]                          Creates a slideshow between jpeg images
       --hw-monitor                      Displays default hardware monitor, 1
                                         line, mode cyberpunk, style 1 and ryujin
                                         liquid temp implement.
@@ -232,6 +234,15 @@ a device reset.
 
 ```shell
 ./ryujinIII --slideshow=1 --slideshow=2
+```
+
+Example slideshow jpeg functionality.<br>
+Be aware, that selecting a memory slot currently empty may cause
+led display to ignore the selected slot and if all slots are empty may trigger
+a device reset.
+
+```shell
+./ryujinIII --slideshow-jpeg=1 --slideshow-jpeg=2
 ```
 
 ## Speed config for pump and fans

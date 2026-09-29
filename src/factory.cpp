@@ -10,6 +10,7 @@
 #include "commands/select_gif_command.h"
 #include "commands/select_jpeg_chain.h"
 #include "commands/slide_show_chain.h"
+#include "commands/slide_show_jpeg_chain.h"
 #include "commands/speed_config_command.h"
 #include "commands/turn_off_command.h"
 #include "commands/turn_on_command.h"
@@ -53,6 +54,10 @@ std::unique_ptr<ExecuteBase> Factory::GetCommand(args::ArgumentParser &parser) {
     if (mapped_flags.count("slideshow...")) {
         auto value = args::get(*dynamic_cast<args::ValueFlagList<int> *>(mapped_flags["slideshow..."]));
         return std::make_unique<SlideShowChain>(wrapper_, value);
+    }
+    if (mapped_flags.count("slideshow jpeg...")) {
+        auto value = args::get(*dynamic_cast<args::ValueFlagList<int> *>(mapped_flags["slideshow jpeg..."]));
+        return std::make_unique<SlideShowJpegChain>(wrapper_, value);
     }
     if (mapped_flags.count("select gif") && !mapped_flags.count("upload gif")) {
         auto index = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["select gif"]);

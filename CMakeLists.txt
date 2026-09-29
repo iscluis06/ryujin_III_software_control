@@ -80,6 +80,9 @@ add_library(${PROJECT_NAME}_library
         src/commands/clock_chain.cpp
         src/commands/slide_show_command.cpp
         src/commands/slide_show_chain.cpp
+        src/commands/slide_show_jpeg_command.cpp
+        src/commands/slide_show_jpeg_mode_command.cpp
+        src/commands/slide_show_jpeg_chain.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp)
