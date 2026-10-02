@@ -65,8 +65,7 @@ apt install libargs-dev
 - [x] Fan control
 - [x] Display hardware monitor (It may require a daemon to report sensor data).
 - [x] Upload jpeg images to LED display.
-- [ ] Feature to keep track of uploaded images. (I still need to validate if possible, not found any descriptor
-  reporting available slots)
+- [x] Feature to keep track of uploaded images.
 - [x] Slideshow effect for gifs.
 - [x] Slideshow effect for images.
 - [x] Clock effect.
@@ -113,6 +112,7 @@ Ryujin III Management Tool
       config]                           Pump Speed config
       --loff                            Turn off the led display
       --default-gif                     Displays the default gif
+      --show-slots                      Displays available memory slots
       --slideshow=[slideshow...]        Creates a slideshow between gif images
       --slideshow-jpeg=[slideshow
       jpeg...]                          Creates a slideshow between jpeg images

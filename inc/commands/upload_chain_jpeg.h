@@ -32,10 +32,8 @@ private:
      * Max number of tries before canceling command
      */
     const int kMaxTries_ = 3;
-    /**
-     * Default path to save processed gif file
-     */
-    static const std::string kFinalGifPath_;
+    std::shared_ptr<FileHandleBase> file_tool_;
+    int index_;
 };
 
 #endif // RYUJINIII_UPLOAD_CHAIN_JPEG_H

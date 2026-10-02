@@ -9,6 +9,7 @@
 #include "commands/hardware_monitor_chain_config.h"
 #include "commands/select_gif_command.h"
 #include "commands/select_jpeg_chain.h"
+#include "commands/show_slots_command.h"
 #include "commands/slide_show_chain.h"
 #include "commands/slide_show_jpeg_chain.h"
 #include "commands/speed_config_command.h"
@@ -89,6 +90,9 @@ std::unique_ptr<ExecuteBase> Factory::GetCommand(args::ArgumentParser &parser) {
     }
     if (mapped_flags.count("clock mode")) {
         return std::make_unique<ClockChain>(wrapper_);
+    }
+    if (mapped_flags.count("show slots")) {
+        return std::make_unique<ShowSlotsCommand>();
     }
     if (mapped_flags.count("hardware monitor config")) {
         if (!mapped_flags.count("line1") || !mapped_flags.count("mode") || !mapped_flags.count("style")) {

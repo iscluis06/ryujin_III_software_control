@@ -30,6 +30,7 @@ private:
      * Default number of tries before canceling command retries
      */
     const int kMaxTries_ = 3;
+    int index_;
 };
 
 #endif // RYUJINIII_DELETE_CHAIN_H

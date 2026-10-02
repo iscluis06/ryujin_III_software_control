@@ -63,6 +63,10 @@ public:
      * Enum of all posible line configs, LINES1 will show only one monitor line, LINES2 two lines and so on
      */
     enum class LinesConfig : short { LINES1 = 0x0, LINES2 = 0x1, LINES3 = 0x2 };
+    /**
+     * Default Ryujin persistent data directory
+     */
+    static constexpr char *kRyujinPersistentDirectory = "/var/lib/ryujinIII";
 };
 
 #endif // RYUJINIII_RYUJIN_CONSTANTS_H

@@ -13,6 +13,8 @@ BuildArgsParser::BuildArgsParser() {
     this->options.emplace_front(new args::Flag(*this->parser, "turn off", "Turn off the led display", {"loff"}));
     this->options.emplace_front(
             new args::Flag(*this->parser, "default gif", "Displays the default gif", {"default-gif"}));
+    this->options.emplace_front(
+            new args::Flag(*this->parser, "show slots", "Displays available memory slots", {"show-slots"}));
     this->options.emplace_front(new args::ValueFlagList<int>(*this->parser, "slideshow",
                                                              "Creates a slideshow between gif images", {"slideshow"}));
     this->options.emplace_front(new args::ValueFlagList<int>(

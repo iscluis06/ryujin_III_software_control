@@ -83,6 +83,9 @@ add_library(${PROJECT_NAME}_library
         src/commands/slide_show_jpeg_command.cpp
         src/commands/slide_show_jpeg_mode_command.cpp
         src/commands/slide_show_jpeg_chain.cpp
+        src/stores/memory_slots_store.cpp
+        src/date_utils.cpp
+        src/commands/show_slots_command.cpp
 )
 
 add_executable(${PROJECT_NAME} main.cpp)
