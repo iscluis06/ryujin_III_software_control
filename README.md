@@ -105,56 +105,72 @@ Ryujin III Management Tool
   OPTIONS:
 
       -h, --help                        Display help menu
-      --lon                             Turn on the led display
-      --fan-speed-config=[fan speed
-      config]                           Fan Speed config
-      --pump-speed-config=[pump speed
-      config]                           Pump Speed config
-      --loff                            Turn off the led display
-      --default-gif                     Displays the default gif
-      --show-slots                      Displays available memory slots
-      --slideshow=[slideshow...]        Creates a slideshow between gif images
-      --slideshow-jpeg=[slideshow
-      jpeg...]                          Creates a slideshow between jpeg images
-      --hw-monitor                      Displays default hardware monitor, 1
-                                        line, mode cyberpunk, style 1 and ryujin
-                                        liquid temp implement.
-                                        Cancel loop by using ctrl+c
-      --hw-monitor-config               Configures a hardware monitor specify
-                                        lines by using line parameters for
-                                        example --line1, --mode for mode
-                                        [galactic = 0, cyberpunk = 1], --style
-                                        from 0 up to 3.
-                                        Example: --hw-monitor-config --line1=0
-                                        --mode=1 --style=0
-                                        Cancel loop by using ctrl+c
-      --line1=[line1]                   Configures the first line for hardware
-                                        monitor, refer to hardware monitor
-                                        implementations for options
-      --line2=[line2]                   Configures the first line for hardware
-                                        monitor, refer to hardware monitor
-                                        implementations for options
-      --line3=[line3]                   Configures the first line for hardware
-                                        monitor, refer to hardware monitor
-                                        implementations for options
-      --git-repo-path=[git repo path]   Specifies the path to the git repo for
-                                        Git Last Commiter implementation
-      --mode=[mode]                     Specifies the mode for hardware monitor,
-                                        currently only galactic=0 and
-                                        cyberpunk=1 available
-      --style=[style]                   Specifies the style for hardware
-                                        monitor, from 0 up to 3 available
-      --select-gif=[select gif]         Select a gif from memory
-      --select-jpeg=[select jpeg]       Select a jpeg from memory
-      --delete-from-memory=[delete from
-      memory]                           Delete a gif from memory
-      --upload-gif=[upload gif]         Upload gif, it should be set along side
-                                        select option, you must specify a memory
-                                        slot to upload to
-      --upload-jpeg=[upload jpeg]       Upload jpeg, it should be set along side
-                                        select option, you must specify a memory
-                                        slot to upload to
-      --clock-mode                      Activates clock mode
+      Display power (exclusive options)
+        --lon                             Turn on the led display
+        --loff                            Turn off the led display
+      Speed config (exclusive options)
+        --fan-speed-config=[fan speed
+        config]                           Fan Speed config
+        --pump-speed-config=[pump speed
+        config]                           Pump Speed config
+      Information group
+        --show-slots                      Displays available memory slots
+      Led display config (exclusive
+      options)
+        --default-gif                     Displays the default gif
+        --select-gif=[select gif]         Select a gif from memory
+        --select-jpeg=[select jpeg]       Select a jpeg from memory
+        --slideshow=[slideshow...]        Creates a slideshow between gif images
+        --slideshow-jpeg=[slideshow
+        jpeg...]                          Creates a slideshow between jpeg
+                                          images
+        --clock-mode                      Activates clock mode
+        --delete-from-memory=[delete from
+        memory]                           Delete a gif from memory
+      Hardware monitor default
+        --hw-monitor                      Displays default hardware monitor, 1
+                                          line, mode cyberpunk, style 1 and
+                                          ryujin liquid temp implement.
+                                          Cancel loop by using ctrl+c
+      Hardware monitor customization
+      (All options must be specified)
+        --hw-monitor-config               Configures a hardware monitor specify
+                                          lines by using line parameters for
+                                          example --line1, --mode for mode
+                                          [galactic = 0, cyberpunk = 1], --style
+                                          from 0 up to 3.
+                                          Example: --hw-monitor-config --line1=0
+                                          --mode=1 --style=0
+                                          Cancel loop by using ctrl+c
+        --mode=[mode]                     Specifies the mode for hardware
+                                          monitor, currently only galactic=0 and
+                                          cyberpunk=1 available
+        --style=[style]                   Specifies the style for hardware
+                                          monitor, from 0 up to 3 available
+        --line1=[line1]                   Configures the first line for hardware
+                                          monitor, refer to hardware monitor
+                                          implementations for options
+        More config options
+          --line2=[line2]                   Configures the first line for
+                                            hardware monitor, refer to hardware
+                                            monitor implementations for options
+          --line3=[line3]                   Configures the first line for
+                                            hardware monitor, refer to hardware
+                                            monitor implementations for options
+          --git-repo-path=[git repo path]   Specifies the path to the git repo
+                                            for Git Last Commiter implementation
+      Upload gif (All options must be
+      specified)
+        --upload-gif=[upload gif]         Upload gif, it should be set along
+                                          side select option, you must specify a
+                                          memory slot to upload to
+        --select-gif=[select gif]         Select a gif from memory
+      Upload jpeg (All options must be
+      specified)
+        --upload-jpeg=[upload jpeg]       Upload jpeg, it should be set along
+                                          side select option, you must specify a
+                                          memory slot to upload to
+        --select-jpeg=[select jpeg]       Select a jpeg from memory
 ```
 
 Example turning off the led display

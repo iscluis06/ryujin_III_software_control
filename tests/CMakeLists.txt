@@ -63,6 +63,6 @@ add_executable(${PROJECT_NAME}_gtest
         mocks/magick_tool_jpeg_mock.h
 )
 
-target_link_libraries(${PROJECT_NAME}_gtest ${libgtest} ${libgtest_main} ${libgmock} ${libusb} ${PROJECT_NAME}_library)
+target_link_libraries(${PROJECT_NAME}_gtest ${libgtest} ${libgtest_main} ${libgmock} ${libusb} ${PROJECT_NAME}_library ${PROJECT_NAME}_args_library)
 
 target_include_directories(${PROJECT_NAME}_gtest PUBLIC ../inc mocks)

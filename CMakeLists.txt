@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.30)
 project(ryujinIII)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_MAJOR_VERSION 0)
-set(CMAKE_MINOR_VERSION 2)
-set(CMAKE_PATCH_VERSION 7)
+set(CMAKE_MAJOR_VERSION 1)
+set(CMAKE_MINOR_VERSION 0)
+set(CMAKE_PATCH_VERSION 0)
 set(CMAKE_TWEAK_VERSION 0)
 set(CMAKE_PROJECT_VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}.${CMAKE_TWEAK_VERSION})
 
@@ -47,7 +47,6 @@ add_library(${PROJECT_NAME}_library
         src/magick_tool.cpp
         src/commands/command_chain.cpp
         src/commands/start_hardware_monitor_command.cpp
-        src/factory.cpp
         src/wrappers/libusb_wrapper_base.cpp
         src/file_handle_base.cpp
         src/led_line/amd_core_line.cpp
@@ -65,7 +64,6 @@ add_library(${PROJECT_NAME}_library
         src/led_line/ryujin_pump_speed_line.cpp
         src/led_line/ryujin_fan_speed_line.cpp
         src/commands/hardware_monitor_chain_config.cpp
-        src/build_args_parser.cpp
         src/commands/speed_config_command.cpp
         src/commands/select_memory_space_jpeg_command.cpp
         src/commands/upload_chain_jpeg.cpp
@@ -88,17 +86,26 @@ add_library(${PROJECT_NAME}_library
         src/commands/show_slots_command.cpp
 )
 
+add_library(${PROJECT_NAME}_args_library
+        src/build_args_parser.cpp
+        src/factory.cpp
+)
+
 add_executable(${PROJECT_NAME} main.cpp)
 
 target_include_directories(${PROJECT_NAME}_library PUBLIC inc)
+target_include_directories(${PROJECT_NAME}_args_library PUBLIC inc)
 
+target_link_libraries(${PROJECT_NAME}_args_library PUBLIC ${PROJECT_NAME}_library)
 target_link_libraries(${PROJECT_NAME}_library PUBLIC ${libusb})
-target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}_library)
+target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}_library ${PROJECT_NAME}_args_library)
 
 IF (${CMAKE_BUILD_TYPE} STREQUAL "Release")
     message(STATUS "Release")
     target_link_options(${PROJECT_NAME}_library PRIVATE -Os -O3 -s)
     target_compile_options(${PROJECT_NAME}_library PRIVATE -Os -O3 -s)
+    target_link_options(${PROJECT_NAME}_args_library PRIVATE -Os -O3 -s)
+    target_compile_options(${PROJECT_NAME}_args_library PRIVATE -Os -O3 -s)
     target_link_options(${PROJECT_NAME} PRIVATE -Os -O3 -s)
     target_compile_options(${PROJECT_NAME} PRIVATE -Os -O3 -s)
 ENDIF ()
