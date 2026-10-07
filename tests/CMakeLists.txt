@@ -11,7 +11,7 @@ enable_testing()
 add_executable(${PROJECT_NAME}_gtest
         commands/base_command_test.cpp
         commands/command_chain_test.cpp
-        commands/default_gif_test.cpp
+        commands/default_gif_command_test.cpp
         commands/delete_chain_test.cpp
         commands/delete_command_test.cpp
         commands/end_upload_command_test.cpp
@@ -43,6 +43,25 @@ add_executable(${PROJECT_NAME}_gtest
         led_line/kernel_hardware_monitor_test.cpp
         led_line/ryujin_fan_speed_line_test.cpp
         led_line/led_line_factory_test.cpp
+        date_utils_test.cpp
+        commands/clock_chain_test.cpp
+        commands/clock_mode_command_test.cpp
+        commands/end_instruction_command_test.cpp
+        commands/select_jpeg_chain_test.cpp
+        commands/select_jpeg_command_test.cpp
+        commands/select_memory_space_jpeg_command_test.cpp
+        commands/show_jpeg_command_test.cpp
+        commands/show_slots_command_test.cpp
+        mocks/stores/memory_slots_store_mock.h
+        commands/slide_show_chain_test.cpp
+        commands/slide_show_command_test.cpp
+        commands/slide_show_jpeg_chain_test.cpp
+        commands/slide_show_jpeg_command_test.cpp
+        commands/speed_config_command_test.cpp
+        start_clock_command_test.cpp
+        commands/start_instruction_command_test.cpp
+        commands/upload_chain_jpeg_test.cpp
+        mocks/magick_tool_jpeg_mock.h
 )
 
 target_link_libraries(${PROJECT_NAME}_gtest ${libgtest} ${libgtest_main} ${libgmock} ${libusb} ${PROJECT_NAME}_library)

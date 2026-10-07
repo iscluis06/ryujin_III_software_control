@@ -4,7 +4,7 @@
 #include <memory>
 #include "ryujin_constants.h"
 
-RyujinDevice::RyujinDevice(std::shared_ptr<LibUsbWrapperBase> wrapper) : wrapper_(wrapper) {}
+RyujinDevice::RyujinDevice(std::shared_ptr<LibUsbWrapperBase> wrapper) : wrapper_(std::move(wrapper)) {}
 RyujinDevice::~RyujinDevice() {
     if (!this->GetWrapper()->ReleaseInterface(RyujinConstants::kConfigInterface)) {
         std::cout << "Failed releasing config interface" << std::endl;

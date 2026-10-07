@@ -60,5 +60,5 @@ bool BaseCommand::Execute() {
 }
 void BaseCommand::ShouldReadBack(bool read_back) { this->read_back_ = read_back; }
 void BaseCommand::SetEndpointOut(int endpoint_out) { this->endpoint_out_ = endpoint_out; }
-void BaseCommand::SetEndpointIn(int endpoint_in) { this->endpoint_in_ = endpoint_in; }
+void BaseCommand::SetEndpointIn(int endpoint_input) { this->endpoint_in_ = endpoint_input; }
 void BaseCommand::SetInterruptSize(int size) { this->interrupt_size_ = size; }

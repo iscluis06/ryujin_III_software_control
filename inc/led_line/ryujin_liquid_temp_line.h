@@ -31,7 +31,7 @@ public:
      * Utility method for testing purposes
      * @return The class name
      */
-    virtual std::string GetClassName() override;
+    std::string GetClassName() override;
 };
 
 #endif // RYUJINIII_RYUJIN_LIQUID_TEMP_LINE_H

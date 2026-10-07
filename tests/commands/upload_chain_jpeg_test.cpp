@@ -1,18 +1,18 @@
-#include "commands/upload_chain.h"
+#include "commands/upload_chain_jpeg.h"
 
 
-#include <gmock/gmock.h>
 #include <gtest/gtest.h>
+
 #include "file_handle_mock.h"
 #include "libusb_wrapper_mock.h"
-#include "magick_tool_mock.h"
+#include "magick_tool_jpeg_mock.h"
 
-class UploadChainTest : public testing::Test {
+class UploadChainJpegTest : public testing::Test {
 protected:
     static void SetUpTestSuite() {
         file_handle_mock = std::make_shared<testing::NiceMock<FileHandleMock>>();
         wrapper_mock = std::make_shared<testing::NiceMock<LibUsbWrapperMock>>();
-        transform_tool_mock = std::make_shared<testing::NiceMock<MagickToolMock>>();
+        transform_tool_mock = std::make_shared<testing::NiceMock<MagickToolJpegMock>>();
         default_array = std::vector<unsigned char>(65, 0);
         transaction_command = {0xec, 0x71};
         start_transaction_command = {0xec, 0x71, 0x0, 0x1, 0xa8, 0x7e, 0x0, 0x0};
@@ -28,7 +28,7 @@ protected:
     }
     static std::shared_ptr<testing::NiceMock<FileHandleMock>> file_handle_mock;
     static std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> wrapper_mock;
-    static std::shared_ptr<testing::NiceMock<MagickToolMock>> transform_tool_mock;
+    static std::shared_ptr<testing::NiceMock<MagickToolJpegMock>> transform_tool_mock;
     static std::vector<unsigned char> default_array;
     static std::vector<unsigned char> transaction_command;
     static std::vector<unsigned char> start_transaction_command;
@@ -40,18 +40,18 @@ protected:
     static constexpr int kDefaultBufferSize = 65;
 };
 
-std::shared_ptr<testing::NiceMock<FileHandleMock>> UploadChainTest::file_handle_mock;
-std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> UploadChainTest::wrapper_mock;
-std::shared_ptr<testing::NiceMock<MagickToolMock>> UploadChainTest::transform_tool_mock;
-std::vector<unsigned char> UploadChainTest::default_array;
-std::vector<unsigned char> UploadChainTest::transaction_command;
-std::vector<unsigned char> UploadChainTest::start_transaction_command;
-std::vector<unsigned char> UploadChainTest::select_memory_command;
-std::vector<unsigned char> UploadChainTest::start_upload_command;
-std::vector<unsigned char> UploadChainTest::reported_size_command;
-std::vector<unsigned char> UploadChainTest::end_upload_command;
+std::shared_ptr<testing::NiceMock<FileHandleMock>> UploadChainJpegTest::file_handle_mock;
+std::shared_ptr<testing::NiceMock<LibUsbWrapperMock>> UploadChainJpegTest::wrapper_mock;
+std::shared_ptr<testing::NiceMock<MagickToolJpegMock>> UploadChainJpegTest::transform_tool_mock;
+std::vector<unsigned char> UploadChainJpegTest::default_array;
+std::vector<unsigned char> UploadChainJpegTest::transaction_command;
+std::vector<unsigned char> UploadChainJpegTest::start_transaction_command;
+std::vector<unsigned char> UploadChainJpegTest::select_memory_command;
+std::vector<unsigned char> UploadChainJpegTest::start_upload_command;
+std::vector<unsigned char> UploadChainJpegTest::reported_size_command;
+std::vector<unsigned char> UploadChainJpegTest::end_upload_command;
 
-TEST_F(UploadChainTest, ExecuteSuccessFirstTry) {
+TEST_F(UploadChainJpegTest, ExecuteSuccessFirstTry) {
     file_handle_mock->SetIterations(kDefaultIterations);
     file_handle_mock->SetBuffer(std::shared_ptr<unsigned char[]>(new unsigned char[kDefaultBufferSize]));
     file_handle_mock->SetSize(kDefaultBufferSize);
@@ -67,7 +67,7 @@ TEST_F(UploadChainTest, ExecuteSuccessFirstTry) {
     EXPECT_CALL(*(transform_tool_mock.get()), IsAvailable).WillRepeatedly(testing::Return(true));
     EXPECT_CALL(*(file_handle_mock.get()), ReadFile).WillRepeatedly(testing::Return(true));
     EXPECT_CALL(*(file_handle_mock.get()), GetIterations).WillRepeatedly(testing::Return(1));
-    UploadChain upload_chain{transform_tool_mock, file_handle_mock, wrapper_mock, "", 1};
+    UploadChainJpeg upload_chain_jpeg{transform_tool_mock, file_handle_mock, wrapper_mock, "", 1};
     EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt)
             .WillOnce(testing::Return(true))
             .WillOnce(testing::Return(true)) // Default Gif
@@ -105,10 +105,10 @@ TEST_F(UploadChainTest, ExecuteSuccessFirstTry) {
     EXPECT_CALL(*(wrapper_mock.get()), SendBulk).WillRepeatedly(testing::Return(true));
 
 
-    EXPECT_EQ(upload_chain.Execute(), true);
+    EXPECT_EQ(upload_chain_jpeg.Execute(), true);
 }
 
-TEST_F(UploadChainTest, ExecuteSuccessSecondTry) {
+TEST_F(UploadChainJpegTest, ExecuteSuccessSecondTry) {
     file_handle_mock->SetIterations(kDefaultIterations);
     file_handle_mock->SetBuffer(std::shared_ptr<unsigned char[]>(new unsigned char[kDefaultBufferSize]));
     file_handle_mock->SetSize(kDefaultBufferSize);
@@ -124,7 +124,7 @@ TEST_F(UploadChainTest, ExecuteSuccessSecondTry) {
     EXPECT_CALL(*(transform_tool_mock.get()), IsAvailable).WillRepeatedly(testing::Return(true));
     EXPECT_CALL(*(file_handle_mock.get()), ReadFile).WillRepeatedly(testing::Return(true));
     EXPECT_CALL(*(file_handle_mock.get()), GetIterations).WillRepeatedly(testing::Return(1));
-    UploadChain upload_chain{transform_tool_mock, file_handle_mock, wrapper_mock, "", 1};
+    UploadChainJpeg upload_chain_jpeg{transform_tool_mock, file_handle_mock, wrapper_mock, "", 1};
     EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt)
             .WillOnce(testing::Return(false))
             .WillOnce(testing::Return(true))
@@ -163,10 +163,10 @@ TEST_F(UploadChainTest, ExecuteSuccessSecondTry) {
     EXPECT_CALL(*(wrapper_mock.get()), SendBulk).WillRepeatedly(testing::Return(true));
 
 
-    EXPECT_EQ(upload_chain.Execute(), true);
+    EXPECT_EQ(upload_chain_jpeg.Execute(), true);
 }
 
-TEST_F(UploadChainTest, ExecuteSuccessThirdTry) {
+TEST_F(UploadChainJpegTest, ExecuteSuccessThirdTry) {
     file_handle_mock->SetIterations(kDefaultIterations);
     file_handle_mock->SetBuffer(std::shared_ptr<unsigned char[]>(new unsigned char[kDefaultBufferSize]));
     file_handle_mock->SetSize(kDefaultBufferSize);
@@ -182,7 +182,7 @@ TEST_F(UploadChainTest, ExecuteSuccessThirdTry) {
     EXPECT_CALL(*(transform_tool_mock.get()), IsAvailable).WillRepeatedly(testing::Return(true));
     EXPECT_CALL(*(file_handle_mock.get()), ReadFile).WillRepeatedly(testing::Return(true));
     EXPECT_CALL(*(file_handle_mock.get()), GetIterations).WillRepeatedly(testing::Return(1));
-    UploadChain upload_chain{transform_tool_mock, file_handle_mock, wrapper_mock, "", 1};
+    UploadChainJpeg upload_chain_jpeg{transform_tool_mock, file_handle_mock, wrapper_mock, "", 1};
     EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt)
             .WillOnce(testing::Return(false))
             .WillOnce(testing::Return(false))
@@ -222,10 +222,10 @@ TEST_F(UploadChainTest, ExecuteSuccessThirdTry) {
     EXPECT_CALL(*(wrapper_mock.get()), SendBulk).WillRepeatedly(testing::Return(true));
 
 
-    EXPECT_EQ(upload_chain.Execute(), true);
+    EXPECT_EQ(upload_chain_jpeg.Execute(), true);
 }
 
-TEST_F(UploadChainTest, ExecuteFail) {
+TEST_F(UploadChainJpegTest, ExecuteFail) {
     file_handle_mock->SetIterations(kDefaultIterations);
     file_handle_mock->SetBuffer(std::shared_ptr<unsigned char[]>(new unsigned char[kDefaultBufferSize]));
     file_handle_mock->SetSize(kDefaultBufferSize);
@@ -241,10 +241,10 @@ TEST_F(UploadChainTest, ExecuteFail) {
     EXPECT_CALL(*(transform_tool_mock.get()), IsAvailable).WillRepeatedly(testing::Return(true));
     EXPECT_CALL(*(file_handle_mock.get()), ReadFile).WillRepeatedly(testing::Return(true));
     EXPECT_CALL(*(file_handle_mock.get()), GetIterations).WillRepeatedly(testing::Return(1));
-    UploadChain upload_chain{transform_tool_mock, file_handle_mock, wrapper_mock, "", 1};
+    UploadChainJpeg upload_chain_jpeg{transform_tool_mock, file_handle_mock, wrapper_mock, "", 1};
     EXPECT_CALL(*(wrapper_mock.get()), SendInterrupt)
             .WillOnce(testing::Return(false))
             .WillOnce(testing::Return(false))
             .WillOnce(testing::Return(false)); // Default Gif
-    EXPECT_EQ(upload_chain.Execute(), false);
+    EXPECT_EQ(upload_chain_jpeg.Execute(), false);
 }

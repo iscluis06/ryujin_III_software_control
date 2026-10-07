@@ -92,7 +92,8 @@ std::unique_ptr<ExecuteBase> Factory::GetCommand(args::ArgumentParser &parser) {
         return std::make_unique<ClockChain>(wrapper_);
     }
     if (mapped_flags.count("show slots")) {
-        return std::make_unique<ShowSlotsCommand>();
+        return std::make_unique<ShowSlotsCommand>(
+                std::make_shared<MemorySlotsStore>(RyujinConstants::kRyujinPersistentDirectory));
     }
     if (mapped_flags.count("hardware monitor config")) {
         if (!mapped_flags.count("line1") || !mapped_flags.count("mode") || !mapped_flags.count("style")) {

@@ -1,9 +1,9 @@
 #include "commands/show_slots_command.h"
-#include "stores/memory_slots_store.h"
+
+ShowSlotsCommand::ShowSlotsCommand(std::shared_ptr<MemorySlotsStore> store) : store_(std::move(store)) {}
 
 bool ShowSlotsCommand::Execute() {
-    MemorySlotsStore memory_slots_store(RyujinConstants::kRyujinPersistentDirectory);
-    memory_slots_store.PrintAll();
+    store_->PrintAll();
     return true;
 }
 std::string ShowSlotsCommand::GetClassName() const { return "ShowSlotsCommand"; }

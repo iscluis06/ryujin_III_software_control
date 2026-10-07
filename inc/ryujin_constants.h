@@ -66,7 +66,7 @@ public:
     /**
      * Default Ryujin persistent data directory
      */
-    static constexpr char *kRyujinPersistentDirectory = "/var/lib/ryujinIII";
+    inline static const std::string kRyujinPersistentDirectory = "/var/lib/ryujinIII";
 };
 
 #endif // RYUJINIII_RYUJIN_CONSTANTS_H

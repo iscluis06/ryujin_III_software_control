@@ -18,6 +18,7 @@ bool DeleteChain::Execute() {
     while (no_retries < this->kMaxTries_) {
         if (this->CommandChain::Execute()) {
             result = true;
+            break;
         }
         no_retries++;
     }

@@ -32,7 +32,13 @@ private:
      * Max number of tries before canceling command
      */
     const int kMaxTries_ = 3;
+    /**
+     * Reference to file handle tool
+     */
     std::shared_ptr<FileHandleBase> file_tool_;
+    /**
+     * Property to keep track of selected index
+     */
     int index_;
 };
 

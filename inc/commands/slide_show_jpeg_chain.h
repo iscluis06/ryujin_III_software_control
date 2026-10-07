@@ -3,9 +3,21 @@
 
 #include "commands/command_chain.h"
 
+/**
+ * Slideshow chain command (jpegs)
+ */
 class SlideShowJpegChain : public CommandChain {
 public:
+    /**
+     * Default constructor
+     * @param base Reference to libusb wrapper
+     * @param indexes Vector of selected jpegs indexes (0-9)
+     */
     SlideShowJpegChain(std::shared_ptr<LibUsbWrapperBase> base, const std::vector<int> &indexes);
+    /**
+     * Execution of chain commands
+     * @return True on success, otherwise false
+     */
     bool Execute() override;
 
 private:

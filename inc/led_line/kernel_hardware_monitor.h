@@ -15,12 +15,12 @@ public:
     /**
      * Default destructor
      */
-    virtual ~KernelHardwareMonitor() override = default;
+    ~KernelHardwareMonitor() override = default;
     /**
      * Define a label to be shown led display, maximum 18 characters according to my findings
      * @return The value to shown on first line
      */
-    virtual std::string GetLine() override;
+    std::string GetLine() override;
     /**
      * Add a hardware label to hardware_labels_ list, which be used to match against all sensor of
      * a given hardware name, when a match is find the value counterpart will be used to obtain sensor data.
@@ -47,13 +47,13 @@ public:
      * Define a label to be shown led display, maximum 18 characters according to my findings
      * @return The value to shown on first line
      */
-    virtual std::string GetTitle() override = 0;
+    std::string GetTitle() override = 0;
 
     /**
      * Utility method for testing purposes
      * @return The class name
      */
-    virtual std::string GetClassName() override = 0;
+    std::string GetClassName() override = 0;
 
 private:
     /**

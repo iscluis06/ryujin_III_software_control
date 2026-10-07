@@ -22,40 +22,26 @@ void MemorySlotsStore::ReadSlots(std::string file_path, std::array<std::string, 
         if (i == 10) break;
     }
 }
-bool MemorySlotsStore::WriteSlot(int index, const std::string &path, SlotType type) {
+void MemorySlotsStore::WriteSlot(int index, const std::string &path, SlotType type) {
     std::array<std::string, 10> &slot = type == SlotType::GIF ? this->gif_slots_ : this->jpeg_slots_;
     if (std::filesystem::exists(slot[index])) {
         std::filesystem::remove(slot[index]);
     }
     slot[index] = path;
-    return true;
 }
-bool MemorySlotsStore::RemoveSlot(int index, SlotType type) {
+void MemorySlotsStore::RemoveSlot(int index, SlotType type) {
     std::array<std::string, 10> &slot = type == SlotType::GIF ? this->gif_slots_ : this->jpeg_slots_;
     if (std::filesystem::exists(slot[index])) {
         std::filesystem::remove(slot[index]);
     }
     slot[index] = "";
-    return true;
 }
 
-bool MemorySlotsStore::UpdateSlots() {
-    std::ofstream gif_slots{this->path_ + "/" + this->gif_file, std::ios::trunc};
-    std::ofstream jpeg_slots{this->path_ + "/" + this->jpeg_file, std::ios::trunc};
-    std::string text = "";
-    for (const std::string &line: this->gif_slots_) {
-        text += line + "\n";
-    }
-    gif_slots.write(text.data(), text.size());
-    text = "";
-    for (const std::string &line: this->jpeg_slots_) {
-        text += line + "\n";
-    }
-    jpeg_slots.write(text.data(), text.size());
-    gif_slots.close();
-    jpeg_slots.close();
-    return true;
+void MemorySlotsStore::UpdateSlots() {
+    this->UpdateSlot(SlotType::GIF);
+    this->UpdateSlot(SlotType::JPEG);
 }
+
 void MemorySlotsStore::PrintSlots(SlotType type, const std::string &title) {
     std::array<std::string, 10> &slots = type == SlotType::GIF ? this->gif_slots_ : this->jpeg_slots_;
     int i = 0;
@@ -69,4 +55,16 @@ void MemorySlotsStore::PrintSlots(SlotType type, const std::string &title) {
 void MemorySlotsStore::PrintAll() {
     this->PrintSlots(SlotType::GIF, "GIFS");
     this->PrintSlots(SlotType::JPEG, "JPEGS");
+}
+
+void MemorySlotsStore::UpdateSlot(SlotType type) {
+    std::string file_path_string = type == SlotType::GIF ? this->gif_file : this->jpeg_file;
+    std::array<std::string, 10> &slot = type == SlotType::GIF ? this->gif_slots_ : this->jpeg_slots_;
+    std::ofstream file_path{this->path_ + "/" + file_path_string, std::ios::trunc};
+    std::string text = "";
+    for (const std::string &line: slot) {
+        text += line + "\n";
+    }
+    file_path.write(text.data(), static_cast<long>(text.size()));
+    file_path.close();
 }

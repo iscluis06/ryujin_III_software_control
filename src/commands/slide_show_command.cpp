@@ -6,9 +6,9 @@ SlideShowCommand::SlideShowCommand(std::shared_ptr<LibUsbWrapperBase> base, cons
     this->ShouldReadBack(true);
     int instruction_number = 0;
     for (int gif: gifs) {
-        this->default_gif_command[this->kGifIndex] = gif;
-        this->kInstruction.insert(this->kInstruction.end(), this->default_gif_command.begin(),
-                                  this->default_gif_command.end());
+        this->kDefaultGifCommand[this->kGifIndex] = gif;
+        this->kInstruction.insert(this->kInstruction.end(), this->kDefaultGifCommand.begin(),
+                                  this->kDefaultGifCommand.end());
         instruction_number++;
         if (instruction_number == 10) {
             break;

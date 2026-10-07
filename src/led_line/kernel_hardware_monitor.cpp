@@ -10,7 +10,7 @@ std::string KernelHardwareMonitor::GetLine() {
 }
 void KernelHardwareMonitor::AddLabel(std::string label) { this->hardware_labels_.emplace_front(label); }
 void KernelHardwareMonitor::SetHardwareMonitorName(const std::string& name) { this->hardware_monitor_name_ = name; }
-bool KernelHardwareMonitor::IsHardwareNameAvailable() { return this->GetHardwareMonitorNamePath() != ""; }
+bool KernelHardwareMonitor::IsHardwareNameAvailable() { return !this->GetHardwareMonitorNamePath().empty(); }
 std::string KernelHardwareMonitor::GetInputValue() {
     std::string amd_hardware_monitor_path = this->GetHardwareMonitorNamePath();
     for (auto const& hw_entry: std::filesystem::directory_iterator(amd_hardware_monitor_path)) {

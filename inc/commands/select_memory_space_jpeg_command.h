@@ -2,7 +2,7 @@
 #define RYUJINIII_SELECT_MEMORY_SPACE_COMMAND_H
 #include "base_command.h"
 /**
- * Command to select the memory space
+ * Command to select the memory space (0-9)
  */
 class SelectMemorySpaceJPEGCommand : public BaseCommand {
 public:
@@ -28,6 +28,9 @@ private:
      * Default instruction to validate the response
      */
     const std::vector<unsigned char> kValidateResponse = {0xec, 0x72};
+    /**
+     * Index for the jpeg memory slot
+     */
     const int kJpegIndex = 4;
 };
 

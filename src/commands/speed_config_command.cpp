@@ -14,18 +14,18 @@ SpeedConfigCommand::SpeedConfigCommand(std::shared_ptr<LibUsbWrapperBase> wrappe
 }
 
 bool SpeedConfigCommand::Execute() {
-    auto buffer = this->GetWrapper()->FillArray(this->default_instruction_.data(), this->default_instruction_.size(),
+    auto buffer = this->GetWrapper()->FillArray(this->kDefaultInstruction_.data(), this->kDefaultInstruction_.size(),
                                                 RyujinConstants::kDefaultInterruptDataLength);
     std::shared_ptr<HardwareStatusStore> store = std::make_shared<HardwareStatusStore>();
     HardwareStatusCommand status_command(this->GetWrapper(), store);
     status_command.Execute();
     if (device_selected_ == DeviceSelector::FAN_DEVICE) {
-        buffer[SpeedConfigCommand::fan_speed_offset_] = speed_;
-        buffer[SpeedConfigCommand::pump_speed_offset_] = DefaultSpeedConfig(store->GetPumpSpeed());
+        buffer[SpeedConfigCommand::kFanSpeedOffset_] = speed_;
+        buffer[SpeedConfigCommand::kPumpSpeedOffset_] = DefaultSpeedConfig(store->GetPumpSpeed());
     }
     if (device_selected_ == DeviceSelector::PUMP_DEVICE) {
-        buffer[SpeedConfigCommand::pump_speed_offset_] = speed_;
-        buffer[SpeedConfigCommand::fan_speed_offset_] = DefaultSpeedConfig(store->GetFanSpeed());
+        buffer[SpeedConfigCommand::kPumpSpeedOffset_] = speed_;
+        buffer[SpeedConfigCommand::kFanSpeedOffset_] = DefaultSpeedConfig(store->GetFanSpeed());
     }
     this->SetInstruction(buffer);
 

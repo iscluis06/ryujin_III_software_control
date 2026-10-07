@@ -4,7 +4,7 @@
 #include "command_chain.h"
 
 /**
- * Command chain to delete a gif from memory (1-10)
+ * Command chain to delete a gif from memory (0-9)
  */
 class DeleteChain : public CommandChain {
 public:
@@ -30,6 +30,9 @@ private:
      * Default number of tries before canceling command retries
      */
     const int kMaxTries_ = 3;
+    /**
+     * Property to keep track of selected index
+     */
     int index_;
 };
 

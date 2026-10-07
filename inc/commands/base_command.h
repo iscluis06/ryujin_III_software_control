@@ -36,7 +36,7 @@ public:
      * then the value from message_back_ will be validate it against validation_message_;
      * @return True on success, otherwise false
      */
-    virtual bool Execute() override;
+    bool Execute() override;
 
     /**
      *  Method to validate message argument
@@ -100,7 +100,7 @@ public:
      * Sets the input endpoint to execute the transfers against
      * @param endpoint_input The input endpoint to use to execute a transfer
      */
-    void SetEndpointIn(int endpoint_in);
+    void SetEndpointIn(int endpoint_input);
     /**
      * Sets the default transfer size, so all messages can be pad using 0's during set instruction.
      * <br>This is mostly a helper function to change the default from ryujin constants.
