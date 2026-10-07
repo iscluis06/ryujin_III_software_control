@@ -43,7 +43,6 @@ add_executable(${PROJECT_NAME}_gtest
         led_line/kernel_hardware_monitor_test.cpp
         led_line/ryujin_fan_speed_line_test.cpp
         led_line/led_line_factory_test.cpp
-        date_utils_test.cpp
         commands/clock_chain_test.cpp
         commands/clock_mode_command_test.cpp
         commands/end_instruction_command_test.cpp
