@@ -57,7 +57,7 @@ add_executable(${PROJECT_NAME}_gtest
         commands/slide_show_jpeg_chain_test.cpp
         commands/slide_show_jpeg_command_test.cpp
         commands/speed_config_command_test.cpp
-        start_clock_command_test.cpp
+        commands/start_clock_command_test.cpp
         commands/start_instruction_command_test.cpp
         commands/upload_chain_jpeg_test.cpp
         mocks/magick_tool_jpeg_mock.h
