@@ -4,10 +4,11 @@
 
 #include "ryujin_constants.h"
 
-SelectMemorySpaceCommand::SelectMemorySpaceCommand(std::shared_ptr<LibUsbWrapperBase> wrapper, int memory_index) :
-    BaseCommand(std::move(wrapper)) {
+SelectMemorySpaceCommand::SelectMemorySpaceCommand(std::shared_ptr<LibUsbWrapperBase> wrapper, int memory_index,
+                                                   MemoryType type) : BaseCommand(std::move(wrapper)) {
     auto buffer = this->GetWrapper()->FillArray(this->kSelectMemory.data(), this->kSelectMemory.size(),
                                                 RyujinConstants::kDefaultInterruptDataLength);
+    buffer[kMemoryTypeIndex] = static_cast<unsigned char>(type);
     buffer[4] = memory_index;
     this->SetInstruction(buffer);
     this->SetEndpointOut(RyujinConstants::kHidDeviceOut);

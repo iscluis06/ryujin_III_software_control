@@ -63,8 +63,10 @@ BuildArgsParser::BuildArgsParser() {
             *led_display_config, "slideshow jpeg", "Creates a slideshow between jpeg images", {"slideshow-jpeg"}));
     this->options.emplace_front(
             new args::Flag(*led_display_config, "clock mode", "Activates clock mode", {"clock-mode"}));
-    this->options.emplace_front(new args::ValueFlag<int>(*led_display_config, "delete from memory",
-                                                         "Delete a gif from memory", {"delete-from-memory"}));
+    this->options.emplace_front(new args::ValueFlag<int>(*led_display_config, "delete a gif from memory",
+                                                         "Delete a gif from memory", {"delete-gif"}));
+    this->options.emplace_front(new args::ValueFlag<int>(*led_display_config, "delete a jpeg from memory",
+                                                         "Delete a jpeg from memory", {"delete-jpeg"}));
 
     this->options.emplace_front(new args::Flag(*hardware_monitor, "hardware monitor",
                                                "Displays default hardware monitor, 1 line, mode cyberpunk, style 1 and "
@@ -90,8 +92,8 @@ BuildArgsParser::BuildArgsParser() {
                                      "monitor implementations for options ",
                                      {"line1"}));
 
-    this->options.emplace_front(
-            new args::Group(*hardware_monitor_customization, "More config options", args::Group::Validators::DontCare));
+    this->options.emplace_front(new args::Group(*hardware_monitor_customization, "More hardware config options",
+                                                args::Group::Validators::DontCare));
     args::Group *hardware_monitor_additional = dynamic_cast<args::Group *>(this->options.front());
 
     this->options.emplace_front(

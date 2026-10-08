@@ -204,15 +204,24 @@ TEST_F(FactoryTest, SelectJpegFail) {
     CommandTest(std::vector<std::string>{"--select-jpeg", "1"}, std::make_unique<DefaultGifCommand>(mock), false);
 }
 
-TEST_F(FactoryTest, DeleteFromMemorySuccess) {
+TEST_F(FactoryTest, DeleteGifSuccess) {
     EXPECT_CALL(*(mock.get()), FillArray).WillRepeatedly(testing::Return(default_array));
-    CommandTest(std::vector<std::string>{"--delete-from-memory", "1"}, std::make_unique<DeleteChain>(mock, 1), true);
+    CommandTest(std::vector<std::string>{"--delete-gif", "1"}, std::make_unique<DeleteChain>(mock, 1), true);
 }
 
-TEST_F(FactoryTest, DeleteFromMemoryFail) {
+TEST_F(FactoryTest, DeleteGifFail) {
     EXPECT_CALL(*(mock.get()), FillArray).WillRepeatedly(testing::Return(default_array));
-    CommandTest(std::vector<std::string>{"--delete-from-memory", "1"}, std::make_unique<DefaultGifCommand>(mock),
-                false);
+    CommandTest(std::vector<std::string>{"--delete-gif", "1"}, std::make_unique<DefaultGifCommand>(mock), false);
+}
+
+TEST_F(FactoryTest, DeleteJpegSuccess) {
+    EXPECT_CALL(*(mock.get()), FillArray).WillRepeatedly(testing::Return(default_array));
+    CommandTest(std::vector<std::string>{"--delete-jpeg", "1"}, std::make_unique<DeleteChain>(mock, 1), true);
+}
+
+TEST_F(FactoryTest, DeleteJpegFail) {
+    EXPECT_CALL(*(mock.get()), FillArray).WillRepeatedly(testing::Return(default_array));
+    CommandTest(std::vector<std::string>{"--delete-jpeg", "1"}, std::make_unique<DefaultGifCommand>(mock), false);
 }
 
 TEST_F(FactoryTest, ClockModeSuccess) {

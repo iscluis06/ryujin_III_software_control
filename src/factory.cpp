@@ -9,6 +9,7 @@
 #include "commands/hardware_monitor_chain_config.h"
 #include "commands/select_gif_command.h"
 #include "commands/select_jpeg_chain.h"
+#include "commands/select_memory_space_command.h"
 #include "commands/show_slots_command.h"
 #include "commands/slide_show_chain.h"
 #include "commands/slide_show_jpeg_chain.h"
@@ -68,9 +69,13 @@ std::unique_ptr<ExecuteBase> Factory::GetCommand(args::ArgumentParser &parser) {
         auto index = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["select jpeg"]);
         return std::make_unique<SelectJpegChain>(wrapper_, args::get(*index));
     }
-    if (mapped_flags.count("delete from memory")) {
-        auto index = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["delete from memory"]);
+    if (mapped_flags.count("delete a gif from memory")) {
+        auto index = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["delete a gif from memory"]);
         return std::make_unique<DeleteChain>(wrapper_, args::get(*index));
+    }
+    if (mapped_flags.count("delete a jpeg from memory")) {
+        auto index = dynamic_cast<args::ValueFlag<int> *>(mapped_flags["delete a jpeg from memory"]);
+        return std::make_unique<DeleteChain>(wrapper_, args::get(*index), SelectMemorySpaceCommand::MemoryType::JPEG);
     }
     if (mapped_flags.count("upload gif") && mapped_flags.count("select gif")) {
         auto path = dynamic_cast<args::ValueFlag<std::string> *>(mapped_flags["upload gif"]);

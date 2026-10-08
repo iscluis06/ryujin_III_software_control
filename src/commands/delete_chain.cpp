@@ -3,11 +3,13 @@
 #include "commands/default_gif_command.h"
 #include "commands/delete_command.h"
 #include "commands/select_memory_space_command.h"
-#include "stores/memory_slots_store.h"
 
-DeleteChain::DeleteChain(std::shared_ptr<LibUsbWrapperBase> wrapper, int memory_index) : CommandChain() {
+DeleteChain::DeleteChain(std::shared_ptr<LibUsbWrapperBase> wrapper, int memory_index,
+                         SelectMemorySpaceCommand::MemoryType type) : CommandChain() {
+    this->type_ = type == SelectMemorySpaceCommand::MemoryType::GIF ? MemorySlotsStore::SlotType::GIF
+                                                                    : MemorySlotsStore::SlotType::JPEG;
     this->AddCommand(new DefaultGifCommand(wrapper));
-    this->AddCommand(new SelectMemorySpaceCommand(wrapper, memory_index));
+    this->AddCommand(new SelectMemorySpaceCommand(wrapper, memory_index, type));
     this->AddCommand(new DeleteCommand(wrapper));
     this->index_ = memory_index;
 }
@@ -23,7 +25,7 @@ bool DeleteChain::Execute() {
         no_retries++;
     }
     MemorySlotsStore slots(RyujinConstants::kRyujinPersistentDirectory);
-    slots.RemoveSlot(this->index_);
+    slots.RemoveSlot(this->index_, this->type_);
     slots.UpdateSlots();
     return result;
 }

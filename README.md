@@ -125,8 +125,10 @@ Ryujin III Management Tool
         jpeg...]                          Creates a slideshow between jpeg
                                           images
         --clock-mode                      Activates clock mode
-        --delete-from-memory=[delete from
+        --delete-gif=[delete a gif from
         memory]                           Delete a gif from memory
+        --delete-jpeg=[delete a jpeg from
+        memory]                           Delete a jpeg from memory
       Hardware monitor default
         --hw-monitor                      Displays default hardware monitor, 1
                                           line, mode cyberpunk, style 1 and
@@ -150,7 +152,7 @@ Ryujin III Management Tool
         --line1=[line1]                   Configures the first line for hardware
                                           monitor, refer to hardware monitor
                                           implementations for options
-        More config options
+        More hardware config options
           --line2=[line2]                   Configures the first line for
                                             hardware monitor, refer to hardware
                                             monitor implementations for options
