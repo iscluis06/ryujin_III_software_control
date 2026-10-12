@@ -17,6 +17,7 @@
 #include "commands/turn_on_command.h"
 #include "commands/upload_chain.h"
 #include "commands/upload_chain_jpeg.h"
+#include "commands/version_command.h"
 #include "file_handle.h"
 #include "magick_tool.h"
 #include "mocks/libusb_wrapper_mock.h"
@@ -168,6 +169,16 @@ TEST_F(FactoryTest, ShowSlotsSuccess) {
 TEST_F(FactoryTest, ShowSlotsFail) {
     EXPECT_CALL(*(mock.get()), FillArray).WillRepeatedly(testing::Return(default_array));
     CommandTest(std::vector<std::string>{"--show-slots"}, std::make_unique<DefaultGifCommand>(mock), false);
+}
+
+TEST_F(FactoryTest, ShowVersionSuccess) {
+    EXPECT_CALL(*(mock.get()), FillArray).WillRepeatedly(testing::Return(default_array));
+    CommandTest(std::vector<std::string>{"--show-version"}, std::make_unique<VersionCommand>(), true);
+}
+
+TEST_F(FactoryTest, ShowVersionFail) {
+    EXPECT_CALL(*(mock.get()), FillArray).WillRepeatedly(testing::Return(default_array));
+    CommandTest(std::vector<std::string>{"--show-version"}, std::make_unique<DefaultGifCommand>(mock), false);
 }
 
 TEST_F(FactoryTest, SlideShowSuccess) {

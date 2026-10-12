@@ -61,6 +61,7 @@ add_executable(${PROJECT_NAME}_gtest
         commands/start_instruction_command_test.cpp
         commands/upload_chain_jpeg_test.cpp
         mocks/magick_tool_jpeg_mock.h
+        commands/version_command_test.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}_gtest ${libgtest} ${libgtest_main} ${libgmock} ${libusb} ${PROJECT_NAME}_library ${PROJECT_NAME}_args_library)
