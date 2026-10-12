@@ -1,0 +1,14 @@
+#ifndef RYUJINIII_VERSION_COMMAND_H
+#define RYUJINIII_VERSION_COMMAND_H
+#include "execute_base.h"
+
+#define RYUJINIII_VERSION "@CMAKE_PROJECT_VERSION@"
+
+class VersionCommand : public ExecuteBase {
+    public:
+    bool Execute() override;
+    std::string GetClassName() const override;
+    std::string GetVersion();
+};
+
+#endif // RYUJINIII_VERSION_COMMAND_H

@@ -3,12 +3,13 @@ project(ryujinIII)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MAJOR_VERSION 1)
-set(CMAKE_MINOR_VERSION 1)
+set(CMAKE_MINOR_VERSION 2)
 set(CMAKE_PATCH_VERSION 0)
 set(CMAKE_TWEAK_VERSION 0)
 set(CMAKE_PROJECT_VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}.${CMAKE_TWEAK_VERSION})
 
 configure_file(README.md ${CMAKE_CURRENT_BINARY_DIR}/README.md COPYONLY)
+configure_file(inc/commands/version_command.h.in ${CMAKE_CURRENT_SOURCE_DIR}/inc/commands/version_command.h)
 
 find_program(CPPCHECK_PATH NAMES cppcheck)
 if (CPPCHECK_PATH)
@@ -84,6 +85,7 @@ add_library(${PROJECT_NAME}_library
         src/stores/memory_slots_store.cpp
         src/date_utils.cpp
         src/commands/show_slots_command.cpp
+        src/commands/version_command.cpp
 )
 
 add_library(${PROJECT_NAME}_args_library

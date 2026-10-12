@@ -48,6 +48,8 @@ BuildArgsParser::BuildArgsParser() {
     this->options.emplace_front(new args::ValueFlag<int>(*speed_config_group, "pump speed config", "Pump Speed config",
                                                          {"pump-speed-config"}));
 
+    this->options.emplace_front(new args::Flag(*information_group, "show version",
+                                               "Displays current ryujinIII library version", {"show-version"}));
     this->options.emplace_front(
             new args::Flag(*information_group, "show slots", "Displays available memory slots", {"show-slots"}));
 

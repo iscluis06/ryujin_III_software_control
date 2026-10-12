@@ -18,6 +18,7 @@
 #include "commands/turn_on_command.h"
 #include "commands/upload_chain.h"
 #include "commands/upload_chain_jpeg.h"
+#include "commands/version_command.h"
 #include "file_handle.h"
 #include "magick_tool.h"
 #include "magick_tool_jpeg.h"
@@ -99,6 +100,9 @@ std::unique_ptr<ExecuteBase> Factory::GetCommand(args::ArgumentParser &parser) {
     if (mapped_flags.count("show slots")) {
         return std::make_unique<ShowSlotsCommand>(
                 std::make_shared<MemorySlotsStore>(RyujinConstants::kRyujinPersistentDirectory));
+    }
+    if (mapped_flags.count("show version")) {
+        return std::make_unique<VersionCommand>();
     }
     if (mapped_flags.count("hardware monitor config")) {
         if (!mapped_flags.count("line1") || !mapped_flags.count("mode") || !mapped_flags.count("style")) {

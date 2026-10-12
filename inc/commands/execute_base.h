@@ -1,6 +1,8 @@
 #ifndef RYUJINIII_EXECUTE_BASE_H
 #define RYUJINIII_EXECUTE_BASE_H
 
+#include <string>
+
 /**
  * Default abstract class to be able to execute command and chains indistinctly
  */

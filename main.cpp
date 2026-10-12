@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     }
     if (argc < 2) {
         std::cout << "Missing option " << std::endl;
-        std::cout << parser;
+        std::cout << *parser->GetParser();
         exit(0);
     }
     try {
