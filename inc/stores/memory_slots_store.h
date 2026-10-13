@@ -45,6 +45,13 @@ public:
      */
     virtual void PrintAll();
 
+    /**
+     * Method to return a list of selected slot type
+     * @param type Desired slot type to get
+     * @return Return the list of the selected slot type
+     */
+    std::array<std::string, 10> GetSlotsByType(SlotType type = SlotType::GIF);
+
 private:
     /**
      * Update the selected slot type into path + file (selected slot type)

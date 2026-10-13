@@ -57,6 +57,11 @@ void MemorySlotsStore::PrintAll() {
     this->PrintSlots(SlotType::JPEG, "JPEGS");
 }
 
+std::array<std::string, 10> MemorySlotsStore::GetSlotsByType(SlotType type) {
+    std::array<std::string, 10> &slots = type == SlotType::GIF ? this->gif_slots_ : this->jpeg_slots_;
+    return slots;
+}
+
 void MemorySlotsStore::UpdateSlot(SlotType type) {
     std::string file_path_string = type == SlotType::GIF ? this->gif_file : this->jpeg_file;
     std::array<std::string, 10> &slot = type == SlotType::GIF ? this->gif_slots_ : this->jpeg_slots_;
