@@ -56,10 +56,18 @@ jobs:
           path: ./artifacts
           merge-multiple: true
 
+      - name: Changelog
+        uses: Bullrich/generate-release-changelog@master
+        id: Changelog
+        env:
+          REPO: ${{ github.repository }}
+
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           files: ./artifacts/**/*
+          body: |
+            ${{ steps.Changelog.outputs.changelog }}
           generate_release_notes: true

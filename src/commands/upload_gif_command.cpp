@@ -13,9 +13,10 @@ UploadGifCommand::UploadGifCommand(std::shared_ptr<LibUsbWrapperBase> wrapper,
 bool UploadGifCommand::Execute() {
     std::vector<unsigned char> buffer(RyujinConstants::kDefaultBulkLength, 0);
     for (int i = 0; i < this->file_handle_->GetIterations(); i++) {
-        int current_size = this->file_handle_->GetSize() - ((i + 1) * RyujinConstants::kDefaultBulkLength);
-        int size_to_copy = current_size < 0 ? current_size + RyujinConstants::kDefaultBulkLength
-                                            : RyujinConstants::kDefaultBulkLength;
+        int current_size = this->file_handle_->GetSize() - (i * RyujinConstants::kDefaultBulkLength);
+        int size_to_copy =
+                current_size > RyujinConstants::kDefaultBulkLength ? RyujinConstants::kDefaultBulkLength : current_size;
+        memset(buffer.data(), 0, sizeof(unsigned char) * RyujinConstants::kDefaultBulkLength);
         memcpy(buffer.data(), this->file_handle_->GetBuffer().get() + (i * RyujinConstants::kDefaultBulkLength),
                sizeof(unsigned char) * size_to_copy);
         if (!this->GetWrapper()->SendBulk(RyujinConstants::kVendorDeviceOut, buffer)) {
@@ -28,7 +29,6 @@ bool UploadGifCommand::Execute() {
             std::cerr << "Failed to read from input endpoint" << std::endl;
             return false;
         }
-        memset(buffer.data(), 0, RyujinConstants::kDefaultBulkLength);
         std::cout << "\rUpload porcentage: ";
         if (i + 1 < this->file_handle_->GetIterations()) {
             std::cout << (int) (100 * ((float) (i + 1) / (float) this->file_handle_->GetIterations())) << "%"

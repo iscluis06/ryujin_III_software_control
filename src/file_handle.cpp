@@ -18,7 +18,7 @@ bool FileHandle::ReadFile() {
         std::cerr << "Couldn't read file or invalid path" << std::endl;
         return false;
     }
-    this->SetIterations(std::ceil(this->GetSize() / RyujinConstants::kDefaultBulkLength));
+    this->SetIterations(std::ceil(static_cast<float>(this->GetSize()) / RyujinConstants::kDefaultBulkLength));
     this->SetIterations(this->GetIterations() == 0 ? 1 : this->GetIterations());
     return true;
 };
