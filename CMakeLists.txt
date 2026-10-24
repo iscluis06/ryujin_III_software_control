@@ -4,7 +4,7 @@ project(ryujinIII)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MAJOR_VERSION 1)
 set(CMAKE_MINOR_VERSION 3)
-set(CMAKE_PATCH_VERSION 0)
+set(CMAKE_PATCH_VERSION 1)
 set(CMAKE_TWEAK_VERSION 0)
 set(CMAKE_PROJECT_VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}.${CMAKE_TWEAK_VERSION})
 
@@ -86,7 +86,6 @@ add_library(${PROJECT_NAME}_library
         src/ryujinIII_library/commands/show_slots_command.cpp
         src/ryujinIII_library/commands/version_command.cpp
         src/ryujinIII_library/commands/load_jpeg_to_memory_command.cpp
-        src/ryujinIII_library/commands/initiate_jpeg_slideshow_command.cpp
 )
 
 add_library(${PROJECT_NAME}_args_library
