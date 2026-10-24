@@ -2,7 +2,7 @@
 #define RYUJINIII_MAGICK_TOOL_JPEG_MOCK_H
 
 #include <gmock/gmock.h>
-#include "magick_tool_jpeg.h"
+#include "tools/magick_tool_jpeg.h"
 
 class MagickToolJpegMock : public MagickToolJpeg {
 public:

@@ -2,7 +2,7 @@
 #define RYUJINIII_FILE_HANDLE_MOCK_H
 
 #include <gmock/gmock.h>
-#include "file_handle_base.h"
+#include "utils/file_handle_base.h"
 
 class FileHandleMock : public FileHandleBase {
 public:

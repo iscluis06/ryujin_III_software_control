@@ -2,7 +2,7 @@
 #define RYUJINIII_TRANSFORM_TOOL_MOCK_H
 
 #include <gmock/gmock.h>
-#include "transform_tool_base.h"
+#include "tools/transform_tool_base.h"
 
 class MagickToolMock : public TransformToolBase {
 public:

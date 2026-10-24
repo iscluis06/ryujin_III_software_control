@@ -1,15 +1,15 @@
-#include "magick_tool.h"
+#include "inc/ryujinIII_library/tools/magick_tool.h"
 
 #include <args.hxx>
 #include <cmath>
 #include <iostream>
 
-#include "build_args_parser.h"
 #include "commands/base_command.h"
 #include "factory.h"
-#include "led_line/led_line_factory.h"
-#include "ryujin_constants.h"
-#include "ryujin_device.h"
+#include "inc/ryujinIII_args_library/build_args_parser.h"
+#include "inc/ryujinIII_library/led_line/led_line_factory.h"
+#include "inc/ryujinIII_library/ryujin/ryujin_constants.h"
+#include "inc/ryujinIII_library/ryujin/ryujin_device.h"
 
 int main(int argc, char *argv[]) {
     auto parser = new BuildArgsParser();
