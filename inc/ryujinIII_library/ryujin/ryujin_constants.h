@@ -9,7 +9,7 @@ struct RyujinConstants {
     /**
      * Enum to select pump or fan device
      */
-    enum class DeviceSelector { PUMP_DEVICE, FAN_DEVICE };
+    enum class DeviceSelector { PUMP_DEVICE, FAN_DEVICE, BOTH };
     /**
      * Config Interface Identifier needed to claim it using libusb.
      */

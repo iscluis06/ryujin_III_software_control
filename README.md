@@ -87,7 +87,7 @@ not be possible.
     * 320x240 widthxheight
     * Dispose method 1
     * Background black
-* I couldn't find a reliable way to recreate a valid gif programatically using libvips or by gifsicle command.
+* I couldn't find a reliable way to recreate a valid gif programmatically using libvips or by gifsicle command.
 * Right now the only way to make a gif file to display is to force its size to a multiple of 4096 bytes.<br>When
   uploading on windows this requirement is not needed (Posible bug).
 
@@ -113,17 +113,27 @@ Ryujin III Management Tool
         config]                           Fan Speed config
         --pump-speed-config=[pump speed
         config]                           Pump Speed config
+        --speed-config=[speed config...]  Speed config for Pump and Fan, set
+                                          only 2 values, any other value will be
+                                          ignored, if only 1 value is set, then
+                                          only pump speed will be config. If no
+                                          values set, no actions will be taken.
       Information group
+        --show-version                    Displays current ryujinIII library
+                                          version
         --show-slots                      Displays available memory slots
       Led display config (exclusive
       options)
+        JPEG Slideshow (At least JPEG
+        indexes must be specified)
+          --slideshow-jpeg=[slideshow
+          jpeg...]                          Creates a slideshow between jpeg
+                                            images
+          --seconds=[seconds]               Seconds between JPEG images
         --default-gif                     Displays the default gif
         --select-gif=[select gif]         Select a gif from memory
         --select-jpeg=[select jpeg]       Select a jpeg from memory
         --slideshow=[slideshow...]        Creates a slideshow between gif images
-        --slideshow-jpeg=[slideshow
-        jpeg...]                          Creates a slideshow between jpeg
-                                          images
         --clock-mode                      Activates clock mode
         --delete-gif=[delete a gif from
         memory]                           Delete a gif from memory
@@ -263,9 +273,27 @@ a device reset.
 ./ryujinIII --slideshow-jpeg=1 --slideshow-jpeg=2
 ```
 
+Example slideshow jpeg functionality with seconds.<br>
+Be aware, that selecting a memory slot currently empty may cause
+led display to ignore the selected slot and if all slots are empty may trigger
+a device reset. If seconds not set it will use by default 5.
+
+```shell
+./ryujinIII --slideshow-jpeg=1 --slideshow-jpeg=2 --seconds=5
+```
+
 ## Speed config for pump and fans
 
 Current speed configs taken directly from device reporting:
+
+### Config BOTH
+
+Is recommended to use this command instead of the individual ones, this
+will ensure that both devices have their speed configured correctly.
+
+```shell
+./ryujinIII --speed-config=50 --speed-config=50
+```
 
 ### Fan speeds
 

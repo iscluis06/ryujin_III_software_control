@@ -11,7 +11,14 @@
 class SpeedConfigCommand : public BaseCommand {
 public:
     /**
-     * Default constructor
+     * Constructor to set both devices speeds
+     * @param wrapper Reference to libusb wrapper
+     * @param pump_speed Selected speed for pump
+     * @param fan_speed Selected speed for fans
+     */
+    SpeedConfigCommand(std::shared_ptr<LibUsbWrapperBase> wrapper, int pump_speed, int fan_speed);
+    /**
+     * Constructor to only set one device speed config
      * @param wrapper Reference to libusb wrapper
      * @param device_selector Device selector choice
      * @param speed Selected speed (refeer to README)
@@ -49,7 +56,11 @@ private:
     /**
      * Property to keep track of selected speed
      */
-    int speed_;
+    int speed1_ = 0;
+    /**
+     * Property to keep track of selected speed
+     */
+    int speed2_ = 0;
     /**
      * Returns a calculated speed according to selected DEVICE (the opposite device from device_selected will be used).
      * @param value Current value for a given speed, if PUMP_DEVICE selected then FAN_DEVICE will used, otherwise

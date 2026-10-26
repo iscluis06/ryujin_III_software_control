@@ -52,6 +52,18 @@ std::unique_ptr<ExecuteBase> Factory::GetCommand(args::ArgumentParser &parser) {
         return std::make_unique<SpeedConfigCommand>(wrapper_, RyujinConstants::DeviceSelector::PUMP_DEVICE,
                                                     args::get(*value));
     }
+    if (mapped_flags.count("speed config...")) {
+        auto values = args::get(*dynamic_cast<args::ValueFlagList<int> *>(mapped_flags["speed config..."]));
+        if (values.empty()) {
+            return nullptr;
+        } else if (values.size() == 1) {
+            return std::make_unique<SpeedConfigCommand>(wrapper_, RyujinConstants::DeviceSelector::PUMP_DEVICE,
+                                                        values[0]);
+        } else {
+            return std::make_unique<SpeedConfigCommand>(wrapper_, values[0], values[1]);
+        }
+    }
+
     if (mapped_flags.count("slideshow...")) {
         auto value = args::get(*dynamic_cast<args::ValueFlagList<int> *>(mapped_flags["slideshow..."]));
         return std::make_unique<SlideShowChain>(wrapper_, value);

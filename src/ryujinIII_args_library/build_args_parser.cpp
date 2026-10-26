@@ -52,6 +52,12 @@ BuildArgsParser::BuildArgsParser() {
                                                          {"fan-speed-config"}));
     this->options.emplace_front(new args::ValueFlag<int>(*speed_config_group, "pump speed config", "Pump Speed config",
                                                          {"pump-speed-config"}));
+    this->options.emplace_front(
+            new args::ValueFlagList<int>(*speed_config_group, "speed config",
+                                         "Speed config for Pump and Fan, set only 2 values, any other value will be "
+                                         "ignored, if only 1 value is set, then only pump speed will be config. If no "
+                                         "values set, no actions will be taken.",
+                                         {"speed-config"}));
 
     this->options.emplace_front(new args::Flag(*information_group, "show version",
                                                "Displays current ryujinIII library version", {"show-version"}));
